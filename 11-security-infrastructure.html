@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>11 · Infrastructure, Hosting &amp; Security — RADAR</title>
+<meta name="description" content="Where RADAR runs, how it is protected, how it recovers from failure, and the controls that must pass before production.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html" aria-current="page"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 11</span><span>·</span><span class="track"><i style="background:#5BC3F5"></i>Trust &amp; Safety</span></div><h1>Infrastructure, Hosting &amp; Security</h1><p class="lede">Where RADAR runs, how it is protected, how it recovers from failure, and the controls that must pass before production.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Engineering</span><span class="chip">Governance &amp; legal</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>Production runs on <strong>KNPHI/DHA-approved or other Government-authorised infrastructure</strong>; the budgeted Dell PowerEdge R770 is the project's main server; development uses non-identifiable data only.</li>
+<li>The network is split into <strong>zones</strong> with a few allowed paths; the AI zone has <strong>no internet egress</strong>.</li>
+<li>Controls follow the proposal's list — RBAC, least privilege, MFA, encryption, audit logging, backup/recovery and incident response — mapped to recognised standards.</li>
+<li>Before production: <strong>load, penetration and interface testing</strong> with reports shared with the foundation (Gate 2).</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>RADAR concentrates sensitive signals from many institutions and sits in the escalation path for emergencies. A breach would damage trust in every connected system; an outage during an outbreak would push EOCs back to paper exactly when speed matters. Security and resilience are therefore gate criteria, not afterthoughts.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="04-system-architecture.html"><span class="t">04 · System Architecture</span><span class="r">The component list defines what must be hosted and secured.</span></a><a class="conn" href="10-data-governance.html"><span class="t">10 · Data Governance</span><span class="r">Data classification drives the security controls and hosting location.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="09-deployment-adoption.html"><span class="t">09 · Deployment &amp; Adoption</span><span class="r">ICT and hosting readiness are site go-live prerequisites.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#hosting-model">Hosting model</a></li><li><a href="#network-zones">Network zones</a></li><li><a href="#security-controls">Security controls</a></li><li><a href="#backup-recovery-and-availability-targets">Backup, recovery and availability targets</a></li><li><a href="#pre-production-checklist-gate-2">Pre-production checklist (Gate 2)</a></li><li><a href="#operations">Operations</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="hosting-model"><span class="sec">1</span>Hosting model</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tier</th><th>Where</th><th>Data allowed</th></tr></thead>
+<tbody>
+<tr><td>Development</td><td>Approved cloud or WSU-hosted (hosting subscription budgeted)</td><td>Synthetic and approved non-identifiable data</td></tr>
+<tr><td>Staging / UAT</td><td>KNPHI/DHA-approved infrastructure</td><td>De-identified replays of real feeds</td></tr>
+<tr><td>Production</td><td>KNPHI/DHA-approved on-premise or Government-authorised infrastructure <span class="tag prop">Proposal</span></td><td>Live data, including restricted classes where unavoidable</td></tr>
+<tr><td>Recovery</td><td>Second Government-authorised site <span class="tag rec">Recommended</span></td><td>Encrypted backups; warm standby if funded</td></tr>
+</tbody></table></div>
+<p>Administration and data-residency requirements are defined by KNPHI/DHA. <span class="tag prop">Proposal</span> See <a href="04-system-architecture.html">doc 04</a> for server sizing and the GPU question.</p>
+
+<h2 id="network-zones"><span class="sec">2</span>Network zones</h2>
+<figure class="fig wide" id="fig-sec-zones">
+<svg viewBox="0 0 760 380" role="img" aria-label="Five zones: external users and partner systems; edge zone with WAF, reverse proxy and gateway; application zone with web app, APIs, agent and analytics; data zone with PostgreSQL and FHIR, object store and audit log; AI zone with LLM server and vector store without internet egress; plus management zone and recovery site." xmlns="http://www.w3.org/2000/svg">
+<rect x="0.0" y="0.0" width="150.0" height="300.0" rx="8" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="12.0" y="14.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">OUTSIDE</text>
+<rect x="166.0" y="0.0" width="150.0" height="300.0" rx="8" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="178.0" y="14.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">EDGE</text>
+<rect x="332.0" y="0.0" width="210.0" height="300.0" rx="8" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="344.0" y="14.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">APPLICATION</text>
+<rect x="558.0" y="0.0" width="202.0" height="186.0" rx="8" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="570.0" y="14.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" letter-spacing="0.08em">DATA</text>
+<rect x="558.0" y="196.0" width="202.0" height="104.0" rx="8" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="570.0" y="210.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" letter-spacing="0.08em">AI · NO EGRESS</text>
+<polyline points="140.0,58.0 176.0,58.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="176.0,58.0 168.0,53.5 168.0,62.5" fill="#4D4D4D"/>
+<polyline points="140.0,138.0 176.0,138.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="176.0,138.0 168.0,133.5 168.0,142.5" fill="#4D4D4D"/>
+<polyline points="306.0,58.0 342.0,58.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="342.0,58.0 334.0,53.5 334.0,62.5" fill="#4D4D4D"/>
+<polyline points="306.0,138.0 342.0,138.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="342.0,138.0 334.0,133.5 334.0,142.5" fill="#4D4D4D"/>
+<polyline points="176.0,218.0 140.0,218.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="140.0,218.0 148.0,222.5 148.0,213.5" fill="#4D4D4D"/>
+<polyline points="342.0,218.0 306.0,218.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="306.0,218.0 314.0,222.5 314.0,213.5" fill="#4D4D4D"/>
+<polyline points="532.0,58.0 550.0,58.0 550.0,52.0 568.0,52.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="568.0,52.0 560.0,47.5 560.0,56.5" fill="#4D4D4D"/>
+<polyline points="532.0,138.0 550.0,138.0 550.0,104.0 568.0,104.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="568.0,104.0 560.0,99.5 560.0,108.5" fill="#4D4D4D"/>
+<polyline points="532.0,218.0 548.0,218.0 548.0,239.0 568.0,239.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="568.0,239.0 560.0,234.5 560.0,243.5" fill="#4D4D4D"/>
+<polyline points="659.0,300.0 660.0,316.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="660.0,316.0 664.0,307.7 655.0,308.3" fill="#4D4D4D"/>
+<rect x="10.0" y="30.0" width="130.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="75.0" y="48.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">EOC users</text>
+<text x="75.0" y="68.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">browser · MFA</text>
+<rect x="10.0" y="110.0" width="130.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="75.0" y="113.8" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Partner</text>
+<text x="75.0" y="128.6" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">systems</text>
+<text x="75.0" y="148.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">KHIS2 · KABS ·</text>
+<text x="75.0" y="162.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">LIMS</text>
+<rect x="10.0" y="190.0" width="130.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="75.0" y="208.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">GHEC-AI · SMS</text>
+<text x="75.0" y="228.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">outbound only</text>
+<rect x="176.0" y="30.0" width="130.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="241.0" y="41.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">WAF + proxy</text>
+<text x="241.0" y="61.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">TLS 1.3 · rate</text>
+<text x="241.0" y="75.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">limits</text>
+<rect x="176.0" y="110.0" width="130.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="241.0" y="113.8" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">OpenHIM</text>
+<text x="241.0" y="128.6" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">gateway</text>
+<text x="241.0" y="148.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">mutual TLS · client</text>
+<text x="241.0" y="162.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">auth</text>
+<rect x="176.0" y="190.0" width="130.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="241.0" y="208.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Egress proxy</text>
+<text x="241.0" y="228.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">allow-list only</text>
+<rect x="342.0" y="30.0" width="190.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="437.0" y="48.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Web app + API</text>
+<text x="437.0" y="68.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">RBAC from Keycloak</text>
+<rect x="342.0" y="110.0" width="190.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="437.0" y="128.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Workers</text>
+<text x="437.0" y="148.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">connectors · analytics</text>
+<rect x="342.0" y="190.0" width="190.0" height="56.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="437.0" y="208.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Agent service</text>
+<text x="437.0" y="228.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">MCP tools · approvals</text>
+<rect x="568.0" y="30.0" width="182.0" height="44.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="659.0" y="42.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">PostgreSQL · FHIR</text>
+<text x="659.0" y="62.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">encrypted at rest</text>
+<rect x="568.0" y="82.0" width="182.0" height="44.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="659.0" y="94.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Object store</text>
+<text x="659.0" y="114.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">raw landing</text>
+<rect x="568.0" y="134.0" width="182.0" height="44.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="659.0" y="146.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Audit log</text>
+<text x="659.0" y="166.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">append-only</text>
+<rect x="568.0" y="222.0" width="182.0" height="34.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="659.0" y="239.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LLM server (GPU)</text>
+<rect x="568.0" y="262.0" width="182.0" height="30.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="659.0" y="277.0" font-size="11" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Vector store</text>
+<rect x="0.0" y="316.0" width="470.0" height="54.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="235.0" y="333.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Management zone</text>
+<text x="235.0" y="353.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">bastion with MFA · monitoring &amp; alerting · patching · backup jobs</text>
+<rect x="560.0" y="316.0" width="200.0" height="54.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="660.0" y="326.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Recovery site</text>
+<text x="660.0" y="346.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">encrypted,</text>
+<text x="660.0" y="360.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Government-authorised</text>
+<text x="700.0" y="308.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">backups</text>
+</svg>
+<figcaption><b>Network zones and the only paths between them.</b> Users and partner systems reach RADAR only through the edge. The data zone accepts connections only from the application zone; the AI zone has no internet egress at all; outbound calls leave through an allow-listed proxy. Encrypted backups go to a Government-authorised recovery site.</figcaption>
+</figure>
+
+<h2 id="security-controls"><span class="sec">3</span>Security controls</h2>
+<p>Each control the proposal commits to, with how RADAR implements it and the reference standard to test against. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control <span class="tag prop">Proposal</span></th><th>Implementation</th><th>Reference</th></tr></thead>
+<tbody>
+<tr><td>Role-based permissions &amp; least privilege</td><td>Keycloak roles mapped to geography and function (<a href="10-data-governance.html">doc 10</a>); admin access just-in-time; quarterly access reviews</td><td>ISO/IEC 27001 Annex A (access control)</td></tr>
+<tr><td>Multifactor authentication</td><td>Mandatory for every user; phishing-resistant factors for administrators</td><td>NIST SP 800-63B</td></tr>
+<tr><td>Encryption</td><td>TLS 1.2+ (1.3 preferred) in transit; mutual TLS between systems; encrypted disks/self-encrypting drives; encrypted backups; keys outside the data host</td><td>ISO/IEC 27001; OWASP ASVS</td></tr>
+<tr><td>Audit logging</td><td>Append-only, hash-chained audit log for decisions and data access; OpenHIM transaction log; logs shipped off-host</td><td>IHE ATNA</td></tr>
+<tr><td>Backup &amp; recovery</td><td>Continuous database archiving + nightly full backups; off-site encrypted copies; quarterly restore tests</td><td>See targets below</td></tr>
+<tr><td>Incident response</td><td>Runbook, contact tree, severity levels, breach-notification duties (DHA 48 h, ODPC 72 h)</td><td>Data Protection Act; Digital Health Act</td></tr>
+<tr><td>Secure development</td><td>Threat modelling, code review, dependency and image scanning, SBOM, signed images, secrets in a vault</td><td>OWASP ASVS; OWASP SAMM</td></tr>
+<tr><td>AI-specific threats</td><td>Prompt-injection defences, output validation, no agent write access without approval, model supply-chain checks</td><td>OWASP Top 10 for LLM Applications 2025 (<a href="12-responsible-ai.html">doc 12</a>)</td></tr>
+<tr><td>Hardened platform</td><td>CIS benchmarks for OS and Kubernetes; R770 secure boot, TPM 2.0, silicon root of trust, system lockdown</td><td>CIS Benchmarks</td></tr>
+</tbody></table></div>
+
+<h2 id="backup-recovery-and-availability-targets"><span class="sec">4</span>Backup, recovery and availability targets</h2>
+<p>Starting targets to agree with KNPHI <span class="tag rec">Recommended</span>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Component</th><th>Recovery point objective</th><th>Recovery time objective</th></tr></thead>
+<tbody>
+<tr><td>MER / FHIR database and audit log</td><td>≤ 15 minutes</td><td>≤ 4 hours</td></tr>
+<tr><td>Raw landing store</td><td>≤ 24 hours (sources can be re-pulled)</td><td>≤ 24 hours</td></tr>
+<tr><td>Analytics and signal store</td><td>Recomputable</td><td>≤ 8 hours</td></tr>
+<tr><td>LLM service</td><td>Stateless (model files backed up)</td><td>≤ 8 hours; rules-only mode meanwhile</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>Availability:</strong> aim for 99.5% monthly for the DMT-PHE workspace, with planned maintenance outside working hours and frozen during active Level 2–3 events.</li>
+<li><strong>Degraded modes:</strong> if the LLM is down, the workspace still shows rules levels and evidence; if RADAR is down, EOCs use paper DMT-PHE tools and back-enter.</li>
+<li><strong>Power and connectivity:</strong> UPS on all EOC equipment; Starlink connectivity budgeted for KNPHI and sites. <span class="tag prop">Proposal</span></li>
+</ul>
+
+<h2 id="pre-production-checklist-gate-2"><span class="sec">5</span>Pre-production checklist (Gate 2)</h2>
+<p>The stage gates require product hardening with test reports available to the foundation: scalability and load testing, cybersecurity and penetration testing, interface validation, and deployment within KNPHI/DHA-approved infrastructure. <span class="tag prop">Proposal</span></p>
+<ol class="steps">
+<li><b>Load test</b> at 10× normal volume (simulated national outbreak week) with workspace response times measured.</li>
+<li><b>Penetration test</b> by an independent party covering web app, APIs, gateway and MCP tools; findings fixed and re-tested.</li>
+<li><b>Interface validation</b> for every connector and the GHEC-AI hand-off, with signed test records.</li>
+<li><b>Restore test</b> from off-site backup into a clean environment, timed against RTO.</li>
+<li><b>Access review</b> confirming every account, role and break-glass path.</li>
+<li><b>Runbooks</b> for operations, incidents and upgrades handed to KNPHI ICT.</li>
+</ol>
+
+<h2 id="operations"><span class="sec">6</span>Operations</h2>
+<ul>
+<li><strong>Monitoring:</strong> pipeline freshness per source, error rates, queue depth, GPU/CPU/disk, certificate expiry, failed logins — alerts to an on-call rota.</li>
+<li><strong>Patching:</strong> monthly for OS and dependencies; emergency patches within 72 hours for critical vulnerabilities.</li>
+<li><strong>Change management:</strong> all changes via CI/CD; production changes approved by the KNPHI system owner.</li>
+<li><strong>Transition:</strong> by Gate 3 the system runs on Government infrastructure with administrative rights transferred and maintenance, support and security procedures handed over. <span class="tag prop">Proposal</span></li>
+</ul>
+
+<h2 id="open-questions"><span class="sec">7</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Where is the recovery site, and is a warm standby affordable?</b> <span class="owner">Owner: KNPHI + DHA</span></li>
+<li><b>Who operates production day to day before transition</b> — WSU engineers with KNPHI shadowing, or KNPHI ICT from the start? <span class="owner">Owner: Steering committee</span></li>
+<li><b>Which independent firm performs the penetration test,</b> and does DHA certification require a specific one? <span class="owner">Owner: WSU + DHA</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — Data Access (security controls, hosting); Budget (server, hosting, Starlink).</li>
+<li>Stage-gate paper — Gate 2 milestone 2; Gate 3 milestone 2.</li>
+<li>Dell Technologies — <a href="https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-r770-spec-sheet.pdf">PowerEdge R770 specification sheet</a> (security features).</li>
+<li>OWASP — <a href="https://www.invicti.com/blog/web-security/owasp-top-10-risks-llm-security-2025">Top 10 for LLM Applications 2025</a> (summary).</li>
+<li>Breach-notification timelines — see <a href="10-data-governance.html">doc 10</a> sources.</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="10-data-governance.html"><span class="d">← Previous</span><br><span class="t">10 · Data Governance</span></a><a class="next" href="12-responsible-ai.html"><span class="d">Next →</span><br><span class="t">12 · Responsible AI</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

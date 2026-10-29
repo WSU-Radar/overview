@@ -1,0 +1,57 @@
+<!--inshort-->
+<ul>
+<li>Fifteen risks across <strong>delivery, data, technology, AI, adoption and sustainability</strong>, each with a likelihood, impact, mitigation and owner.</li>
+<li>The highest-rated: slow <strong>data-sharing agreements</strong> (R1), weak source data or APIs (R2), low adoption (R3), procurement delays (R6), county power and connectivity (R8), staff turnover (R9) and no recurrent budget (R10).</li>
+<li>Risks are reviewed at every steering committee and at each gate.</li>
+</ul>
+<!--why-->
+<p>Most risks that would sink RADAR are not technical — they are agreements, people, procurement and money. Naming them early, with an owner and an early-warning sign, turns surprises at a gate review into issues handled months earlier.</p>
+<!--body-->
+<h2>Risk map</h2>
+<!--fig:risk-heatmap-->
+
+<h2>Register</h2>
+<p>Ratings are before mitigation (L = likelihood, I = impact; L/M/H). Initial assessment <span class="tag rec">Recommended</span> — the steering committee owns the ratings.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>ID</th><th>Risk</th><th>L</th><th>I</th><th>Mitigation</th><th>Early warning</th><th>Owner</th></tr></thead>
+<tbody>
+<tr><td><b>R1</b></td><td>Data-sharing agreements and approvals take longer than planned, delaying live data and the MVP</td><td>H</td><td>H</td><td>Start month 1; standard DSA template; KNPHI-led umbrella agreement; DPIA lodged early; MVP can demo on de-identified replays while agreements finish</td><td>No signed DSA for an MVP source by month 3</td><td>KNPHI + WSU</td></tr>
+<tr><td><b>R2</b></td><td>Source data incomplete, late, or without usable API</td><td>H</td><td>M</td><td>Integration ladder (start at L1); data-quality dashboard; feedback to custodians; pick MVP sources by readiness</td><td>Inventory shows &lt; 2 seasons of history or no export</td><td>WSU engineering</td></tr>
+<tr><td><b>R3</b></td><td>Low adoption: officers see RADAR as extra work</td><td>M</td><td>H</td><td>Remove re-typing; champions; SOP update; SUS and time-on-task tracked; fast support</td><td>Falling log-ins; back-entered decisions rising</td><td>CGP + KNPHI</td></tr>
+<tr><td><b>R4</b></td><td>Unsafe AI recommendation contributes to a missed or delayed escalation</td><td>L</td><td>H</td><td>Rules set the level; validator; human confirmation; FN ceiling; kill switch; incident review</td><td>Override reasons citing wrong level</td><td>UM/CGHE + KNPHI</td></tr>
+<tr><td><b>R5</b></td><td>Security incident or data breach</td><td>L</td><td>H</td><td>Zones, MFA, encryption, audit, pen test, minimum-necessary data, incident runbook</td><td>Failed-login spikes; unpatched critical CVEs</td><td>WSU + KNPHI ICT</td></tr>
+<tr><td><b>R6</b></td><td>Server/GPU procurement or import delays</td><td>M</td><td>H</td><td>Order in month 1–2; develop on cloud with synthetic data meanwhile; consider Government hosting as interim</td><td>No PO by month 2</td><td>WSU finance</td></tr>
+<tr><td><b>R7</b></td><td>Recruitment delays (coordinator, analyst, enterprise partner)</td><td>M</td><td>M</td><td>Early recruitment <span class="tag prop">Proposal</span>; interim cover from partners</td><td>Posts unfilled at month 2</td><td>WSU</td></tr>
+<tr><td><b>R8</b></td><td>Power and connectivity failures at county EOCs</td><td>H</td><td>M</td><td>Starlink, UPS, light UI, SMS alerts, offline forms, paper fallback</td><td>Readiness assessment scores</td><td>CGP + counties</td></tr>
+<tr><td><b>R9</b></td><td>EOC staff turnover erodes skills</td><td>H</td><td>M</td><td>ToT, job aids, six-monthly refreshers, onboarding pack, in-app guidance</td><td>Share of active users trained &lt; 80%</td><td>CGP</td></tr>
+<tr><td><b>R10</b></td><td>No recurrent budget after October 2029</td><td>M</td><td>H</td><td>Cost model from Gate 2 data; engage KNPHI finance early; open-source stack; align with national budget calendar</td><td>No budget line in KNPHI submission by mid-2029</td><td>PI + KNPHI</td></tr>
+<tr><td><b>R11</b></td><td>Regulatory change or DHA certification delays</td><td>M</td><td>M</td><td>Early DHA engagement; FHIR validation in CI; track regulations</td><td>New DHA requirements issued</td><td>WSU + DHA liaison</td></tr>
+<tr><td><b>R12</b></td><td>Enterprise software partner selected late or under-scoped</td><td>M</td><td>M</td><td>Select in months 1–2 with clear statement of work tied to Gate 1 and 2 deliverables</td><td>No contract by month 3</td><td>WSU</td></tr>
+<tr><td><b>R13</b></td><td>A major outbreak diverts EOC staff from the project</td><td>M</td><td>M</td><td>Rapid-response mode: use the outbreak as live validation where safe; keep a minimal core team on delivery</td><td>Level 3 activation</td><td>Steering committee</td></tr>
+<tr><td><b>R14</b></td><td>Model performance drifts on real data</td><td>M</td><td>M</td><td>Monitoring, retraining procedure, disaggregated reporting</td><td>Rising override rate</td><td>UM/CGHE</td></tr>
+<tr><td><b>R15</b></td><td>Scope creep toward “integrate everything”</td><td>M</td><td>M</td><td>MVP scope locked; new sources only via the prioritisation criteria; change control in TWG</td><td>Unplanned connectors in sprint plans</td><td>PI + TWG</td></tr>
+</tbody></table></div>
+
+<h2>How risks are managed</h2>
+<ol class="steps">
+<li><b>Review rhythm.</b> Top risks at every TWG; full register at every steering committee and in each gate evidence pack.</li>
+<li><b>Escalation.</b> Any risk rated High/High, or any early-warning sign that fires, goes to the steering committee within two weeks.</li>
+<li><b>Issues vs. risks.</b> When a risk happens it becomes an issue with an action plan and date; the register records the outcome.</li>
+<li><b>Gate link.</b> If a risk threatens the MVP deadline, the 30-day remediation notice to the foundation applies (<a href="13-roadmap-stage-gates.html">doc 13</a>).</li>
+</ol>
+
+<h2>Key assumptions</h2>
+<p>If any of these turns out false, revisit the plan.</p>
+<ul>
+<li>KNPHI can nominate a system owner, data stewards and ICT staff from the start.</li>
+<li>At least four MVP sources can share data at Level 1–2 by March 2027.</li>
+<li>KNPHI/DHA will authorise a production hosting location by mid-2027.</li>
+<li>The DMT-PHE trigger-card set is stable enough to encode for the MVP.</li>
+<li>Sobek can provide a GHEC-AI interface for joint specification in the MVP phase.</li>
+</ul>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — Budget (spending risks and mitigations), Data Access.</li>
+<li>Stage-gate paper — MVP remediation rule.</li>
+<li>Risk ratings are an initial assessment for the steering committee to confirm.</li>
+</ul>

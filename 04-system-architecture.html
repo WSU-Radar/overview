@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04 · System Architecture &amp; Technology Stack — RADAR</title>
+<meta name="description" content="The five layers of RADAR, the components inside them, how data moves between them, and the recommended open-source technology stack.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html" aria-current="page"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 04</span><span>·</span><span class="track"><i style="background:#A60F2D"></i>Product &amp; Architecture</span></div><h1>System Architecture &amp; Technology Stack</h1><p class="lede">The five layers of RADAR, the components inside them, how data moves between them, and the recommended open-source technology stack.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Engineering</span><span class="chip">Leadership &amp; funder</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>RADAR has <strong>five layers</strong> on top of existing systems: integration, bridge (MER), intelligence, decision support, and users &amp; channels.</li>
+<li>Identity, audit and observability <strong>cut across</strong> every layer.</li>
+<li>The recommended stack is <strong>open source and government-ownable</strong>: OpenHIM, HAPI FHIR, PostgreSQL, NATS, Python/R analytics, an on-premise LLM served by vLLM, and Keycloak.</li>
+<li>RADAR is <strong>not a big-data problem</strong> — volumes are modest. The hard parts are reliability, integration, audit and safe AI.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>The architecture fixes where each responsibility lives, so the connector, analytics, AI and UI teams can work in parallel without stepping on each other. It also has to be something KNPHI can run after October 2029: every choice here favours tools that are well documented, widely used in African health information systems, and free of licence lock-in.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="03-minimum-event-record.html"><span class="t">03 · Minimum Event Record</span><span class="r">The MER is the core data contract the architecture is built around.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="05-interoperability.html"><span class="t">05 · Interoperability</span><span class="r">The architecture fixes where the interoperability layer sits.</span></a><a class="conn" href="06-intelligence-layer.html"><span class="t">06 · Intelligence Layer</span><span class="r">Analytics run as services inside the intelligence layer.</span></a><a class="conn" href="07-dmt-phe-ai-agent.html"><span class="t">07 · DMT-PHE &amp; AI Agent</span><span class="r">The agent and rules engine run inside the decision-support layer.</span></a><a class="conn" href="11-security-infrastructure.html"><span class="t">11 · Security &amp; Infrastructure</span><span class="r">The component list defines what must be hosted and secured.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#quality-goals-that-drive-the-design">Quality goals that drive the design</a></li><li><a href="#the-five-layers">The five layers</a></li><li><a href="#components-and-the-path-of-one-record">Components and the path of one record</a></li><li><a href="#recommended-technology-stack">Recommended technology stack</a></li><li><a href="#environments">Environments</a></li><li><a href="#sizing-and-hardware">Sizing and hardware</a></li><li><a href="#designing-for-low-connectivity">Designing for low connectivity</a></li><li><a href="#architecture-decision-log">Architecture decision log</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="quality-goals-that-drive-the-design"><span class="sec">1</span>Quality goals that drive the design</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Goal</th><th>What it means for RADAR</th><th>Design response</th></tr></thead>
+<tbody>
+<tr><td><b>Available during outbreaks</b></td><td>Load and attention spike exactly when the system matters most</td><td>Stateless services, queues between stages, degraded modes, tested restores</td></tr>
+<tr><td><b>Data residency</b></td><td>Identifiable data stays on Government-authorised infrastructure <span class="tag prop">Proposal</span></td><td>Production on KNPHI/DHA infrastructure; on-prem LLM; dev on non-identifiable data only</td></tr>
+<tr><td><b>Auditable</b></td><td>Every recommendation, confirmation and override is time-stamped and attributable</td><td>Append-only audit log; Provenance on every MER change</td></tr>
+<tr><td><b>Incremental</b></td><td>Start with four sources; add streams without rebuilding</td><td>One connector pattern; MER as stable contract; event bus decouples producers and consumers</td></tr>
+<tr><td><b>Operable by KNPHI</b></td><td>Small ops team after handover</td><td>Few moving parts, containers, infrastructure-as-code, runbooks, managed upgrades</td></tr>
+<tr><td><b>Low-connectivity tolerant</b></td><td>County EOCs may lose power or internet</td><td>Light web UI, offline-capable forms, SMS alerts, back-entry with true timestamps</td></tr>
+</tbody></table></div>
+
+<h2 id="the-five-layers"><span class="sec">2</span>The five layers</h2>
+<figure class="fig wide" id="fig-arch-layers">
+<svg viewBox="0 0 760 486" role="img" aria-label="Layered stack: source systems, integration layer, bridge layer (MER), intelligence layer, decision-support layer and users and channels, with cross-cutting identity and access, audit and governance, and observability columns." xmlns="http://www.w3.org/2000/svg">
+<polyline points="40.0,85.0 40.0,61.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="40.0,61.0 35.5,69.0 44.5,69.0" fill="#A60F2D"/>
+<polyline points="92.0,61.0 92.0,85.0" fill="none" stroke="#9A9A9A" stroke-width="1.1" stroke-linejoin="round"/>
+<polygon points="92.0,85.0 96.5,77.0 87.5,77.0" fill="#9A9A9A"/>
+<polyline points="40.0,163.0 40.0,139.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="40.0,139.0 35.5,147.0 44.5,147.0" fill="#A60F2D"/>
+<polyline points="92.0,139.0 92.0,163.0" fill="none" stroke="#9A9A9A" stroke-width="1.1" stroke-linejoin="round"/>
+<polygon points="92.0,163.0 96.5,155.0 87.5,155.0" fill="#9A9A9A"/>
+<polyline points="40.0,241.0 40.0,217.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="40.0,217.0 35.5,225.0 44.5,225.0" fill="#A60F2D"/>
+<polyline points="92.0,217.0 92.0,241.0" fill="none" stroke="#9A9A9A" stroke-width="1.1" stroke-linejoin="round"/>
+<polygon points="92.0,241.0 96.5,233.0 87.5,233.0" fill="#9A9A9A"/>
+<polyline points="40.0,319.0 40.0,295.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="40.0,295.0 35.5,303.0 44.5,303.0" fill="#A60F2D"/>
+<polyline points="92.0,295.0 92.0,319.0" fill="none" stroke="#9A9A9A" stroke-width="1.1" stroke-linejoin="round"/>
+<polygon points="92.0,319.0 96.5,311.0 87.5,311.0" fill="#9A9A9A"/>
+<polyline points="40.0,397.0 40.0,373.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="40.0,373.0 35.5,381.0 44.5,381.0" fill="#A60F2D"/>
+<polyline points="92.0,373.0 92.0,397.0" fill="none" stroke="#9A9A9A" stroke-width="1.1" stroke-linejoin="round"/>
+<polygon points="92.0,397.0 96.5,389.0 87.5,389.0" fill="#9A9A9A"/>
+<rect x="0.0" y="8.0" width="130.0" height="52.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="65.0" y="26.3" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Users &amp;</text>
+<text x="65.0" y="41.7" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">channels</text>
+<rect x="142.0" y="14.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="196.2" y="34.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">EOC dashboard</text>
+<rect x="258.5" y="14.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="312.8" y="27.3" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">DMT-PHE</text>
+<text x="312.8" y="40.7" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">workspace</text>
+<rect x="375.0" y="14.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="429.2" y="27.3" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">SMS / email</text>
+<text x="429.2" y="40.7" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">alerts</text>
+<rect x="491.5" y="14.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="545.8" y="34.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Partner APIs</text>
+<text x="52.0" y="73.0" font-size="10" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">recommendations</text>
+<rect x="0.0" y="86.0" width="130.0" height="52.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="65.0" y="104.3" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Decision</text>
+<text x="65.0" y="119.7" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">support</text>
+<rect x="142.0" y="92.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="196.2" y="105.3" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Rules engine</text>
+<text x="196.2" y="118.7" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">(trigger cards)</text>
+<rect x="258.5" y="92.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="312.8" y="105.3" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">AI agent (RAG +</text>
+<text x="312.8" y="118.7" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LLM)</text>
+<rect x="375.0" y="92.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="429.2" y="112.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Human review</text>
+<rect x="491.5" y="92.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="545.8" y="112.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Audit log</text>
+<text x="52.0" y="151.0" font-size="10" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">risk signals</text>
+<rect x="0.0" y="164.0" width="130.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="65.0" y="190.0" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Intelligence</text>
+<rect x="142.0" y="170.0" width="85.2" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="184.6" y="183.3" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Record</text>
+<text x="184.6" y="196.7" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">linkage</text>
+<rect x="235.2" y="170.0" width="85.2" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="277.8" y="183.3" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Anomaly</text>
+<text x="277.8" y="196.7" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">detection</text>
+<rect x="328.4" y="170.0" width="85.2" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="371.0" y="190.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Fusion</text>
+<rect x="421.6" y="170.0" width="85.2" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="464.2" y="190.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Forecasts</text>
+<rect x="514.8" y="170.0" width="85.2" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="557.4" y="190.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Risk score</text>
+<text x="52.0" y="229.0" font-size="10" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">linked events</text>
+<rect x="0.0" y="242.0" width="130.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="65.0" y="268.0" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Bridge · MER</text>
+<rect x="142.0" y="248.0" width="147.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="215.7" y="268.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">MER service</text>
+<rect x="297.3" y="248.0" width="147.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="371.0" y="268.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">FHIR R4 server</text>
+<rect x="452.7" y="248.0" width="147.3" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="526.3" y="268.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Event bus</text>
+<text x="52.0" y="307.0" font-size="10" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">standard fields</text>
+<rect x="0.0" y="320.0" width="130.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="65.0" y="346.0" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Integration</text>
+<rect x="142.0" y="326.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="196.2" y="346.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Connectors</text>
+<rect x="258.5" y="326.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="312.8" y="339.3" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">OpenHIM /</text>
+<text x="312.8" y="352.7" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LATTICE</text>
+<rect x="375.0" y="326.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="429.2" y="346.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Terminology</text>
+<rect x="491.5" y="326.0" width="108.5" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="545.8" y="346.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Quality checks</text>
+<text x="52.0" y="385.0" font-size="10" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">pull / push</text>
+<rect x="0.0" y="398.0" width="130.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="65.0" y="416.3" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Source</text>
+<text x="65.0" y="431.7" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">systems</text>
+<rect x="142.0" y="404.0" width="69.7" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="176.8" y="424.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">KHIS2</text>
+<rect x="219.7" y="404.0" width="69.7" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="254.5" y="424.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">m-Dharura</text>
+<rect x="297.3" y="404.0" width="69.7" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="332.2" y="424.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">KABS</text>
+<rect x="375.0" y="404.0" width="69.7" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="409.8" y="424.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LIMS</text>
+<rect x="452.7" y="404.0" width="69.7" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="487.5" y="417.3" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">KMD ·</text>
+<text x="487.5" y="430.7" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">NDMA</text>
+<rect x="530.3" y="404.0" width="69.7" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="565.2" y="424.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">EIOS</text>
+<text x="104.0" y="464.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="currentColor"></text>
+<rect x="616.0" y="8.0" width="41.0" height="442.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="636.5" y="229.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D" transform="rotate(-90 636.5 229.0)" letter-spacing="0.08em">IDENTITY &amp; ACCESS</text>
+<rect x="665.0" y="8.0" width="41.0" height="442.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="685.5" y="229.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D" transform="rotate(-90 685.5 229.0)" letter-spacing="0.08em">AUDIT &amp; GOVERNANCE</text>
+<rect x="714.0" y="8.0" width="41.0" height="442.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="734.5" y="229.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D" transform="rotate(-90 734.5 229.0)" letter-spacing="0.08em">OBSERVABILITY</text>
+<line x1="0.0" y1="476.0" x2="30.0" y2="476.0" stroke="#A60F2D" stroke-width="2"/>
+<text x="36.0" y="476.0" font-size="10" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">data up</text>
+<line x1="110.0" y1="476.0" x2="140.0" y2="476.0" stroke="#9A9A9A" stroke-width="1.4"/>
+<text x="146.0" y="476.0" font-size="10" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">feedback down</text>
+</svg>
+<figcaption><b>RADAR's five layers on top of existing systems.</b> Data moves up the stack; decisions, overrides and outcomes flow back down as feedback. Identity, audit and observability cut across every layer rather than being bolted onto one of them.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<thead><tr><th>Layer</th><th>Responsibility</th><th>Detail in</th></tr></thead>
+<tbody>
+<tr><td><b>Integration</b></td><td>Connect to sources, land raw data unchanged, validate, map to standard codes</td><td><a href="05-interoperability.html">doc 05</a></td></tr>
+<tr><td><b>Bridge (MER)</b></td><td>Hold event identities, timestamps and links; publish changes</td><td><a href="03-minimum-event-record.html">doc 03</a></td></tr>
+<tr><td><b>Intelligence</b></td><td>Linkage, baselines, anomaly detection, fusion, forecasts, risk scores, signal cards</td><td><a href="06-intelligence-layer.html">doc 06</a></td></tr>
+<tr><td><b>Decision support</b></td><td>Trigger-card rules, AI agent, human confirmation, audit</td><td><a href="07-dmt-phe-ai-agent.html">doc 07</a></td></tr>
+<tr><td><b>Users &amp; channels</b></td><td>EOC dashboard, DMT-PHE workspace, alerts, partner APIs (GHEC-AI)</td><td><a href="08-signal-to-response.html">doc 08</a></td></tr>
+</tbody></table></div>
+
+<h2 id="components-and-the-path-of-one-record"><span class="sec">3</span>Components and the path of one record</h2>
+<figure class="fig wide" id="fig-arch-containers">
+<svg viewBox="0 0 760 440" role="img" aria-label="Component diagram in four rows: ingestion (gateway, connector workers, raw landing, validate and map), core (linker, MER service with FHIR, event bus, analytics, signal store), decision (rules engine, agent service, web app, audit log, outbound gateway) and AI support (knowledge base, LLM server, identity provider)." xmlns="http://www.w3.org/2000/svg">
+<polyline points="136.0,53.0 156.0,53.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="156.0,53.0 148.0,48.5 148.0,57.5" fill="#4D4D4D"/>
+<polyline points="292.0,53.0 312.0,53.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="312.0,53.0 304.0,48.5 304.0,57.5" fill="#4D4D4D"/>
+<polyline points="448.0,53.0 468.0,53.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="468.0,53.0 460.0,48.5 460.0,57.5" fill="#4D4D4D"/>
+<polyline points="604.0,53.0 624.0,53.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="624.0,53.0 616.0,48.5 616.0,57.5" fill="#4D4D4D"/>
+<polyline points="692.0,82.0 692.0,136.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="692.0,136.0 696.5,128.0 687.5,128.0" fill="#4D4D4D"/>
+<polyline points="624.0,165.0 604.0,165.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="604.0,165.0 612.0,169.5 612.0,160.5" fill="#4D4D4D"/>
+<polyline points="468.0,165.0 448.0,165.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="448.0,165.0 456.0,169.5 456.0,160.5" fill="#A60F2D"/>
+<polyline points="312.0,165.0 292.0,165.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="292.0,165.0 300.0,169.5 300.0,160.5" fill="#4D4D4D"/>
+<polyline points="156.0,165.0 136.0,165.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="136.0,165.0 144.0,169.5 144.0,160.5" fill="#4D4D4D"/>
+<polyline points="68.0,194.0 68.0,248.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="68.0,248.0 72.5,240.0 63.5,240.0" fill="#4D4D4D"/>
+<polyline points="136.0,277.0 156.0,277.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="156.0,277.0 148.0,272.5 148.0,281.5" fill="#4D4D4D"/>
+<polyline points="292.0,277.0 312.0,277.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="312.0,277.0 304.0,272.5 304.0,281.5" fill="#4D4D4D"/>
+<polyline points="448.0,277.0 468.0,277.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="468.0,277.0 460.0,272.5 460.0,281.5" fill="#A60F2D"/>
+<polyline points="604.0,277.0 624.0,277.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="624.0,277.0 616.0,272.5 616.0,281.5" fill="#4D4D4D"/>
+<polyline points="204.0,306.0 204.0,360.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="204.0,360.0 208.5,352.0 199.5,352.0" fill="#4D4D4D"/>
+<polyline points="244.0,360.0 244.0,306.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="244.0,306.0 239.5,314.0 248.5,314.0" fill="#9A9A9A"/>
+<polyline points="170.0,306.0 170.0,338.0 68.0,338.0 68.0,360.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="68.0,360.0 72.5,352.0 63.5,352.0" fill="#4D4D4D"/>
+<polyline points="380.0,248.0 380.0,216.0 536.0,216.0 536.0,194.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="536.0,194.0 531.5,202.0 540.5,202.0" fill="#9A9A9A"/>
+<text x="0.0" y="12.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">INGEST</text>
+<text x="0.0" y="124.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">CORE</text>
+<text x="0.0" y="236.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">DECIDE</text>
+<text x="0.0" y="348.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">SUPPORT</text>
+<rect x="0.0" y="24.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="68.0" y="36.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Source systems</text>
+<text x="68.0" y="56.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">KHIS2 · KABS ·</text>
+<text x="68.0" y="70.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">m-Dharura …</text>
+<rect x="156.0" y="24.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="224.0" y="43.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Gateway</text>
+<text x="224.0" y="63.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">OpenHIM / LATTICE</text>
+<rect x="312.0" y="24.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="36.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Connectors</text>
+<text x="380.0" y="56.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">scheduled jobs ·</text>
+<text x="380.0" y="70.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Dagster</text>
+<rect x="468.0" y="24.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="536.0" y="36.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Raw landing</text>
+<text x="536.0" y="56.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">immutable object</text>
+<text x="536.0" y="70.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">store</text>
+<rect x="624.0" y="24.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="692.0" y="36.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Validate · map</text>
+<text x="692.0" y="56.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">schema · FHIR ·</text>
+<text x="692.0" y="70.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">codes</text>
+<rect x="624.0" y="136.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="692.0" y="148.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Linker</text>
+<text x="692.0" y="168.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">match to events</text>
+<text x="692.0" y="182.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">(Splink)</text>
+<rect x="468.0" y="136.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="536.0" y="148.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">MER service</text>
+<text x="536.0" y="168.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">HAPI FHIR R4 ·</text>
+<text x="536.0" y="182.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">PostgreSQL</text>
+<rect x="312.0" y="136.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="155.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Event bus</text>
+<text x="380.0" y="175.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">NATS JetStream</text>
+<rect x="156.0" y="136.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="224.0" y="148.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Analytics</text>
+<text x="224.0" y="168.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">detection · fusion ·</text>
+<text x="224.0" y="182.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">forecasts</text>
+<rect x="0.0" y="136.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="68.0" y="148.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Signal store</text>
+<text x="68.0" y="168.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">risk scores +</text>
+<text x="68.0" y="182.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">evidence</text>
+<rect x="0.0" y="248.0" width="136.0" height="58.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="68.0" y="260.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Rules engine</text>
+<text x="68.0" y="280.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">trigger-card</text>
+<text x="68.0" y="294.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">thresholds</text>
+<rect x="156.0" y="248.0" width="136.0" height="58.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="224.0" y="267.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Agent service</text>
+<text x="224.0" y="287.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">RAG · tools via MCP</text>
+<rect x="312.0" y="248.0" width="136.0" height="58.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="380.0" y="260.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">RADAR web app</text>
+<text x="380.0" y="280.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">dashboard ·</text>
+<text x="380.0" y="294.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">DMT-PHE</text>
+<rect x="468.0" y="248.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="536.0" y="267.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Audit log</text>
+<text x="536.0" y="287.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">append-only, signed</text>
+<rect x="624.0" y="248.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="692.0" y="260.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Outbound</text>
+<text x="692.0" y="280.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">GHEC-AI · SMS ·</text>
+<text x="692.0" y="294.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">email</text>
+<rect x="0.0" y="360.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="68.0" y="379.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Knowledge base</text>
+<text x="68.0" y="399.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">guidelines · pgvector</text>
+<rect x="156.0" y="360.0" width="136.0" height="58.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="224.0" y="379.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LLM server</text>
+<text x="224.0" y="399.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">vLLM · on-prem GPU</text>
+<rect x="312.0" y="360.0" width="448.0" height="58.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="536.0" y="379.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Identity provider (Keycloak)</text>
+<text x="536.0" y="399.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">SSO · MFA · role-based access for every component above</text>
+<text x="68.0" y="220.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">signal card</text>
+<text x="102.0" y="338.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">retrieve</text>
+<text x="458.0" y="216.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">status updates</text>
+</svg>
+<figcaption><b>Runtime components and the path one record takes.</b> A record enters through the gateway, is landed unchanged, validated, mapped and coded, linked to an event, and published. Analytics consume events from the bus; the decision service combines deterministic rules with the AI agent, and every human decision lands in the append-only audit log.</figcaption>
+</figure>
+<ol class="steps">
+<li><b>Ingest.</b> A connector pulls the week's KABS reports through the gateway and lands the raw file unchanged.</li>
+<li><b>Validate, map, code.</b> Records are checked against the source schema, mapped to MER/FHIR fields, and coded (syndrome, species, admin unit). Failures go to quarantine.</li>
+<li><b>Link.</b> The linker matches a cluster of livestock abortions to an existing suspected-RVF MER in the same sub-county, or opens a new one.</li>
+<li><b>Publish.</b> The MER service writes the change (with Provenance) and publishes an event on the bus.</li>
+<li><b>Analyse.</b> Analytics workers recompute baselines and fusion scores; a signal card is written with its evidence.</li>
+<li><b>Decide.</b> The rules engine evaluates the RVF trigger card; the agent drafts a cited recommendation; an officer confirms Level 2 in the DMT-PHE workspace.</li>
+<li><b>Act and record.</b> The decision lands in the audit log; the outbound gateway notifies the level owner and sends the GHEC-AI hand-off.</li>
+</ol>
+
+<h2 id="recommended-technology-stack"><span class="sec">4</span>Recommended technology stack</h2>
+<p>Each choice is a recommendation for the Technical Working Group to confirm in the Technical Product Profile (TPP). All are open source. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Component</th><th>Recommendation</th><th>Why</th><th>Alternatives</th></tr></thead>
+<tbody>
+<tr><td>Gateway / interoperability layer</td><td><b>OpenHIM</b> (or LATTICE where operational)</td><td>Reference interoperability layer of OpenHIE; routing, client auth, ATNA audit, mediators; MPL 2.0</td><td>Kong / NGINX + custom audit</td></tr>
+<tr><td>Connector orchestration</td><td><b>Dagster</b></td><td>Asset-based pipelines with lineage, retries and schedules; Python-native</td><td>Apache Airflow, Prefect</td></tr>
+<tr><td>Raw landing</td><td>S3-compatible object storage</td><td>Immutable raw files allow re-processing when mappings improve</td><td>Ceph RGW, SeaweedFS, MinIO</td></tr>
+<tr><td>MER &amp; FHIR server</td><td><b>HAPI FHIR JPA</b> on PostgreSQL</td><td>Most widely used open FHIR R4 server; profile validation, subscriptions, terminology</td><td>Microsoft FHIR server, Medplum</td></tr>
+<tr><td>Database</td><td><b>PostgreSQL 16+</b> with PostGIS and pgvector</td><td>One reliable engine for relational, spatial and vector search; strong tooling for backup</td><td>TimescaleDB extension for time series</td></tr>
+<tr><td>Event bus</td><td><b>NATS JetStream</b></td><td>Single small binary with persistence; enough for RADAR's volumes; easy to operate</td><td>Apache Kafka / Redpanda if DHA standardises on them</td></tr>
+<tr><td>Record linkage</td><td><b>Splink</b></td><td>Open, explainable Fellegi–Sunter linkage at scale</td><td>Custom rules only</td></tr>
+<tr><td>Analytics</td><td>Python (statsmodels, scikit-learn) + R <b>surveillance</b> package</td><td>Farrington Flexible, EARS, CUSUM are mature in R; Python for pipelines and fusion</td><td>—</td></tr>
+<tr><td>Rules engine</td><td>Versioned <b>decision tables</b> (YAML/JSON) evaluated in code, under test</td><td>Trigger cards stay readable by epidemiologists and deterministic</td><td>DMN engine (e.g. Camunda) if KNPHI prefers BPMN tools</td></tr>
+<tr><td>AI agent</td><td>Python service (FastAPI) with thin orchestration; tools via <b>MCP</b></td><td>Small, auditable code path; MCP standardises tool access</td><td>LangGraph or similar if complexity grows</td></tr>
+<tr><td>LLM serving</td><td><b>vLLM</b> on on-prem GPU; open-weight model chosen by evaluation</td><td>Data never leaves Government infrastructure; OpenAI-compatible API</td><td>Government-authorised hosted endpoint</td></tr>
+<tr><td>Web application</td><td>React + TypeScript; MapLibre maps with offline tiles</td><td>Production-grade UI; the Streamlit prototype remains a reference only</td><td>—</td></tr>
+<tr><td>Analyst dashboards</td><td>Apache Superset</td><td>Self-service charts for KNPHI analysts on read-only replicas</td><td>Metabase, Grafana</td></tr>
+<tr><td>Identity &amp; access</td><td><b>Keycloak</b> (OIDC)</td><td>SSO, MFA, role-based access; can federate with Government identity later</td><td>—</td></tr>
+<tr><td>Alerts</td><td>SMS gateway + email</td><td>Reaches officers without the app open</td><td>WhatsApp Business API (policy check)</td></tr>
+<tr><td>Observability</td><td>Prometheus, Grafana, Loki, OpenTelemetry</td><td>Metrics, logs and traces in one place; alerting on pipeline failures</td><td>—</td></tr>
+<tr><td>Runtime &amp; delivery</td><td>Containers on <b>k3s/RKE2</b>; CI with image scanning and signing</td><td>Same deployment model from dev to production; small footprint</td><td>Docker Compose for the MVP only</td></tr>
+</tbody></table></div>
+
+<h2 id="environments"><span class="sec">5</span>Environments</h2>
+<figure class="fig" id="fig-arch-envs">
+<svg viewBox="0 0 760 236" role="img" aria-label="Development, staging and production environments with promotion arrows; production backs up to a recovery site; identifiable data stays in production." xmlns="http://www.w3.org/2000/svg">
+<polyline points="210.0,80.0 275.0,80.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="275.0,80.0 267.0,75.5 267.0,84.5" fill="#4D4D4D"/>
+<polyline points="485.0,80.0 550.0,80.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="550.0,80.0 542.0,75.5 542.0,84.5" fill="#4D4D4D"/>
+<polyline points="655.0,140.0 655.0,176.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="655.0,176.0 659.5,168.0 650.5,168.0" fill="#4D4D4D"/>
+<rect x="0.0" y="20.0" width="210.0" height="120.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="105.0" y="55.3" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Development</text>
+<text x="105.0" y="76.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">approved cloud or WSU-hosted ·</text>
+<text x="105.0" y="91.3" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">synthetic &amp; de-identified data ·</text>
+<text x="105.0" y="105.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">open to all developers</text>
+<rect x="275.0" y="20.0" width="210.0" height="120.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="55.3" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Staging / UAT</text>
+<text x="380.0" y="76.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">KNPHI/DHA-approved infra ·</text>
+<text x="380.0" y="91.3" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">de-identified replay of real</text>
+<text x="380.0" y="105.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">feeds · load &amp; security tests</text>
+<rect x="550.0" y="20.0" width="210.0" height="120.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="655.0" y="55.3" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Production</text>
+<text x="655.0" y="76.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">KNPHI/DHA infra · live</text>
+<text x="655.0" y="91.3" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">identifiable data ·</text>
+<text x="655.0" y="105.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">least-privilege admin access</text>
+<text x="242.0" y="53.2" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">promote</text>
+<text x="242.0" y="66.8" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">signed build</text>
+<text x="517.0" y="53.2" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">after</text>
+<text x="517.0" y="66.8" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">go/no-go</text>
+<rect x="550.0" y="176.0" width="210.0" height="50.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="655.0" y="184.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Recovery site</text>
+<text x="655.0" y="204.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">encrypted backups ·</text>
+<text x="655.0" y="218.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Government-authorised</text>
+<text x="655.0" y="158.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">encrypted backup</text>
+<line x1="0.0" y1="186.0" x2="490.0" y2="186.0" stroke="#A60F2D" stroke-width="2" stroke-dasharray="6 4"/>
+<polygon points="0.0,186.0 10.0,181.0 10.0,191.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="245.0" y="204.0" font-size="11" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Identifiable data never flows left of production</text>
+</svg>
+<figcaption><b>Three environments, one rule.</b> Code and models are promoted left to right through signed CI/CD builds; identifiable data never moves left. Development can use cloud hosting because it only ever sees synthetic or approved non-identifiable data.</figcaption>
+</figure>
+<p>Development environments may use approved non-identifiable data; production runs within KNPHI/DHA-approved on-premise or other Government-authorised infrastructure. <span class="tag prop">Proposal</span> The budget includes hosting subscriptions in Periods 1 and 3 (US$4,000 each), the latter to keep the platform running through evaluation and handover. Any cloud hosting that carries live data must itself be Government-authorised. <span class="tag prop">Proposal</span></p>
+
+<h2 id="sizing-and-hardware"><span class="sec">6</span>Sizing and hardware</h2>
+<p>RADAR's data volumes are small by modern standards. Published figures give a sense of scale: KABS received about 11,400 livestock reports in its first two years; one county's community EBS produced about 8,700 signals in a year. <span class="tag res">Research</span> Even nationally, structured records will be in the low millions over the grant — comfortably handled by a single well-configured PostgreSQL server. The compute-heavy component is <strong>LLM inference</strong>.</p>
+<p>The proposal describes the budgeted server as hosting the RADAR development platform, integrated surveillance databases, analytics engines, AI services and decision-support tools. <span class="tag prop">Proposal</span> Whether it becomes the production host at KNPHI, a development/staging host, or both is a decision for the TPP. <span class="tag open">Open</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Dell PowerEdge R770 (budgeted, US$36,095)</th><th>Specification <span class="tag res">Research</span></th></tr></thead>
+<tbody>
+<tr><td>Form factor &amp; CPU</td><td>2U, two Intel Xeon 6 processors (up to 86 P-cores or 144 E-cores each)</td></tr>
+<tr><td>Memory</td><td>32 DDR5 DIMM slots, up to 8 TB</td></tr>
+<tr><td>Storage</td><td>Up to 40 E3.S NVMe or 24 × 2.5" SATA; BOSS-N1 mirrored boot</td></tr>
+<tr><td>GPU</td><td>Up to 2 double-width 450 W GPUs, or 6 single-width 75 W GPUs</td></tr>
+<tr><td>Security</td><td>TPM 2.0, silicon root of trust, secure boot, self-encrypting drives, system lockdown</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="ct">Two hardware risks to settle early</span>
+<ul>
+<li><strong>GPU.</strong> Running an LLM on-premise needs at least one data-centre GPU (for example a 48 GB-class card for a mid-size open-weight model). Confirm whether the quoted server configuration includes one; if not, budget it or agree a Government-authorised hosted model endpoint. <span class="tag open">Open</span></li>
+<li><strong>Single point of failure.</strong> One server hosts everything. Plan a second node or a Government-cloud standby for recovery (see <a href="11-security-infrastructure.html">doc 11</a>).</li>
+</ul></div>
+<p><strong>Indicative configuration</strong> <span class="tag rec">Recommended</span>: 2 × mid-range Xeon 6 P-core CPUs, 512 GB RAM, 8 × NVMe in RAID 10, mirrored boot, 1–2 × 48 GB-class GPUs, dual power supplies, iDRAC Enterprise. Finalise after a load test of the MVP.</p>
+
+<h2 id="designing-for-low-connectivity"><span class="sec">7</span>Designing for low connectivity</h2>
+<ul>
+<li>A light web UI that loads quickly on weak links; static assets cached by the browser.</li>
+<li>Offline-capable forms for county officers, syncing when the link returns, with the officer's original action time preserved.</li>
+<li>SMS alerts for escalations so no one depends on having the app open.</li>
+<li>Starlink connectivity at KNPHI and implementation sites is budgeted across all three periods. <span class="tag prop">Proposal</span></li>
+<li>A documented paper fallback (the existing DMT-PHE tools) with back-entry when systems return (<a href="08-signal-to-response.html">doc 08</a>).</li>
+</ul>
+
+<h2 id="architecture-decision-log"><span class="sec">8</span>Architecture decision log</h2>
+<p>Decisions are recorded as short Architecture Decision Records (ADRs) in the code repository. Initial set to confirm at the first Technical Working Group: <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>ADR</th><th>Decision</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>001</td><td>MER implemented as FHIR R4 profiles on HAPI FHIR, built on Kenya Core</td><td>Proposed</td></tr>
+<tr><td>002</td><td>Escalation level is always computed by the deterministic rules engine; the LLM never sets it</td><td>Proposed</td></tr>
+<tr><td>003</td><td>LLM runs on Government infrastructure; no identifiable data to public AI services</td><td>Proposed (aligns with proposal)</td></tr>
+<tr><td>004</td><td>NATS JetStream as event bus</td><td>Proposed</td></tr>
+<tr><td>005</td><td>OpenHIM as gateway unless LATTICE covers the source</td><td>Proposed</td></tr>
+<tr><td>006</td><td>Raw data landed unchanged and retained for re-processing</td><td>Proposed</td></tr>
+<tr><td>007</td><td>Production UI rebuilt in React; Streamlit prototype kept for research only</td><td>Proposed</td></tr>
+</tbody></table></div>
+
+<h2 id="open-questions"><span class="sec">9</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Where exactly will production run?</b> KNPHI data centre, DHA-designated facility or Government cloud — and who operates it day to day. <span class="owner">Owner: KNPHI + DHA · before TPP sign-off</span></li>
+<li><b>Does the server quote include GPUs?</b> <span class="owner">Owner: WSU finance + engineering · month 1</span></li>
+<li><b>Does DHA mandate specific platforms</b> (e.g. a national HIE gateway, Kafka) that should replace the recommendations above? <span class="owner">Owner: DHA liaison · month 2</span></li>
+<li><b>What does the enterprise software partner own</b> — UI, hardening, or both? <span class="owner">Owner: WSU · partner selection</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — RADAR Conceptual Design; Budget (server, hosting, internet); Data Access (production hosting, security controls).</li>
+<li>Stage-gate paper — Gate 1 milestone 2 (Technical Product Profile and architecture sign-off); Gate 2 milestone 2 (product hardening).</li>
+<li>Dell Technologies — <a href="https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-r770-spec-sheet.pdf">PowerEdge R770 specification sheet</a>.</li>
+<li>OpenHIM — <a href="https://cdn.jsdelivr.net/npm/openhim-core@5.2.5/docs/about.md">About the OpenHIM</a> (OpenHIE interoperability layer).</li>
+<li>KABS and EBS volumes — see sources in <a href="02-surveillance-landscape.html">doc 02</a>.</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="03-minimum-event-record.html"><span class="d">← Previous</span><br><span class="t">03 · Minimum Event Record</span></a><a class="next" href="05-interoperability.html"><span class="d">Next →</span><br><span class="t">05 · Interoperability</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

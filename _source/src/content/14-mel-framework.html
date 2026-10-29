@@ -1,0 +1,85 @@
+<!--inshort-->
+<ul>
+<li>Four <strong>learning questions</strong>: Is it faster? Is it more accurate and usable? Do multiple streams add intelligence? Does the GHEC-AI hand-off work?</li>
+<li>Every indicator has one <strong>exact definition</strong>, one data source and one owner — most come straight from RADAR's own timestamps and logs.</li>
+<li>Design: <strong>baseline before deployment</strong>, routine monitoring, <strong>endline</strong> near the end; mixed methods; internally led by WSU with KNPHI.</li>
+<li>Evidence feeds three decisions: gate go/no-go, model recalibration, and scale-up policy.</li>
+</ul>
+<!--why-->
+<p>The gates are judged on numbers. If “concordance” or “detection-to-classification time” are defined loosely, two people can compute different answers from the same data — and a gate can be missed on a technicality or passed without real improvement. Precise definitions agreed now also protect the credibility of the two planned publications.</p>
+<!--body-->
+<h2>Learning questions</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Question <span class="tag prop">Proposal</span></th><th>Main evidence</th></tr></thead>
+<tbody>
+<tr><td>LQ1</td><td>Does RADAR reduce time from signal detection to DMT-PHE classification and escalation?</td><td>MER timestamps, baseline vs. post-deployment</td></tr>
+<tr><td>LQ2</td><td>Does it improve concordance with expert classification, documentation completeness, 7-1-7 performance and user acceptability?</td><td>Parallel runs, expert panel, decision logs, SUS</td></tr>
+<tr><td>LQ3</td><td>Does integrating multiple streams give earlier or additional actionable intelligence, and what technical, workflow or safety challenges affect adoption and scale-up?</td><td>Signal cards (which stream first), back-testing, interviews</td></tr>
+<tr><td>LQ4</td><td>Does the RADAR/DMT-PHE–GHEC-AI hand-off work — reliability, completeness, timeliness, user experience, effect on mobilisation?</td><td>Interface logs, response timestamps, interviews</td></tr>
+</tbody></table></div>
+
+<h2>From evidence to decisions</h2>
+<!--fig:mel-chain-->
+
+<h2>Indicator reference sheet</h2>
+<p>Definitions are proposals for the MEL protocol <span class="tag rec">Recommended</span>; targets are from the stage gates <span class="tag prop">Proposal</span>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Indicator</th><th>Definition</th><th>Source</th><th>Target</th></tr></thead>
+<tbody>
+<tr><td><b>Signal → classification time</b></td><td>Median (and IQR) hours from <code>detected_at</code> to first human-confirmed <code>classified_at</code>, for verified events</td><td>MER</td><td>≤ 48 h (Gate 2)</td></tr>
+<tr><td><b>Detection → escalation latency</b></td><td>Median hours from <code>detected_at</code> to first <code>escalated_at</code> at Level ≥ 2</td><td>MER</td><td>Reduction vs. baseline</td></tr>
+<tr><td><b>7-1-7 compliance</b></td><td>% of events meeting each target separately (detect ≤ 7 d, notify ≤ 1 d, respond ≤ 7 d) and all three together</td><td>MER, Early Action Reviews</td><td>Improvement vs. baseline (Gates 2–3)</td></tr>
+<tr><td><b>AI–expert concordance</b></td><td>% of assessed events where AI-supported level = panel reference level; plus weighted kappa</td><td>Parallel runs, panel</td><td>0.85 / 0.88 / 0.90</td></tr>
+<tr><td><b>False-negative rate</b></td><td>% of panel Level 2–3 events classified lower by the AI-supported path</td><td>Parallel runs, panel</td><td>Below ceiling (set at Gate 1)</td></tr>
+<tr><td><b>Documentation completeness</b></td><td>% of required DMT-PHE fields completed across escalation events (required set fixed in the protocol)</td><td>Decision log</td><td>80% / 85% / 90%</td></tr>
+<tr><td><b>Adverse decision events</b></td><td>Count of reviewed incidents meeting the agreed definition (<a href="12-responsible-ai.html">doc 12</a>)</td><td>Incident log</td><td>Zero</td></tr>
+<tr><td><b>System Usability Scale</b></td><td>Standard 10-item SUS, 0–100, per site</td><td>User survey</td><td>75 / 78 / 80</td></tr>
+<tr><td><b>Dataset integration</b></td><td>% of baseline-inventory datasets at integration Level ≥ 2 with monitored automated flows</td><td>Connector registry</td><td>≥ 80% (Gate 2)</td></tr>
+<tr><td><b>Additive intelligence</b></td><td>% of verified events where a non-human stream (animal, climate, OSINT) signalled first, and median lead time</td><td>MER links, signal cards</td><td>Reported (LQ3)</td></tr>
+<tr><td><b>Hand-off performance</b></td><td>% of authorised responses with a complete hand-off; median time authorisation → team mobilised</td><td>Interface logs, MER</td><td>Reported (LQ4)</td></tr>
+</tbody></table></div>
+
+<h2>Evaluation design</h2>
+<ol class="steps">
+<li><b>Baseline (before deployment).</b> At the national EOC, reconstruct detection-to-classification, detection-to-escalation and 7-1-7 for recent events from existing records — a Gate 1 milestone that cannot be redone later. <span class="tag prop">Proposal</span> Repeat at each county before its go-live. <span class="tag rec">Recommended</span></li>
+<li><b>Routine monitoring.</b> Indicators computed automatically from MER and logs; monthly dashboard; quarterly review.</li>
+<li><b>Parallel runs.</b> Eight weeks per site generating concordance datasets (<a href="09-deployment-adoption.html">doc 09</a>).</li>
+<li><b>Endline.</b> Toward the end of the grant: the same measures, plus surveys, key-informant interviews and workflow observation. <span class="tag prop">Proposal</span></li>
+<li><b>Analysis.</b> Pre/post comparison per site; where enough events exist, an interrupted time-series design; qualitative analysis of adoption barriers.</li>
+</ol>
+<div class="callout note"><span class="ct">Independence</span>
+<p>The formal evaluation is internally led by WSU with KNPHI rather than by an independent third party. <span class="tag prop">Proposal</span> To strengthen credibility: pre-register the protocol and analysis plan, keep the expert panel independent of the build team, have KEMRI lead data-quality assessment, and invite an external reviewer to audit the endline analysis. <span class="tag rec">Recommended</span></p></div>
+<div class="callout warn"><span class="ct">Watch for small numbers</span><p>Level 2–3 events are uncommon. At some sites there may be too few real events in a period for stable estimates. Report confidence intervals, pool across sites where appropriate, and supplement with simulation cases — clearly labelled as such.</p></div>
+
+<h2>Data collection and ethics</h2>
+<ul>
+<li>System-generated data (timestamps, logs) under KNPHI data-custodian approval.</li>
+<li>Surveys, interviews and observation with informed consent or an approved waiver through the KEMRI ethics process. <span class="tag prop">Proposal</span></li>
+<li>Casual research assistants (budgeted in periods 1 and 3) support data collection and quality checks.</li>
+</ul>
+
+<h2>Reporting and dissemination</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Output</th><th>Audience</th><th>When</th></tr></thead>
+<tbody>
+<tr><td>Monthly indicator dashboard</td><td>Steering committee, EOC managers</td><td>Monthly from MVP</td></tr>
+<tr><td>Gate evidence packs</td><td>Gates Foundation</td><td>Progress reports 1–2, final report</td></tr>
+<tr><td>Annual partners meeting</td><td>KNPHI, counties, partners</td><td>Yearly (budgeted)</td></tr>
+<tr><td>Two peer-reviewed manuscripts + preprints</td><td>Scientific community</td><td>By Gate 3</td></tr>
+<tr><td>Scale-up evidence report and policy brief</td><td>MoH, KNPHI, counties, funders</td><td>By Gate 3</td></tr>
+<tr><td>Regional dissemination</td><td>Africa CDC networks, WHO Preparedness Data Exchange</td><td>Year 3</td></tr>
+</tbody></table></div>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Which past events form the baseline,</b> and over what period? <span class="owner">Owner: MEL consultant + KNPHI · month 2</span></li>
+<li><b>Required DMT-PHE fields</b> for the completeness measure. <span class="owner">Owner: KNPHI + CGP</span></li>
+<li><b>Will an external reviewer audit the endline?</b> <span class="owner">Owner: PI</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — Measurement and Evaluation; formal evaluation; outcome measures.</li>
+<li>Stage-gate paper — thresholds and Gate 3 milestones 1, 4–6.</li>
+<li>7-1-7 Alliance — <a href="https://717alliance.org/faq/">FAQ</a>.</li>
+<li>MeasuringU — <a href="https://measuringu.com/interpret-sus-score/">Interpreting SUS scores</a>.</li>
+</ul>

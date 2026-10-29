@@ -1,0 +1,150 @@
+<!--inshort-->
+<ul>
+<li>The <strong>Minimum Event Record (MER)</strong> is a small, standard set of fields that describes one public-health event and the times it passed through detection, notification, investigation and response.</li>
+<li>It is a <strong>data standard and exchange profile</strong> — not a new database, not a new user interface.</li>
+<li>Systems <strong>publish</strong> a few fields about an event and <strong>subscribe</strong> to what others published; each stays authoritative for its own data.</li>
+<li>For the first time, one event has <strong>one identity</strong> across human, animal, laboratory and response systems — which is what makes 7-1-7 measurable.</li>
+</ul>
+<!--why-->
+<p>Everything else in RADAR keys off the MER: analytics link signals to it, DMT-PHE classifies it, GHEC-AI responds to it, and MEL measures time along it. If the MER is wrong or bloated, every downstream piece inherits the problem. It is also the first MVP component and must be <strong>agreed with KNPHI and in operational use</strong> for Gate 1.</p>
+<!--body-->
+<h2>What the MER is</h2>
+<p>When a suspected outbreak occurs today, the facts about that single event are scattered: the community signal in m-Dharura, the animal signal in KABS, the case count in KHIS2, the lab result in a laboratory system, and the decision in an EOC spreadsheet. No system holds a record of the event itself. <span class="tag prop">Proposal</span></p>
+<p>The MER fixes this with the smallest possible shared record: an event identity, a handful of descriptive fields, a set of lifecycle timestamps, and <strong>pointers</strong> back to the source records. It is the “bridge” that achieves systems integration before the heavy infrastructure needed for full integration exists.</p>
+<!--fig:mer-linking-->
+
+<h2>Design rules</h2>
+<p>These rules keep the MER small, safe and durable. <span class="tag rec">Recommended</span></p>
+<div class="cards">
+<div class="card"><h4>Minimum necessary</h4><p>Only fields needed to identify, classify, time and link an event. Anything else stays at the source.</p></div>
+<div class="card"><h4>No direct identifiers</h4><p>No names, phone numbers or national IDs. Counts and places, not people.</p></div>
+<div class="card"><h4>Pointers, not copies</h4><p>Linked records are referenced by source system and source ID.</p></div>
+<div class="card"><h4>Everything attributed</h4><p>Every field change records who or what changed it, when, and from which source.</p></div>
+<div class="card"><h4>Stable identity</h4><p>The event ID never changes, even when the suspected disease does.</p></div>
+<div class="card"><h4>Disease-agnostic</h4><p>Hazard is a coded field, so new threats need a code, not a schema change.</p></div>
+</div>
+
+<h2>Field specification (v0.1 draft)</h2>
+<p>A starting proposal for the KNPHI MER workshop. “MVP” marks fields required for the first release. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Group</th><th>Field</th><th>MVP</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td rowspan="3"><b>Identity</b></td><td><code>mer_id</code></td><td>✓</td><td>Opaque, permanent identifier (UUID). Never reused, never re-coded.</td></tr>
+<tr><td><code>display_code</code></td><td>✓</td><td>Human-readable label such as <code>RVF-ISI-2026-001</code>. May change if the hazard is re-classified; <code>mer_id</code> does not.</td></tr>
+<tr><td><code>version</code></td><td>✓</td><td>Increments on every update; enables optimistic locking and audit.</td></tr>
+<tr><td rowspan="3"><b>Hazard</b></td><td><code>hazard_code</code></td><td>✓</td><td>Disease, syndrome or event type from the national code list (mapped to ICD-11 where one exists; DMT-PHE trigger-card ID).</td></tr>
+<tr><td><code>hazard_category</code></td><td>✓</td><td>Enteric · VHF · febrile/respiratory · unknown aetiology · other.</td></tr>
+<tr><td><code>case_status</code></td><td>✓</td><td>Suspected · probable · confirmed · discarded (per DMT-PHE case definitions).</td></tr>
+<tr><td rowspan="3"><b>Place</b></td><td><code>county</code>, <code>sub_county</code></td><td>✓</td><td>Official administrative codes. Multi-county events list all affected units.</td></tr>
+<tr><td><code>ward</code>, <code>facility</code></td><td></td><td>Optional finer units; facility uses the Kenya Master Health Facility List (KMHFL) code.</td></tr>
+<tr><td><code>location_point</code></td><td></td><td>Optional generalised coordinates (rounded) for clustering; never a household location.</td></tr>
+<tr><td rowspan="2"><b>Population</b></td><td><code>species</code></td><td>✓</td><td>Human and/or animal species affected (livestock, wildlife groups).</td></tr>
+<tr><td><code>counts</code></td><td></td><td>Aggregate cases, deaths, animals at risk/affected — each with “as of” time and source.</td></tr>
+<tr><td rowspan="9"><b>Timestamps</b></td><td><code>emergence_at</code></td><td></td><td>Earliest known onset or exposure (often estimated retrospectively; may stay unknown).</td></tr>
+<tr><td><code>detected_at</code></td><td>✓</td><td>First time the event was recorded by any source or system (7-1-7 definition).</td></tr>
+<tr><td><code>notified_at</code></td><td>✓</td><td>First time the information reached the public-health authority responsible for action.</td></tr>
+<tr><td><code>verified_at</code></td><td>✓</td><td>Signal confirmed as an event by a surveillance officer.</td></tr>
+<tr><td><code>classified_at</code></td><td>✓</td><td>DMT-PHE level first assigned (confirmed by a human).</td></tr>
+<tr><td><code>escalated_at</code></td><td>✓</td><td>Each escalation or de-escalation decision, with level.</td></tr>
+<tr><td><code>response_authorised_at</code></td><td>✓</td><td>Response approved; hand-off to GHEC-AI / RRT.</td></tr>
+<tr><td><code>action_completed_at[1..7]</code></td><td>✓</td><td>Completion date for each of the seven 7-1-7 early response actions, or “N/A”.</td></tr>
+<tr><td><code>closed_at</code></td><td></td><td>Exit criteria met (e.g. 42 days with no new case for Ebola).</td></tr>
+<tr><td rowspan="3"><b>Status</b></td><td><code>lifecycle_state</code></td><td>✓</td><td>Signal · verifying · verified · classified · responding · monitoring · closed · discarded.</td></tr>
+<tr><td><code>escalation_level</code></td><td>✓</td><td>DMT-PHE level 1, 2 or 3 (current).</td></tr>
+<tr><td><code>risk_score</code></td><td></td><td>Latest RADAR score (0–1) and band, with a pointer to the signal card evidence.</td></tr>
+<tr><td rowspan="2"><b>Links</b></td><td><code>linked_records[]</code></td><td>✓</td><td>Source system · source record ID · record type · link method (shared ID / rule / probabilistic / manual) · link confidence · linked by · linked at.</td></tr>
+<tr><td><code>decisions[]</code></td><td>✓</td><td>Pointers to DMT-PHE decision-log entries (recommendation, human action, reason).</td></tr>
+<tr><td><b>Provenance</b></td><td><code>field_sources</code></td><td>✓</td><td>For each field: which system or person last set it, and when.</td></tr>
+</tbody></table></div>
+
+<h2>Lifecycle</h2>
+<!--fig:mer-states-->
+<ul>
+<li><strong>Who can open an MER?</strong> RADAR opens one automatically when a new signal does not match an existing event; an officer can also open one manually (e.g. a phone report).</li>
+<li><strong>Merge and split.</strong> If two MERs turn out to be the same event, they merge — the surviving <code>mer_id</code> keeps both histories and the other becomes an alias. A split creates a new MER and moves selected links. Both actions require a human and are audited.</li>
+<li><strong>Discarded is a state, not a deletion.</strong> False alarms are evidence: they are needed to measure positive predictive value and alert burden.</li>
+</ul>
+
+<h2>Timestamps and the 7-1-7 clock</h2>
+<!--fig:mer-timeline-->
+<p>The 7-1-7 target expects every outbreak to be <strong>detected within 7 days</strong> of emergence, <strong>notified within 1 day</strong> of detection, and to have <strong>seven early response actions completed within 7 days</strong> of notification. <span class="tag res">Research</span> The MER uses the 7-1-7 Alliance definitions so results are comparable internationally:</p>
+<ul>
+<li><strong>Detection:</strong> the date the event is first recorded by any source or in any system.</li>
+<li><strong>Notification:</strong> the date the information reaches the first public-health authority responsible for action.</li>
+<li><strong>Early response completion:</strong> the last completion date across the seven actions; an action that does not apply is recorded as “N/A”, not left blank.</li>
+</ul>
+<div class="callout warn"><span class="ct">Rules for messy time data</span>
+<ul>
+<li>Store the <strong>original source timestamp</strong> and the <strong>time RADAR received it</strong> separately — they answer different questions.</li>
+<li>Back-entered data (e.g. after a system outage) keeps its real event time and carries a “back-entered” flag.</li>
+<li>Unknown is <code>null</code>; not applicable is <code>N/A</code>. Never default a missing time to “now”.</li>
+<li>Store all times in UTC with the source time zone; display in East Africa Time (UTC+3).</li>
+</ul></div>
+
+<h2>Linking signals to events</h2>
+<p>Linking is the hardest and most consequential step. A wrong merge hides an outbreak; a missed link splits one. RADAR applies three passes in order and records which one made each link. <span class="tag rec">Recommended</span></p>
+<ol class="steps">
+<li><b>Shared identifiers.</b> If two records share a reliable ID (for example a lab specimen ID quoted in an EBS follow-up), link them deterministically.</li>
+<li><b>Rules.</b> Same or adjacent administrative unit, overlapping time window and compatible hazard/syndrome (configurable per disease — e.g. a wider window for RVF than for cholera).</li>
+<li><b>Probabilistic matching.</b> A Fellegi–Sunter model (e.g. the open-source Splink library) scores candidate pairs. High scores link automatically; borderline scores go to a data steward's review queue.</li>
+</ol>
+
+<h2>Exchange model: publish and subscribe</h2>
+<!--fig:mer-pubsub-->
+<p>Each participating system publishes a small number of standard fields about an event and subscribes to what others have published about the same event. Existing systems keep operating exactly as they do now. <span class="tag prop">Proposal</span> In the MVP, “publishing” will mostly be done <em>on behalf of</em> source systems by RADAR's connectors (integration levels 1–2); native publishing by source systems is the Level 4 end state (<a href="05-interoperability.html">doc 05</a>).</p>
+
+<h2>FHIR R4 representation</h2>
+<p>FHIR R4 has no dedicated “outbreak event” resource, so the MER is modelled as a small set of profiles built on Kenya Core (DHA, FHIR R4 4.0.1). <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>MER part</th><th>FHIR resource</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>The event itself</td><td><code>Basic</code> profile <code>KeMerEvent</code></td><td>R4's pattern for concepts without a resource; MER fields as extensions; <code>identifier</code> holds <code>mer_id</code> and display code.</td></tr>
+<tr><td>Signals and counts</td><td><code>Observation</code></td><td><code>focus</code> → event; one per signal or count, with source identifier.</td></tr>
+<tr><td>Workflow steps (verify, classify, escalate, 7 actions)</td><td><code>Task</code></td><td><code>focus</code> → event; <code>executionPeriod</code> carries the timestamps; <code>owner</code> the responsible unit.</td></tr>
+<tr><td>Place</td><td><code>Location</code>, <code>Organization</code></td><td>Kenya Core identifiers; KMHFL facility codes; admin-unit code systems.</td></tr>
+<tr><td>Links and attribution</td><td><code>Provenance</code></td><td>Who/what linked or changed what, and how (rule, model, person).</td></tr>
+<tr><td>Hand-off and notifications</td><td><code>Communication</code> / <code>Task</code></td><td>GHEC-AI request and status updates.</td></tr>
+<tr><td>Publish / subscribe</td><td><code>Subscription</code></td><td>R4 Subscription (or the R4 backport of topic-based subscriptions).</td></tr>
+</tbody></table></div>
+<pre><code>{
+  "resourceType": "Basic",
+  "meta": { "profile": ["{knphi-fhir-base}/mer/StructureDefinition/KeMerEvent"] },
+  "identifier": [
+    { "system": "{knphi-fhir-base}/mer/id", "value": "5b0e…-uuid" },
+    { "system": "{knphi-fhir-base}/mer/display", "value": "RVF-ISI-2026-001" }
+  ],
+  "code": { "coding": [{ "system": "{knphi-fhir-base}/mer/CodeSystem/record-type", "code": "mer-event" }] },
+  "extension": [
+    { "url": ".../hazard", "valueCodeableConcept": { "text": "Rift Valley fever (suspected)" } },
+    { "url": ".../escalationLevel", "valueInteger": 2 },
+    { "url": ".../detectedAt", "valueDateTime": "2026-12-03T07:40:00Z" },
+    { "url": ".../notifiedAt", "valueDateTime": "2026-12-03T15:05:00Z" }
+  ]
+}</code></pre>
+<p class="sources">Illustrative only — canonical URLs, extension names and code systems are decided at the MER workshop and published by KNPHI. Before drafting profiles, review the draft Kenya surveillance FHIR IG on build.fhir.org and the Kenya Core and Diagnostics IGs so the MER reuses what already exists.</p>
+
+<h2>Governance of the standard</h2>
+<ul>
+<li><strong>Owner:</strong> KNPHI. The MER must be <em>agreed and in operational use</em> by Gate 1 and <em>published and adopted as a KNPHI standard</em> by Gate 2. <span class="tag prop">Proposal</span></li>
+<li><strong>Versioning:</strong> semantic versions (v0.x during the MVP, v1.0 at adoption). Additive changes are minor versions; removing or redefining a field is a major version with a migration plan.</li>
+<li><strong>Change control:</strong> proposals go to the Technical Working Group; KNPHI approves (<a href="15-partners-governance.html">doc 15</a>).</li>
+<li><strong>Code lists:</strong> hazards, statuses, link methods and action types are published as FHIR CodeSystems/ValueSets and versioned with the profile.</li>
+</ul>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Which hazard code list is authoritative?</b> IDSR priority list, DMT-PHE trigger cards and ICD-11 overlap but differ. <span class="owner">Owner: KNPHI · MER workshop</span></li>
+<li><b>Do counts live in the MER or only at the source?</b> Counts make the MER more useful but harder to keep consistent. <span class="owner">Owner: TWG</span></li>
+<li><b>Finest geography allowed?</b> Ward level helps clustering; it may raise re-identification risk in sparse areas. <span class="owner">Owner: Data governance group</span></li>
+<li><b>Who may merge or split events?</b> Suggest data stewards at KNPHI and county EOC managers. <span class="owner">Owner: KNPHI</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — RADAR Conceptual Design (minimum event record), Phase 0 milestones.</li>
+<li>RADAR deck — slide 3 “Minimum Event Record: the practical bridge to interoperability”.</li>
+<li>Stage-gate paper — Gate 1 threshold “minimum event record agreed with KNPHI and in operational use”; Gate 2 milestone 7.</li>
+<li>7-1-7 Alliance — <a href="https://717alliance.org/faq/">Frequently Asked Questions</a> (milestone definitions, seven early response actions).</li>
+<li>Digital Health Agency — <a href="https://build.fhir.org/ig/IntelliSOFT-Consulting/Kenya-core-FHIR-IG/index.html">Kenya Core FHIR Implementation Guide v1.0.0</a> (CI build).</li>
+<li>HL7 — FHIR R4 resource definitions (Basic, Observation, Task, Provenance, Subscription).</li>
+<li>UK Ministry of Justice — Splink probabilistic record linkage (<a href="https://pypi.org/project/splink/3.7.1">PyPI</a>).</li>
+</ul>

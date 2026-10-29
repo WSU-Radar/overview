@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02 · Kenya&#x27;s Surveillance Landscape &amp; Data Sources — RADAR</title>
+<meta name="description" content="Every system RADAR draws from — human, animal, environmental, laboratory and open-source — who owns it, what it holds and when RADAR connects to it.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html" aria-current="page"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 02</span><span>·</span><span class="track"><i style="background:#4D4D4D"></i>Orientation</span></div><h1>Kenya&#x27;s Surveillance Landscape &amp; Data Sources</h1><p class="lede">Every system RADAR draws from — human, animal, environmental, laboratory and open-source — who owns it, what it holds and when RADAR connects to it.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Engineering</span><span class="chip">EOC &amp; surveillance</span><span class="chip">Governance &amp; legal</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>Outbreak signals in Kenya are spread across <strong>six sectors</strong> and more than a dozen systems, each with its own owner, format and rhythm.</li>
+<li>RADAR connects to them <strong>in priority order</strong>: four sources for the MVP, the rest in Phases 1–2.</li>
+<li>Every source needs the same things before it connects: a custodian, a legal basis and agreement, an access route, and known identifiers and timestamps.</li>
+<li>This document is the seed of the <strong>dataset inventory</strong> — a Gate 1 deliverable.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>The MER (doc 03) can only link what it can reach. Knowing exactly which system holds which piece of an outbreak — and how good, how fast and how accessible that data is — decides what the MVP can realistically show and which agreements must be signed first.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="01-project-overview.html"><span class="t">01 · Project Overview</span><span class="r">The problem statement decides which source systems matter first.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="03-minimum-event-record.html"><span class="t">03 · Minimum Event Record</span><span class="r">The source systems&#x27; identifiers and timestamps shape the MER fields.</span></a><a class="conn" href="05-interoperability.html"><span class="t">05 · Interoperability</span><span class="r">Every source in the inventory needs a connector pattern.</span></a><a class="conn" href="10-data-governance.html"><span class="t">10 · Data Governance</span><span class="r">Every source needs a data-sharing agreement and a data custodian.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#the-landscape-at-a-glance">The landscape at a glance</a></li><li><a href="#source-system-profiles">Source system profiles</a></li><li><a href="#what-each-stream-contributes">What each stream contributes</a></li><li><a href="#what-the-evidence-says-about-these-data">What the evidence says about these data</a></li><li><a href="#how-sources-are-prioritised">How sources are prioritised</a></li><li><a href="#the-dataset-inventory-gate-1-deliverable">The dataset inventory (Gate 1 deliverable)</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="the-landscape-at-a-glance"><span class="sec">1</span>The landscape at a glance</h2>
+<figure class="fig wide" id="fig-landscape">
+<svg viewBox="0 0 760 446" role="img" aria-label="Grid of six sectors - human health, animal and wildlife, laboratory, environment and climate, open-source and media, outbreak management - each listing its systems and planned connection phase, all feeding connectors and then the Minimum Event Record." xmlns="http://www.w3.org/2000/svg">
+<rect x="0.0" y="0.0" width="244.0" height="152.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<rect x="258.0" y="0.0" width="244.0" height="152.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<rect x="516.0" y="0.0" width="244.0" height="152.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<rect x="0.0" y="164.0" width="244.0" height="110.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<rect x="258.0" y="164.0" width="244.0" height="110.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<rect x="516.0" y="164.0" width="244.0" height="110.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<polyline points="380.0,278.0 380.0,308.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="380.0,308.0 384.5,300.0 375.5,300.0" fill="#4D4D4D"/>
+<polyline points="380.0,350.0 380.0,382.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="380.0,382.0 384.5,374.0 375.5,374.0" fill="#A60F2D"/>
+<rect x="0.0" y="0.0" width="4.0" height="152.0" rx="2" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="14.0" y="15.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">HUMAN HEALTH</text>
+<rect x="10.0" y="30.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="20.0" y="42.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">IDSR / KHIS2</text>
+<text x="20.0" y="56.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">weekly aggregates (DHIS2)</text>
+<rect x="189.8" y="39.0" width="36.2" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="207.9" y="48.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">MVP</text>
+<rect x="10.0" y="72.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="20.0" y="84.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">m-Dharura</text>
+<text x="20.0" y="98.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">community &amp; facility EBS</text>
+<rect x="189.8" y="81.0" width="36.2" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="207.9" y="90.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">MVP</text>
+<rect x="10.0" y="114.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="20.0" y="126.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">eCHIS</text>
+<text x="20.0" y="140.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">community health promoters</text>
+<rect x="171.9" y="123.0" width="54.1" height="18.0" rx="9" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1"/>
+<text x="199.0" y="132.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">Phase 2</text>
+<rect x="258.0" y="0.0" width="4.0" height="152.0" rx="2" fill="#E16727" stroke="#E16727" stroke-width="1"/>
+<text x="272.0" y="15.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">ANIMAL &amp; WILDLIFE</text>
+<rect x="268.0" y="30.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="278.0" y="42.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">KABS</text>
+<text x="278.0" y="56.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">livestock &amp; wildlife syndromes</text>
+<rect x="447.8" y="39.0" width="36.2" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="465.9" y="48.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">MVP</text>
+<rect x="268.0" y="72.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="278.0" y="84.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">EarthRanger</text>
+<text x="278.0" y="98.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">wildlife health events</text>
+<rect x="429.9" y="81.0" width="54.1" height="18.0" rx="9" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1"/>
+<text x="457.0" y="90.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">Phase 2</text>
+<rect x="516.0" y="0.0" width="4.0" height="152.0" rx="2" fill="#002D61" stroke="#002D61" stroke-width="1"/>
+<text x="530.0" y="15.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">LABORATORY</text>
+<rect x="526.0" y="30.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="536.0" y="42.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">LIMS / NPHL</text>
+<text x="536.0" y="56.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">confirmations</text>
+<rect x="687.9" y="39.0" width="54.1" height="18.0" rx="9" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1"/>
+<text x="715.0" y="48.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">Phase 1</text>
+<rect x="0.0" y="164.0" width="4.0" height="110.0" rx="2" fill="#AADC24" stroke="#AADC24" stroke-width="1"/>
+<text x="14.0" y="179.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">ENVIRONMENT &amp; CLIMATE</text>
+<rect x="10.0" y="194.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="20.0" y="206.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">KMD</text>
+<text x="20.0" y="220.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">rainfall, forecasts</text>
+<rect x="171.9" y="203.0" width="54.1" height="18.0" rx="9" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1"/>
+<text x="199.0" y="212.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">Phase 1</text>
+<rect x="10.0" y="236.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="20.0" y="248.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">NDMA</text>
+<text x="20.0" y="262.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">drought, vegetation</text>
+<rect x="171.9" y="245.0" width="54.1" height="18.0" rx="9" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1"/>
+<text x="199.0" y="254.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">Phase 1</text>
+<rect x="258.0" y="164.0" width="4.0" height="110.0" rx="2" fill="#5BC3F5" stroke="#5BC3F5" stroke-width="1"/>
+<text x="272.0" y="179.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">OPEN-SOURCE &amp; MEDIA</text>
+<rect x="268.0" y="194.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="278.0" y="206.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">WHO EIOS 2.0</text>
+<text x="278.0" y="220.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">media, radio, web</text>
+<rect x="429.9" y="203.0" width="54.1" height="18.0" rx="9" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1"/>
+<text x="457.0" y="212.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">Phase 2</text>
+<rect x="516.0" y="164.0" width="4.0" height="110.0" rx="2" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="530.0" y="179.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">OUTBREAK MANAGEMENT</text>
+<rect x="526.0" y="194.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="536.0" y="206.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">EOC logs / DMT-PHE</text>
+<text x="536.0" y="220.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">decisions, activations</text>
+<rect x="705.8" y="203.0" width="36.2" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="723.9" y="212.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">MVP</text>
+<rect x="526.0" y="236.0" width="224.0" height="36.0" rx="5" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="536.0" y="248.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">ADaM / SHIELD</text>
+<text x="536.0" y="262.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">line lists, contacts</text>
+<rect x="687.9" y="245.0" width="54.1" height="18.0" rx="9" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1"/>
+<text x="715.0" y="254.5" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">Phase 1</text>
+<text x="380.0" y="292.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">a small, standard slice of each</text>
+<rect x="0.0" y="310.0" width="760.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="330.0" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Connectors</text>
+<text x="470.0" y="330.0" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">API pull · scheduled file · FHIR · LATTICE</text>
+<rect x="250.0" y="382.0" width="260.0" height="54.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="380.0" y="398.8" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Minimum Event Record</text>
+<text x="380.0" y="420.0" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">one event ID · shared timestamps</text>
+<text x="380.0" y="366.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">standard fields</text>
+<text x="530.0" y="402.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">Source systems stay authoritative;</text>
+<text x="530.0" y="417.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">RADAR stores pointers, not copies.</text>
+</svg>
+<figcaption><b>Where outbreak signals live today.</b> Each sector runs its own systems, owners and reporting rhythm. RADAR replaces none of them: connectors (or LATTICE, where it is operational) bring a small, standard slice of each into the Minimum Event Record, and each source system stays authoritative for its own data. Phase tags show the recommended connection order — to be confirmed with KNPHI.</figcaption>
+</figure>
+<p>Kenya's ecosystem is expansive and increasingly digital, but each system carries its own data. Events that arise across more than one system — which is where the most dangerous outbreaks originate — are the ones most likely to be missed or reported late. <span class="tag prop">Proposal</span></p>
+
+<h2 id="source-system-profiles"><span class="sec">2</span>Source system profiles</h2>
+<p>What is known today about each source. Items marked “confirm” must be verified with the custodian during the inventory.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>System</th><th>Custodian</th><th>What it holds</th><th>Rhythm &amp; access</th><th>RADAR use · phase</th></tr></thead>
+<tbody>
+<tr><td><b>IDSR via KHIS2</b><span class="sub">DHIS2-based national HIS</span></td><td>MoH / KNPHI</td><td>Weekly aggregate counts of priority diseases by facility and sub-county; immediately notifiable cases</td><td>Weekly; DHIS2 Web API (JSON) or ADX</td><td>Baselines and aberration detection · <b>MVP</b></td></tr>
+<tr><td><b>m-Dharura</b><span class="sub">community &amp; health-facility EBS</span></td><td>MoH / KNPHI</td><td>Signals from community health promoters and health workers (unexplained deaths, animal deaths, clusters); verification and response status</td><td>Near real-time; export or API (confirm)</td><td>Earliest human signals; verification timestamps · <b>MVP</b></td></tr>
+<tr><td><b>KABS</b><span class="sub">Kenya Animal Biosurveillance System</span></td><td>Directorate of Veterinary Services</td><td>9 livestock syndromes (e.g. abortion, sudden death, haemorrhagic) and 9 wildlife syndromes, with GPS, species, numbers at risk/affected, provisional diagnosis; zero reports for RVF, PPR, CBPP <span class="tag res">Research</span></td><td>Android app (offline) → central server; reports arrive within 24 h; dashboard export</td><td>Zoonotic early warning (RVF, anthrax) · <b>MVP</b></td></tr>
+<tr><td><b>EOC logs / DMT-PHE records</b></td><td>KNPHI PHEOC, county EOCs</td><td>Activations, escalation decisions, response actions (today in spreadsheets and paper)</td><td>Manual today; RADAR becomes the record</td><td>Decision timestamps for 7-1-7 · <b>MVP</b></td></tr>
+<tr><td><b>LIMS / NPHL</b></td><td>National Public Health Laboratories</td><td>Lab requests and results; specimen IDs</td><td>Kenya Diagnostics FHIR IG (draft, R4) <span class="tag res">Research</span></td><td>Confirmation timestamps; links lab ↔ event · Phase 1</td></tr>
+<tr><td><b>ADaM / SHIELD</b></td><td>MoH DDSR (built by ICAP)</td><td>Outbreak line lists, case investigation, contact tracing, lab and location data</td><td>Works online/offline; export or API (confirm)</td><td>Case counts once an outbreak is declared · Phase 1</td></tr>
+<tr><td><b>KMD</b></td><td>Kenya Meteorological Department</td><td>Rainfall, temperature, forecasts, seasonal outlooks</td><td>Daily–monthly; data agreement needed</td><td>Climate-driven risk (RVF, cholera) · Phase 1</td></tr>
+<tr><td><b>NDMA</b></td><td>National Drought Management Authority</td><td>Monthly county drought early-warning bulletins: drought phase, vegetation condition, livestock and water indicators</td><td>Monthly PDF bulletins (Level-1 extraction)</td><td>Environmental context, vegetation anomalies · Phase 1</td></tr>
+<tr><td><b>eCHIS</b></td><td>MoH Division of Community Health</td><td>Household and community-level data from community health promoters</td><td>Rolled out in all counties (2024) <span class="tag res">Research</span>; integration route to confirm</td><td>Community syndromic signals, aggregated · Phase 2</td></tr>
+<tr><td><b>EarthRanger</b><span class="sub">Wildlife Health Watch</span></td><td>Conservancies, KWS, Smithsonian partners</td><td>Ranger reports of wildlife illness, injury, unusual mortality</td><td>REST API; partner agreement needed</td><td>Wildlife sentinel signals · Phase 2</td></tr>
+<tr><td><b>WHO EIOS 2.0</b></td><td>WHO (KNPHI accounts)</td><td>Media, web, social and (since 2025) transcribed radio signals, AI-assisted</td><td>Free to Member States <span class="tag res">Research</span>; export/API to confirm</td><td>Open-source and cross-border signals · Phase 2</td></tr>
+<tr><td><b>LATTICE</b></td><td>KNPHI</td><td>Governed, FHIR-compliant integration platform</td><td>Where operational</td><td>Preferred route for any source it already connects</td></tr>
+<tr><td><b>NPHIIS</b></td><td>KNPHI</td><td>Named in the proposal's data list; scope to confirm</td><td>—</td><td>To be assessed in the inventory</td></tr>
+<tr><td><b>Telecom / mobility</b></td><td>Operators (via agreements)</td><td>Aggregated movement or behavioural indicators</td><td>Only where legally permitted, minimum granularity, aggregated <span class="tag prop">Proposal</span></td><td>Optional context · later</td></tr>
+</tbody></table></div>
+
+<h2 id="what-each-stream-contributes"><span class="sec">3</span>What each stream contributes</h2>
+<p>Not every stream matters equally for every outbreak type. This matrix guides which sources to connect first for each category (● strong value · ○ supporting · – little value). <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Stream</th><th>Enteric</th><th>VHF</th><th>Febrile / resp.</th><th>Unknown aetiology</th></tr></thead>
+<tbody>
+<tr><td>IDSR aggregates (KHIS2)</td><td>●</td><td>○</td><td>●</td><td>○</td></tr>
+<tr><td>Event-based (m-Dharura)</td><td>●</td><td>●</td><td>○</td><td>●</td></tr>
+<tr><td>Animal &amp; wildlife (KABS, EarthRanger)</td><td>–</td><td>●</td><td>○</td><td>●</td></tr>
+<tr><td>Laboratory (LIMS)</td><td>●</td><td>●</td><td>●</td><td>●</td></tr>
+<tr><td>Climate &amp; environment (KMD, NDMA)</td><td>●</td><td>●</td><td>–</td><td>○</td></tr>
+<tr><td>Open-source &amp; media (EIOS)</td><td>○</td><td>●</td><td>●</td><td>●</td></tr>
+<tr><td>Outbreak line lists (ADaM)</td><td>●</td><td>●</td><td>●</td><td>○</td></tr>
+</tbody></table></div>
+
+<h2 id="what-the-evidence-says-about-these-data"><span class="sec">4</span>What the evidence says about these data</h2>
+<p>Published evaluations of Kenyan systems show both their value and their limits. RADAR's design has to work with these realities, not assume clean data. <span class="tag res">Research</span></p>
+<div class="cards">
+<div class="card"><span class="k">33.9%</span><p>of 8,734 community EBS signals were verified as events in the 2020–21 Nakuru pilot; 84% of risk-assessed events got a response.</p></div>
+<div class="card"><span class="k">13%</span><p>of health workers in pilot facilities were trained on facility EBS — coverage, not technology, limited reporting.</p></div>
+<div class="card"><span class="k">&lt; 24 h</span><p>KABS reports reach the central server within a day; 11,399 livestock and 205 wildlife reports by Dec 2019.</p></div>
+<div class="card"><span class="k">143</span><p>mpox cases tracked in ADaM by Feb 2025; adopted as MoH's sole outbreak tracking tool.</p></div>
+</div>
+<div class="callout key"><span class="ct">The gap RADAR is built for</span>
+<p>The EBS evaluation explicitly names <strong>“no unique identifiers linking lab results to reported events”</strong> as a challenge. That is exactly the gap the Minimum Event Record closes. KABS also contributed to detecting the 2018 RVF outbreak across three counties — evidence that animal signals carry early warning value worth fusing with human data.</p></div>
+<ul>
+<li><strong>Reporting fluctuates.</strong> CEBS reporting rose sharply and then declined; baselines must handle reporting artefacts, not just disease trends (see <a href="06-intelligence-layer.html">doc 06</a>).</li>
+<li><strong>Verification is the bottleneck.</strong> Signals went uninvestigated when officers lacked transport funds — RADAR can make this visible, but the fix is operational.</li>
+<li><strong>Different geographies and codes.</strong> Facility codes (KMHFL), administrative units and GPS points must be harmonised before linking.</li>
+</ul>
+
+<h2 id="how-sources-are-prioritised"><span class="sec">5</span>How sources are prioritised</h2>
+<p>A source joins the MVP only if it scores well on all five criteria. <span class="tag rec">Recommended</span></p>
+<ol class="steps">
+<li><b>Signal value</b> for the MVP's priority events (see the matrix above).</li>
+<li><b>Access readiness</b> — an API, export or LATTICE route exists today.</li>
+<li><b>Agreement readiness</b> — the custodian is willing and a data-sharing agreement or MOU can be signed in time for Gate 1.</li>
+<li><b>Data quality</b> — completeness and timeliness are good enough to build a baseline.</li>
+<li><b>Linkability</b> — the source carries place, time and syndrome fields that the MER can match on.</li>
+</ol>
+<p>Applying these gives the recommended MVP set: <strong>KHIS2 (IDSR), m-Dharura, KABS and the EOC/DMT-PHE decision log.</strong> Together they cover the human–animal link for RVF and the human-only pathway for cholera, and they produce the timestamps needed for the 7-1-7 baseline.</p>
+
+<h2 id="the-dataset-inventory-gate-1-deliverable"><span class="sec">6</span>The dataset inventory (Gate 1 deliverable)</h2>
+<p>For every source, the inventory records the same fields so the connector, governance and MEL teams work from one sheet. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Group</th><th>Fields to capture</th></tr></thead>
+<tbody>
+<tr><td>Ownership</td><td>Custodian institution · named data steward · technical contact · legal basis for sharing · DSA/MOU status and expiry</td></tr>
+<tr><td>Access</td><td>Route (API, export, LATTICE, file) · endpoint · authentication · rate limits · environment for testing</td></tr>
+<tr><td>Content</td><td>Data dictionary · record types · identifiers (and whether they are stable) · personal data present? · free text present?</td></tr>
+<tr><td>Space &amp; time</td><td>Geography fields and code systems · time fields and their meaning (onset, report, entry) · time zone</td></tr>
+<tr><td>Quality</td><td>Completeness · timeliness · known artefacts · volume per week · history available for baselines</td></tr>
+<tr><td>Integration</td><td>Current maturity level (L0–L4, <a href="05-interoperability.html">doc 05</a>) · target level · phase · connector owner</td></tr>
+</tbody></table></div>
+
+<h2 id="open-questions"><span class="sec">7</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Can m-Dharura and ADaM expose an API, or only exports?</b> Decides whether they start at Level 1 or Level 2. <span class="owner">Owner: WSU engineering with MoH/ICAP · MVP sprint 1</span></li>
+<li><b>Which sources does LATTICE already connect?</b> Any source on LATTICE should use it instead of a direct connector. <span class="owner">Owner: KNPHI · month 1</span></li>
+<li><b>What is NPHIIS and is it in scope?</b> <span class="owner">Owner: KNPHI · month 1</span></li>
+<li><b>How much history is available per source?</b> Aberration detection needs several seasons of baseline data. <span class="owner">Owner: data analyst · inventory</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — Background, RADAR Conceptual Design, Data Access sections.</li>
+<li>Kenya community and facility EBS evaluation — <a href="https://gh.bmj.com/content/8/12/e013736">BMJ Global Health 2023; 8:e013736</a>.</li>
+<li>KABS rollout evaluation — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8415615">High real-time reporting of domestic and wild animal diseases (PMC8415615)</a>.</li>
+<li>ICAP — <a href="https://icap.columbia.edu/news-events/icap-in-kenya-develops-digital-solution-for-disease-outbreak-management/">ICAP in Kenya develops digital solution for disease outbreak management</a> (ADaM, SHIELD).</li>
+<li>WHO — <a href="https://who.int/news/item/13-10-2025-who-upgrades-its-public-health-intelligence-system-to-boost-global-health-security">WHO upgrades its public health intelligence system (EIOS 2.0)</a>, 13 Oct 2025.</li>
+<li>Mpala Research Centre — <a href="https://mpala.org/research/wildlife-health-watch/">Wildlife Health Watch</a> (EarthRanger).</li>
+<li>Amref — <a href="https://newsroom.amref.org/blog/2024/07/digital-community-health-activated-in-kenya-a-leap-towards-universal-health-coverage/amp/">Digital community health activated in Kenya</a> (eCHIS), Jul 2024.</li>
+<li>NPHL — <a href="https://gok-nphl.github.io/Kenya-Diagnostics-FHIR-IG/">Kenya Diagnostics FHIR IG</a> (draft).</li>
+<li>NDMA — <a href="https://knowledgeweb.ndma.go.ke/Content/LibraryDocuments/National_Drought_Early_Warning_Bulletin_July_202620260819151459.pdf">National Drought Early Warning Bulletin</a> (example, Jul 2026).</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="01-project-overview.html"><span class="d">← Previous</span><br><span class="t">01 · Project Overview</span></a><a class="next" href="03-minimum-event-record.html"><span class="d">Next →</span><br><span class="t">03 · Minimum Event Record</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

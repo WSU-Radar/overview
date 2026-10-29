@@ -1,0 +1,129 @@
+<!--inshort-->
+<ul>
+<li>RADAR speaks <strong>FHIR R4</strong> for system-to-system exchange, built on DHA's <strong>Kenya Core</strong> implementation guide, and <strong>MCP</strong> for connecting the AI agent to tools.</li>
+<li>Every source uses the <strong>same seven-step connector pipeline</strong>; raw data is kept so it can be re-processed.</li>
+<li>Sources climb an <strong>integration maturity ladder</strong> (L0 manual → L4 publish/subscribe). The MVP only needs L1–L2.</li>
+<li>Anything already on <strong>LATTICE</strong> goes through LATTICE.</li>
+</ul>
+<!--why-->
+<p>“Integrate everything at once” is a challenge: too many systems, standards and business rules, high infrastructure and maintenance costs, and a brittle result that is hard to sustain. <span class="tag prop">Proposal</span> A single repeatable connector pattern, open standards, and a ladder that lets each source start simple is how RADAR stays incremental and sustainable — and how a new stream can be added later as a configuration change rather than a rebuild.</p>
+<!--body-->
+<h2>Principles</h2>
+<div class="cards">
+<div class="card"><h4>Federated</h4><p>Sources remain the system of record. RADAR holds identities, timestamps and pointers.</p></div>
+<div class="card"><h4>Standards first</h4><p>Reuse Kenya Core, national code lists and existing IGs before inventing anything.</p></div>
+<div class="card"><h4>Minimum necessary</h4><p>Pull only the fields RADAR uses, at the coarsest granularity that works.</p></div>
+<div class="card"><h4>Start low, climb</h4><p>Begin at the integration level a partner can support today.</p></div>
+</div>
+
+<h2>Standards stack</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Concern</th><th>Standard</th><th>Status / note</th></tr></thead>
+<tbody>
+<tr><td>Exchange format</td><td><b>HL7 FHIR R4</b> (4.0.1)</td><td>Named in the proposal; DHA's declared national version <span class="tag res">Research</span></td></tr>
+<tr><td>National base profiles</td><td><b>Kenya Core IG</b> v1.0.0 (DHA)</td><td>Patient, Practitioner, Organization, Location, Encounter, Observation, Condition, Task; identifier patterns; national terminologies</td></tr>
+<tr><td>Laboratory</td><td>Kenya Diagnostics FHIR IG (NPHL)</td><td>Draft v0.1.0 — ServiceRequest, DiagnosticReport, Observation</td></tr>
+<tr><td>Surveillance</td><td>Draft Kenya surveillance FHIR IG (build.fhir.org)</td><td>Review before writing MER profiles</td></tr>
+<tr><td>Aggregate data</td><td>DHIS2 Web API (JSON) / ADX</td><td>KHIS2 route</td></tr>
+<tr><td>Terminology</td><td>ICD-11 / ICD-10, LOINC, SNOMED CT subset, national data dictionary</td><td>As referenced by Kenya Core</td></tr>
+<tr><td>Places</td><td>KMHFL facility codes; county / sub-county / ward codes</td><td>Needed for linking across sources</td></tr>
+<tr><td>Architecture</td><td>OpenHIE; OpenHIM as interoperability layer</td><td>Gateway, client auth, ATNA audit trail</td></tr>
+<tr><td>AI tools</td><td><b>Model Context Protocol</b> (spec 2026-07-28)</td><td>Agent ↔ tool interface; see below</td></tr>
+<tr><td>Security</td><td>OAuth 2.x / OpenID Connect; mutual TLS between systems</td><td>Via Keycloak and the gateway</td></tr>
+</tbody></table></div>
+<div class="callout note"><span class="ct">DHA conformance and certification</span>
+<p>DHA publishes its requirements as layered FHIR implementation guides, with Kenya Core as the foundation. Resources can be checked locally with the HL7 FHIR validator against the IG packages; DHA runs a separate certification assessment in which interoperability is one domain — passing validation is not the same as being certified. <span class="tag res">Research</span> Run the validator in CI from day one and engage DHA early on certification scope and timing.</p></div>
+
+<h2>One connector pipeline for every source</h2>
+<!--fig:interop-pipeline-->
+<div class="table-wrap"><table>
+<thead><tr><th>Step</th><th>What happens</th><th>Checks and outputs</th></tr></thead>
+<tbody>
+<tr><td><b>Extract</b></td><td>Pull or receive data via the source's route (API, file, FHIR, LATTICE)</td><td>Incremental where possible (since last watermark); retries with back-off</td></tr>
+<tr><td><b>Land</b></td><td>Store the raw payload unchanged with metadata</td><td>Checksum, source, received-at; immutable</td></tr>
+<tr><td><b>Validate</b></td><td>Schema, required fields, value ranges, dates not in the future</td><td>Failures → quarantine + alert to data steward</td></tr>
+<tr><td><b>Map</b></td><td>Transform to MER / FHIR fields</td><td>Versioned mapping; FHIR validator on output</td></tr>
+<tr><td><b>Code</b></td><td>Map local codes to national code lists (syndrome, species, admin unit, facility)</td><td>Unmapped codes flagged, never guessed</td></tr>
+<tr><td><b>Link</b></td><td>Match to an existing MER or open a new one (<a href="03-minimum-event-record.html">doc 03</a>)</td><td>Link method and confidence recorded</td></tr>
+<tr><td><b>Publish</b></td><td>Write MER changes; emit event on the bus</td><td>Counts in/out per step to the data-quality dashboard</td></tr>
+</tbody></table></div>
+
+<h2>Connector plan by source</h2>
+<p>Starting level and target per source. <span class="tag rec">Recommended</span> — confirm during the dataset inventory (<a href="02-surveillance-landscape.html">doc 02</a>).</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Source</th><th>Route</th><th>Start → target</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>KHIS2 (IDSR)</td><td>DHIS2 Web API, analytics endpoints</td><td>L2 → L3</td><td>Weekly pull of priority-disease data elements by org unit; map org units to admin codes</td></tr>
+<tr><td>m-Dharura</td><td>Export or API</td><td>L1/L2 → L4</td><td>Signals, verification outcome and times; free text treated as untrusted input (<a href="12-responsible-ai.html">doc 12</a>)</td></tr>
+<tr><td>KABS</td><td>Dashboard export or API</td><td>L1/L2 → L3</td><td>Syndrome, species, counts, GPS; generalise coordinates on ingest</td></tr>
+<tr><td>EOC / DMT-PHE log</td><td>Native (RADAR is the record)</td><td>L4</td><td>Paper back-entry form for outages</td></tr>
+<tr><td>LIMS (NPHL)</td><td>FHIR (Diagnostics IG)</td><td>L3</td><td>Result + specimen ID only; link via specimen ID where quoted in EBS/ADaM</td></tr>
+<tr><td>ADaM / SHIELD</td><td>Export or API</td><td>L1 → L2</td><td>Aggregate line-list counts per event; no personal data in RADAR</td></tr>
+<tr><td>KMD</td><td>Data feed per agreement</td><td>L1 → L2</td><td>Gridded or station rainfall; public products (e.g. CHIRPS) as a fallback</td></tr>
+<tr><td>NDMA</td><td>Monthly bulletin</td><td>L0/L1</td><td>Extract drought phase and vegetation condition by county</td></tr>
+<tr><td>EarthRanger</td><td>REST API</td><td>L2</td><td>Wildlife health event types only</td></tr>
+<tr><td>WHO EIOS</td><td>Platform export / API (confirm)</td><td>L1 → L2</td><td>Media signals tagged Kenya and neighbours</td></tr>
+</tbody></table></div>
+
+<h2>Integration maturity ladder</h2>
+<!--fig:interop-ladder-->
+<p>The ladder makes “integration” concrete and measurable. It also feeds the Gate 2 threshold of <strong>≥ 80% dataset integration from baseline</strong>: “integrated” should be defined as Level 2 or higher with automated, monitored flows. <span class="tag rec">Recommended</span></p>
+
+<h2>FHIR and MCP: different jobs</h2>
+<!--fig:interop-fhir-mcp-->
+<p>The proposal names both FHIR R4 and the Model Context Protocol (MCP) as RADAR's open integration protocols. <span class="tag prop">Proposal</span> They are complementary:</p>
+<ul>
+<li><strong>FHIR</strong> moves <em>records</em> between systems under contracts that validators can check.</li>
+<li><strong>MCP</strong> gives the <em>AI agent</em> a controlled set of tools — look up an MER, fetch a trigger card, search guidelines, request a GHEC-AI hand-off.</li>
+</ul>
+<h3>MCP design rules</h3>
+<ul>
+<li><strong>Target the current specification (2026-07-28).</strong> It makes the protocol stateless (no session handshake), adds <code>Mcp-Method</code>/<code>Mcp-Name</code> headers so gateways can route and authorise without parsing bodies, moves server-initiated requests to multi-round-trip requests, and tightens OAuth (issuer validation per RFC 9207; Client ID Metadata Documents instead of dynamic registration). Roots, Sampling and Logging are deprecated. <span class="tag res">Research</span></li>
+<li><strong>Read-only by default.</strong> Tools that write or send anything outside RADAR (e.g. GHEC-AI hand-off) only execute after a named officer approves the action in the DMT-PHE workspace.</li>
+<li><strong>Narrow, typed tools.</strong> Each tool has a strict input/output schema and returns only minimum-necessary fields.</li>
+<li><strong>Everything logged.</strong> Each tool call (who, what, parameters, result size) goes to the audit log.</li>
+<li><strong>Route through the gateway</strong> so the same authentication, rate limits and audit apply as for FHIR traffic.</li>
+</ul>
+
+<h2>The GHEC-AI interface</h2>
+<p>GHEC-AI (Sobek) is the downstream response-matching layer: it matches approved response needs to available workforce and capacity. Only minimum-necessary operational information passes, through secure API/MCP interfaces, and only after authorised escalation. <span class="tag prop">Proposal</span> Initial interface specifications, agreed jointly with Sobek, are an MVP component.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Direction</th><th>Fields (draft)</th><th>Excluded</th></tr></thead>
+<tbody>
+<tr><td>RADAR → GHEC-AI</td><td><code>mer_id</code>, hazard, escalation level, affected admin units, required capacities (e.g. RRT, IPC, lab, RCCE, vector control), urgency, authorising officer and time</td><td>Any patient-level data; free-text case notes</td></tr>
+<tr><td>GHEC-AI → RADAR</td><td>Request status, proposed team (role counts), approval, deployment and arrival times</td><td>Personal data of responders beyond role and team ID</td></tr>
+</tbody></table></div>
+<p>Details of the workflow and sequence are in <a href="08-signal-to-response.html">doc 08</a>.</p>
+
+<h2>Data quality management</h2>
+<ul>
+<li><strong>Four dimensions</strong> tracked per source per week: completeness, timeliness (lag from event to arrival), validity (passes checks), uniqueness (duplicates).</li>
+<li><strong>Data stewards</strong> at KNPHI own each source's quarantine queue and the relationship with its custodian.</li>
+<li><strong>Feedback to sources:</strong> recurring problems go back to the custodian — RADAR should improve source data over time, not silently patch it.</li>
+</ul>
+
+<h2>Testing interoperability</h2>
+<ul>
+<li>Contract tests per connector using captured, de-identified sample payloads.</li>
+<li>A synthetic data generator that can replay realistic outbreaks (RVF, cholera) end-to-end in development.</li>
+<li>FHIR validation against Kenya Core and the MER profiles on every build.</li>
+<li>Staging replays of de-identified real feeds before any connector goes to production.</li>
+</ul>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Which sources does LATTICE cover today, and on what timeline will it cover more?</b> <span class="owner">Owner: KNPHI · month 1</span></li>
+<li><b>Does DHA require RADAR to route through a national HIE gateway?</b> <span class="owner">Owner: DHA liaison</span></li>
+<li><b>Which GHEC-AI version and API will Sobek expose, and on what infrastructure?</b> Data residency for the hand-off must be confirmed. <span class="owner">Owner: WSU + Sobek · MVP</span></li>
+<li><b>Exact definition of “dataset integrated” for the 80% threshold.</b> <span class="owner">Owner: TWG + MEL · Gate 1</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — Conceptual Design (FHIR R4, MCP), “How RADAR will fit” (LATTICE, GHEC-AI).</li>
+<li>RADAR deck — slide 5 “RADAR approach to integration/interoperability”.</li>
+<li>DHA — <a href="https://build.fhir.org/ig/IntelliSOFT-Consulting/Kenya-core-FHIR-IG/index.html">Kenya Core FHIR IG</a>; Nanto Health — <a href="https://health.nanto.com/resources/dha-fhir-conformance-testing-kenya">How DHA tests interoperability in Kenya</a> (vendor guide; verify with DHA).</li>
+<li>NPHL — <a href="https://gok-nphl.github.io/Kenya-Diagnostics-FHIR-IG/">Kenya Diagnostics FHIR IG</a>.</li>
+<li>Model Context Protocol — <a href="https://blog.modelcontextprotocol.io/posts/2026-07-28/">The 2026-07-28 Specification</a>.</li>
+<li>OpenHIM — <a href="https://cdn.jsdelivr.net/npm/openhim-core@5.2.5/docs/about.md">About the OpenHIM</a>.</li>
+<li>Sobek — <a href="https://sobek.ai/">GHEC AI</a>.</li>
+</ul>

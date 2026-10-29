@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>06 · Intelligence Layer: Data Fusion &amp; Early Warning — RADAR</title>
+<meta name="description" content="How RADAR turns harmonised feeds into early-warning signals: record linkage, anomaly detection, cross-stream fusion, forecasting and risk scoring.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html" aria-current="page"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 06</span><span>·</span><span class="track"><i style="background:#A60F2D"></i>Product &amp; Architecture</span></div><h1>Intelligence Layer: Data Fusion &amp; Early Warning</h1><p class="lede">How RADAR turns harmonised feeds into early-warning signals: record linkage, anomaly detection, cross-stream fusion, forecasting and risk scoring.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Engineering</span><span class="chip">M&amp;E / research</span><span class="chip">EOC &amp; surveillance</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>The intelligence layer turns harmonised feeds into <strong>signal cards</strong>: a risk score plus the evidence behind it, ready for DMT-PHE.</li>
+<li>It works in stages: <strong>baselines → aberration detection → space-time clustering → cross-stream fusion → risk score</strong>, with climate forecasts as an extra input.</li>
+<li><strong>Transparent statistics first</strong>, machine learning only where it clearly adds value — every alert must be explainable to an EOC officer.</li>
+<li>Thresholds are tuned to keep <strong>alert burden</strong> manageable per county, and recalibrated from confirmed and discarded outcomes.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>This is where “predictive risk-based analytics” and “earlier detection” — two of the proposal's outcome claims — are either earned or not. The value comes from <strong>fusion</strong>: animal and climate signals often appear weeks before human cases, so seeing them together on one event buys time. But a noisy detector that floods EOCs with false alarms would destroy trust faster than any other failure.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="03-minimum-event-record.html"><span class="t">03 · Minimum Event Record</span><span class="r">Fusion links signals from many streams to one MER event.</span></a><a class="conn" href="04-system-architecture.html"><span class="t">04 · System Architecture</span><span class="r">Analytics run as services inside the intelligence layer.</span></a><a class="conn" href="05-interoperability.html"><span class="t">05 · Interoperability</span><span class="r">Harmonised, terminology-mapped feeds are the input to analytics.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="07-dmt-phe-ai-agent.html"><span class="t">07 · DMT-PHE &amp; AI Agent</span><span class="r">Risk scores and anomaly flags are what DMT-PHE classifies.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#from-feeds-to-a-signal-card">From feeds to a signal card</a></li><li><a href="#methods-by-stage">Methods by stage</a></li><li><a href="#why-fusion-buys-time">Why fusion buys time</a></li><li><a href="#the-signal-card">The signal card</a></li><li><a href="#configured-per-outbreak-category-not-rebuilt">Configured per outbreak category, not rebuilt</a></li><li><a href="#how-detectors-are-evaluated-and-tuned">How detectors are evaluated and tuned</a></li><li><a href="#data-realities-to-design-for">Data realities to design for</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="from-feeds-to-a-signal-card"><span class="sec">1</span>From feeds to a signal card</h2>
+<figure class="fig wide" id="fig-intel-pipeline">
+<svg viewBox="0 0 760 300" role="img" aria-label="Six stages: harmonised streams, baselines, aberration detection, space-time clustering, cross-stream fusion with forecasts as an extra input, risk score and signal card to DMT-PHE; outcome labels feed back to baselines and fusion." xmlns="http://www.w3.org/2000/svg">
+<polyline points="112.0,82.0 129.0,82.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="129.0,82.0 121.0,77.5 121.0,86.5" fill="#4D4D4D"/>
+<polyline points="241.0,82.0 258.0,82.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="258.0,82.0 250.0,77.5 250.0,86.5" fill="#4D4D4D"/>
+<polyline points="370.0,82.0 387.0,82.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="387.0,82.0 379.0,77.5 379.0,86.5" fill="#4D4D4D"/>
+<polyline points="499.0,82.0 516.0,82.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="516.0,82.0 508.0,77.5 508.0,86.5" fill="#4D4D4D"/>
+<polyline points="628.0,82.0 645.0,82.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="645.0,82.0 637.0,77.5 637.0,86.5" fill="#4D4D4D"/>
+<polyline points="572.0,170.0 572.0,124.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="572.0,124.0 567.5,132.0 576.5,132.0" fill="#4D4D4D"/>
+<polyline points="701.0,124.0 701.0,262.0 185.0,262.0 185.0,124.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="185.0,124.0 180.5,132.0 189.5,132.0" fill="#4D4D4D"/>
+<rect x="0.0" y="40.0" width="112.0" height="84.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="56.0" y="50.6" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Harmonised</text>
+<text x="56.0" y="66.0" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">streams</text>
+<text x="56.0" y="86.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">per place ·</text>
+<text x="56.0" y="100.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">syndrome ·</text>
+<text x="56.0" y="114.2" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">day/week</text>
+<rect x="129.0" y="40.0" width="112.0" height="84.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="185.0" y="65.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Baselines</text>
+<text x="185.0" y="85.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">seasonal,</text>
+<text x="185.0" y="99.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">trend-adjusted</text>
+<rect x="258.0" y="40.0" width="112.0" height="84.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="314.0" y="57.5" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Aberration</text>
+<text x="314.0" y="72.9" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">detection</text>
+<text x="314.0" y="93.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Farrington ·</text>
+<text x="314.0" y="107.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">EARS · CUSUM</text>
+<rect x="387.0" y="40.0" width="112.0" height="84.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="443.0" y="64.4" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Space-time</text>
+<text x="443.0" y="79.8" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">clusters</text>
+<text x="443.0" y="100.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">scan statistics</text>
+<rect x="516.0" y="40.0" width="112.0" height="84.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="572.0" y="65.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Fusion</text>
+<text x="572.0" y="85.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">rules + graph</text>
+<text x="572.0" y="99.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">across streams</text>
+<rect x="645.0" y="40.0" width="112.0" height="84.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="701.0" y="58.3" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Signal card</text>
+<text x="701.0" y="78.9" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">risk score +</text>
+<text x="701.0" y="92.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">evidence →</text>
+<text x="701.0" y="106.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">DMT-PHE</text>
+<rect x="496.0" y="170.0" width="152.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="572.0" y="181.2" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Forecasts</text>
+<text x="572.0" y="201.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">climate-driven risk</text>
+<text x="572.0" y="215.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">(e.g. RVF, cholera)</text>
+<text x="602.0" y="148.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">prior risk</text>
+<text x="300.0" y="262.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">confirmed / discarded labels recalibrate thresholds and weights</text>
+<text x="0.0" y="18.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">RUNS ON EVERY NEW BATCH · RESULTS STORED WITH THEIR EVIDENCE</text>
+</svg>
+<figcaption><b>From harmonised feeds to a signal card.</b> Single-stream detectors find unusual counts; clustering finds unusual places; fusion asks whether several independent streams point at the same place and syndrome at the same time. Confirmed and discarded outcomes flow back to recalibrate thresholds and weights.</figcaption>
+</figure>
+
+<h2 id="methods-by-stage"><span class="sec">2</span>Methods by stage</h2>
+<p>Recommended starting methods. All are established in public-health surveillance and run on open-source libraries. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Stage</th><th>Method</th><th>Why this one</th></tr></thead>
+<tbody>
+<tr><td><b>Linkage &amp; de-duplication</b></td><td>Deterministic rules, then Fellegi–Sunter probabilistic linkage (Splink)</td><td>Explainable match weights; review queue for borderline pairs</td></tr>
+<tr><td><b>Baselines</b></td><td>Quasi-Poisson / negative-binomial regression with seasonality and trend, per place × syndrome</td><td>Handles over-dispersion and seasonal diseases (cholera, RVF)</td></tr>
+<tr><td><b>Aberration detection</b></td><td>Farrington Flexible; EARS C1–C3; negative-binomial regression; CUSUM</td><td>Different strengths — see evidence below; run more than one and compare</td></tr>
+<tr><td><b>Space-time clustering</b></td><td>Prospective space-time scan statistic (Kulldorff); R <code>scanstatistics</code></td><td>Finds unusual places, not just unusual weeks</td></tr>
+<tr><td><b>Text signals</b></td><td>Classify free-text EBS and media items into syndromes and places (English and Kiswahili), LLM-assisted with human review</td><td>Turns narrative signals into countable, linkable fields</td></tr>
+<tr><td><b>Cross-stream fusion</b></td><td>One Health concordance rules + evidence accumulation (log-likelihood-ratio style weights per stream) over the MER event graph</td><td>Weights are visible and editable by epidemiologists</td></tr>
+<tr><td><b>Forecasts</b></td><td>Climate-driven risk models (rainfall, vegetation index, sea-surface temperature) for RVF; rainfall/flooding and WASH context for cholera</td><td>Gives a prior risk before any case appears</td></tr>
+<tr><td><b>Risk score</b></td><td>Calibrated 0–1 score with bands (low · watch · alert · high)</td><td>Same scale across diseases; bands map to suggested trigger cards</td></tr>
+</tbody></table></div>
+
+<h3>What the evidence says about detectors</h3>
+<p>A comparison of daily syndromic surveillance algorithms (Noufaily et al., <i>Bioinformatics</i> 2019) found no single best method <span class="tag res">Research</span>:</p>
+<ul>
+<li><strong>Farrington Flexible</strong> had the highest specificity (~0.98) and positive predictive value — fewest false alarms — but lower power for small outbreaks.</li>
+<li><strong>Negative-binomial regression</strong> (UKHSA's RAMMIE) detected outbreaks most often and typically <strong>2–3 days earlier</strong>.</li>
+<li><strong>EARS C1–C3</strong> had markedly lower specificity (0.81–0.92) and are less suited to multi-purpose surveillance.</li>
+</ul>
+<p>For RADAR this suggests a pairing: a high-specificity detector to raise alerts, and a high-sensitivity detector to raise “watch” flags that only escalate when another stream agrees — exactly what fusion is for.</p>
+
+<h2 id="why-fusion-buys-time"><span class="sec">3</span>Why fusion buys time</h2>
+<figure class="fig wide" id="fig-intel-rvf">
+<svg viewBox="0 0 760 318" role="img" aria-label="Timeline over twelve weeks with bars for rainfall anomaly, vegetation and vector conditions, livestock abortions, human febrile cases and lab confirmation; a stepped fused risk line rises from low to high as each stream appears, well before the human-only detector would alert." xmlns="http://www.w3.org/2000/svg">
+<line x1="170.0" y1="136.0" x2="170.0" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="264.7" y1="136.0" x2="264.7" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="359.3" y1="136.0" x2="359.3" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="454.0" y1="136.0" x2="454.0" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="548.7" y1="136.0" x2="548.7" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="643.3" y1="136.0" x2="643.3" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="738.0" y1="136.0" x2="738.0" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<text x="0.0" y="147.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Rainfall anomaly</text>
+<text x="0.0" y="161.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">KMD</text>
+<rect x="170.0" y="147.0" width="118.3" height="13.0" rx="4" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="0.0" y="179.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Vegetation / vectors</text>
+<text x="0.0" y="193.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">NDMA · entomology</text>
+<rect x="241.0" y="179.0" width="213.0" height="13.0" rx="4" fill="#AADC24" stroke="#AADC24" stroke-width="1"/>
+<text x="0.0" y="211.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Livestock abortions</text>
+<text x="0.0" y="225.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">KABS</text>
+<rect x="359.3" y="211.0" width="213.0" height="13.0" rx="4" fill="#E16727" stroke="#E16727" stroke-width="1"/>
+<text x="0.0" y="243.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Human febrile cases</text>
+<text x="0.0" y="257.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">m-Dharura · KHIS2</text>
+<rect x="477.7" y="243.0" width="189.3" height="13.0" rx="4" fill="#002D61" stroke="#002D61" stroke-width="1"/>
+<text x="0.0" y="275.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Lab confirmation</text>
+<text x="0.0" y="289.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">LIMS</text>
+<rect x="572.3" y="275.0" width="118.3" height="13.0" rx="4" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="170.0" y="310.0" font-size="9.5" font-weight="500" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">wk 0</text>
+<text x="264.7" y="310.0" font-size="9.5" font-weight="500" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">wk 2</text>
+<text x="359.3" y="310.0" font-size="9.5" font-weight="500" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">wk 4</text>
+<text x="454.0" y="310.0" font-size="9.5" font-weight="500" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">wk 6</text>
+<text x="548.7" y="310.0" font-size="9.5" font-weight="500" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">wk 8</text>
+<text x="643.3" y="310.0" font-size="9.5" font-weight="500" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">wk 10</text>
+<text x="738.0" y="310.0" font-size="9.5" font-weight="500" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">wk 12</text>
+<polyline points="170.0,110.0 217.3,110.0 217.3,92.0 312.0,92.0 312.0,72.0 406.7,72.0 406.7,48.0 738.0,48.0" fill="none" stroke="#A60F2D" stroke-width="2.5" stroke-linejoin="round"/>
+<text x="0.0" y="48.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D">Fused risk</text>
+<text x="0.0" y="64.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">(RADAR)</text>
+<text x="160.0" y="110.0" font-size="9.5" font-weight="600" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">low</text>
+<text x="160.0" y="92.0" font-size="9.5" font-weight="600" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">watch</text>
+<text x="160.0" y="72.0" font-size="9.5" font-weight="600" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">alert</text>
+<text x="160.0" y="48.0" font-size="9.5" font-weight="600" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">high</text>
+<line x1="548.7" y1="30.0" x2="548.7" y2="120.0" stroke="#4D4D4D" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="554.7" y="28.0" font-size="10" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">human-only alert</text>
+<line x1="406.7" y1="30.0" x2="406.7" y2="120.0" stroke="#A60F2D" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="400.7" y="28.0" font-size="10" font-weight="700" text-anchor="end" dominant-baseline="middle" fill="#A60F2D">fused alert</text>
+</svg>
+<figcaption><b>Why fusion buys time: the Rift Valley fever chain (illustrative).</b> Climate and animal signals usually appear weeks before human cases. A single-stream human detector fires late; a fused score rises as each independent stream adds evidence. Actual lags must be estimated from Kenyan data (e.g., the 2006–07 and 2018 outbreaks) before thresholds are set.</figcaption>
+</figure>
+<p>Rift Valley fever is the clearest One Health case: heavy rainfall and flooding create mosquito breeding conditions; livestock abortions and deaths follow; human febrile illness comes later. KABS contributed to detecting the 2018 RVF outbreak in livestock and humans across three counties. <span class="tag res">Research</span></p>
+<p>Climate-based RVF models in Kenya show both promise and limits: a dynamic model using 30 years of rainfall, temperature, humidity, vegetation index and sea-surface temperature predicted observed events with high skill (Brier scores 0.007–0.022), but explained variance differed sharply by ecology — R² 0.66 in Garissa versus 0.16–0.21 in Murang'a and Kwale. <span class="tag res">Research</span> Forecasts should therefore act as a <em>prior</em> that raises sensitivity in at-risk areas, not as an alert on their own.</p>
+
+<h2 id="the-signal-card"><span class="sec">4</span>The signal card</h2>
+<p>The signal card is the hand-over object to DMT-PHE. Every field must be explainable. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Field</th><th>Content</th></tr></thead>
+<tbody>
+<tr><td>Event</td><td>MER ID and display code, hazard, place, species</td></tr>
+<tr><td>Score &amp; band</td><td>Current risk score, band, and change since last run</td></tr>
+<tr><td>Evidence</td><td>Each contributing stream: what was observed, vs. what was expected, by which detector, with links to source records</td></tr>
+<tr><td>Context</td><td>Forecast prior, neighbouring-area activity, recent similar events</td></tr>
+<tr><td>Data caveats</td><td>Late or incomplete sources, reporting artefacts, unmapped codes</td></tr>
+<tr><td>Suggested trigger card</td><td>Which DMT-PHE trigger card(s) the evidence points to — the rules engine evaluates them</td></tr>
+</tbody></table></div>
+
+<h2 id="configured-per-outbreak-category-not-rebuilt"><span class="sec">5</span>Configured per outbreak category, not rebuilt</h2>
+<p>Repurposing RADAR for a new threat is a configuration change — syndrome-specific thresholds, stream weightings and escalation parameters — not a new development cycle. <span class="tag prop">Proposal</span> Configuration lives in versioned files reviewed by KNPHI epidemiologists.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Setting</th><th>Enteric (e.g. cholera)</th><th>VHF (e.g. RVF)</th><th>Febrile / resp.</th><th>Unknown aetiology</th></tr></thead>
+<tbody>
+<tr><td>Main streams</td><td>IDSR, EBS, lab, rainfall</td><td>KABS, EBS, climate, lab</td><td>IDSR, EBS, lab, EIOS</td><td>EBS, EIOS, all others</td></tr>
+<tr><td>Linking time window</td><td>Short (days)</td><td>Long (weeks)</td><td>Medium</td><td>Medium, wide geography</td></tr>
+<tr><td>Detector emphasis</td><td>High specificity</td><td>Sensitivity + fusion</td><td>Seasonal baselines</td><td>Clustering + text signals</td></tr>
+<tr><td>Forecast prior</td><td>Rainfall / flooding</td><td>Rainfall, vegetation, SST</td><td>Seasonality</td><td>None</td></tr>
+</tbody></table></div>
+<p class="sources">Illustrative starting points to be set with KNPHI and validated by back-testing.</p>
+
+<h2 id="how-detectors-are-evaluated-and-tuned"><span class="sec">6</span>How detectors are evaluated and tuned</h2>
+<ol class="steps">
+<li><b>Back-test on history.</b> Replay past seasons (including known outbreaks such as 2018 RVF and recent cholera and mpox) and measure sensitivity, specificity, positive predictive value and timeliness.</li>
+<li><b>Set an alert budget.</b> Agree with each EOC how many alerts per week it can realistically review; tune thresholds to stay within it.</li>
+<li><b>Shadow first.</b> Run new detectors silently alongside live ones before they raise alerts.</li>
+<li><b>Learn from outcomes.</b> Every confirmed and discarded event becomes a label for recalibration (<a href="12-responsible-ai.html">doc 12</a>).</li>
+</ol>
+
+<h2 id="data-realities-to-design-for"><span class="sec">7</span>Data realities to design for</h2>
+<ul>
+<li><strong>Reporting artefacts.</strong> Training drives, app outages and funding changes move counts as much as disease does. Track reporting completeness alongside cases.</li>
+<li><strong>Zero vs. missing.</strong> A KABS “zero report” is information; a missing week is not. Never treat missing as zero.</li>
+<li><strong>Delays.</strong> Weekly aggregates arrive late and get revised; use nowcasting adjustments or wait windows.</li>
+<li><strong>Small numbers.</strong> Many sub-counties have very low counts; aggregate spatially when needed.</li>
+<li><strong>Mobility and telecom data</strong> are used only where legally and operationally permitted, at minimum granularity, aggregated or de-identified. <span class="tag prop">Proposal</span></li>
+</ul>
+
+<h2 id="open-questions"><span class="sec">8</span>Open questions</h2>
+<ol class="decisions">
+<li><b>How many years of history can each MVP source provide?</b> Seasonal baselines need several seasons. <span class="owner">Owner: data analyst · inventory</span></li>
+<li><b>What alert budget can the national and county EOCs absorb?</b> <span class="owner">Owner: KNPHI PHEOC · MVP</span></li>
+<li><b>Which historic outbreaks are documented well enough for back-testing?</b> <span class="owner">Owner: KNPHI + KEMRI</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — operational focus (ii) predictive risk-based analytics; multi-stream integration layer; future scalability and repurposing.</li>
+<li>Noufaily A. et al. — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6736430">Comparison of statistical algorithms for daily syndromic surveillance aberration detection</a>, <i>Bioinformatics</i> 2019.</li>
+<li><a href="https://geospatialhealth.net/gh/article/view/377">Dynamic risk model for Rift Valley fever outbreaks in Kenya based on climate and disease outbreak data</a>, <i>Geospatial Health</i>.</li>
+<li>KABS evaluation — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8415615">PMC8415615</a> (2018 RVF detection).</li>
+<li>RADAR deck — slide 11 (Mpox, PHEIUE and RVF pilot case studies).</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="05-interoperability.html"><span class="d">← Previous</span><br><span class="t">05 · Interoperability</span></a><a class="next" href="07-dmt-phe-ai-agent.html"><span class="d">Next →</span><br><span class="t">07 · DMT-PHE &amp; AI Agent</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

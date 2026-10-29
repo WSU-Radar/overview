@@ -1,0 +1,108 @@
+<!--inshort-->
+<ul>
+<li>Nine steps take an event from <strong>first signal</strong> to <strong>authorised response and closure</strong>.</li>
+<li>RADAR does the assembling, scoring and time-stamping; <strong>people make every decision</strong>.</li>
+<li>Level 1 events can be authorised by the county; <strong>Level 2–3</strong> go through KNPHI PHEOC before the GHEC-AI hand-off.</li>
+<li>Each step writes a timestamp to the MER, so <strong>7-1-7 performance is measured continuously</strong> instead of reconstructed after the fact.</li>
+</ul>
+<!--why-->
+<p>This is the workflow EOC staff will be trained on and evaluated against. It is also where the time is lost today — in hand-overs between people and systems. Writing it down step by step makes clear who owns each hand-over, what RADAR automates, and what is measured at each point.</p>
+<!--body-->
+<h2>The workflow at a glance</h2>
+<!--fig:workflow-lanes-->
+
+<h2>Step by step</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Step</th><th>Who</th><th>What RADAR does</th><th>MER timestamp</th><th>Target</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Signal reported</td><td>CHP, health worker, vet officer, ranger, lab</td><td>Ingests from m-Dharura, KABS, KHIS2, LIMS, EIOS</td><td>source time</td><td>—</td></tr>
+<tr><td>2</td><td>MER opened or matched</td><td>RADAR</td><td>Links to an existing event or opens a new MER</td><td><code>detected_at</code></td><td>Minutes after arrival</td></tr>
+<tr><td>3</td><td>Verify</td><td>Sub-county surveillance officer</td><td>Shows the signal and related records; records outcome</td><td><code>verified_at</code></td><td>≤ 24 h <span class="tag rec">Recommended</span></td></tr>
+<tr><td>4</td><td>Link, score, draft</td><td>RADAR</td><td>Fusion, risk score, signal card; rules level; agent draft with citations</td><td>score time</td><td>Minutes</td></tr>
+<tr><td>5</td><td>Confirm level</td><td>County EOC (named officer)</td><td>Confirm / modify / override with reason</td><td><code>classified_at</code></td><td>Median ≤ 48 h from signal <span class="tag prop">Proposal</span></td></tr>
+<tr><td>6</td><td>National confirmation (L2–3)</td><td>KNPHI PHEOC incident manager</td><td>Same workspace, national view; IHR notification if required</td><td><code>escalated_at</code>, <code>notified_at</code></td><td>Notification ≤ 1 day from detection</td></tr>
+<tr><td>7</td><td>Match responders</td><td>GHEC-AI with EOC approval</td><td>Sends minimum-necessary hand-off; receives proposed team</td><td><code>response_authorised_at</code></td><td>Within level timelines (e.g. RRT ≤ 72 h)</td></tr>
+<tr><td>8</td><td>Early response actions</td><td>RRTs, county teams</td><td>Tracks the seven actions with due times</td><td><code>action_completed_at[1..7]</code></td><td>All within 7 days of notification</td></tr>
+<tr><td>9</td><td>Monitor and close</td><td>County EOC / KNPHI</td><td>Watch-period timer; computes 7-1-7 intervals</td><td><code>closed_at</code></td><td>Per trigger-card exit criteria</td></tr>
+</tbody></table></div>
+
+<h2>7-1-7 in practice</h2>
+<p>7-1-7 sets three timeliness targets: <strong>detect within 7 days</strong> of emergence, <strong>notify within 1 day</strong>, and <strong>complete early response actions within 7 days</strong>. <span class="tag res">Research</span> The seven early response actions are:</p>
+<ol>
+<li>Initiate investigation or deploy an investigation/response team</li>
+<li>Conduct epidemiological analysis of burden, severity and risk factors, and an initial risk assessment</li>
+<li>Obtain laboratory confirmation of the outbreak aetiology</li>
+<li>Initiate appropriate case management and infection prevention and control measures in health facilities</li>
+<li>Initiate appropriate public-health countermeasures in affected communities</li>
+<li>Initiate appropriate risk communication and community engagement</li>
+<li>Establish a coordination mechanism</li>
+</ol>
+<p>An action that does not apply is recorded as “N/A”, not left blank. For larger events, 7-1-7 is best applied in real time through an <strong>Early Action Review</strong> shortly after notification, feeding later intra- and after-action reviews. RADAR's event timeline is designed to be the working record for those reviews.</p>
+<div class="callout key"><span class="ct">Why this changes things</span><p>Today 7-1-7 performance in Kenya is assessed retrospectively and case by case, because the timestamps that define it sit in different systems. <span class="tag prop">Proposal</span> With the MER, the same numbers are available live for every event — and the slowest step is visible while there is still time to act.</p></div>
+
+<h2>Who is notified, and when</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Trigger</th><th>Notified</th><th>Channel</th></tr></thead>
+<tbody>
+<tr><td>New high-band signal card</td><td>County surveillance coordinator; sub-county officer</td><td>Workspace + SMS</td></tr>
+<tr><td>Signal not reviewed within agreed time</td><td>County EOC manager</td><td>SMS + email</td></tr>
+<tr><td>Level 1 confirmed</td><td>County EOC team; KNPHI PHEOC (for information)</td><td>Workspace</td></tr>
+<tr><td>Level 2–3 recommended</td><td>KNPHI PHEOC incident manager</td><td>Workspace + SMS + phone tree</td></tr>
+<tr><td>Response authorised</td><td>GHEC-AI; RRT leads; county director of health</td><td>API + SMS</td></tr>
+<tr><td>7-1-7 action overdue</td><td>Action owner and EOC manager</td><td>Workspace + SMS</td></tr>
+</tbody></table></div>
+<p class="sources">Starting proposal <span class="tag rec">Recommended</span>; confirm against DMT-PHE “responsible actors” per trigger card.</p>
+
+<h2>The GHEC-AI hand-off</h2>
+<!--fig:ghec-seq-->
+<p>RADAR provides upstream intelligence, the DMT-PHE agent supports human-supervised classification and escalation, and GHEC-AI matches approved response needs to available workforce and capacity — RRT registry, training and skills matching, deployment readiness and mobilisation. <span class="tag prop">Proposal</span> The payload is defined in <a href="05-interoperability.html">doc 05</a>. Evaluating this hand-off (reliability, completeness and timeliness of information exchange, user experience, effect on mobilisation) is one of the four learning questions (<a href="14-mel-framework.html">doc 14</a>).</p>
+
+<h2>Worked example: suspected RVF in northern Kenya</h2>
+<p>Based on the scenario in the project deck; times are illustrative. <span class="tag prop">Proposal</span></p>
+<ol class="steps">
+<li><b>Week 0 — rainfall anomaly.</b> KMD data shows heavy rainfall; RADAR's RVF forecast prior rises for several northern sub-counties. No alert, but sensitivity increases.</li>
+<li><b>Week 4, Mon 09:00 — animal signal.</b> KABS reports a cluster of livestock abortions. RADAR opens MER <code>RVF-…-001</code> (<code>detected_at</code>); the score moves to “watch”.</li>
+<li><b>Mon 15:00 — human signal.</b> m-Dharura reports two febrile patients with bleeding in the same sub-county. Linker attaches both to the MER; fusion moves the score to “alert”; signal card issued to the county.</li>
+<li><b>Tue 10:00 — verification.</b> Sub-county officer confirms by phone and visit (<code>verified_at</code>).</li>
+<li><b>Tue 11:00 — classification.</b> RVF trigger card rules return Level 2; agent drafts a recommendation (One Health investigation, joint human–animal response, samples to KEMRI/NPHL) with citations. County EOC manager confirms (<code>classified_at</code>, 26 h after detection).</li>
+<li><b>Tue 14:00 — national.</b> KNPHI PHEOC confirms Level 2, activates support (<code>escalated_at</code>, <code>notified_at</code>).</li>
+<li><b>Tue 16:00 — hand-off.</b> GHEC-AI proposes a joint human–animal RRT; EOC approves; teams mobilise (<code>response_authorised_at</code>).</li>
+<li><b>Days 2–7 — actions.</b> Investigation, lab confirmation, IPC, community countermeasures, RCCE, vector control and coordination tracked to completion; 7-1-7 computed automatically.</li>
+</ol>
+
+<h2>When things go wrong</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Situation</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td>RADAR or connectivity down</td><td>Switch to paper DMT-PHE tools; record decisions with real times; back-enter when restored (flagged as back-entered)</td></tr>
+<tr><td>Officer disagrees with the recommendation</td><td>Override with reason — this is expected and valuable; overrides feed model review</td></tr>
+<tr><td>Validator blocks the AI draft</td><td>Rules level and evidence shown without the draft; senior review (<a href="07-dmt-phe-ai-agent.html">doc 07</a>)</td></tr>
+<tr><td>Event spans several counties</td><td>One MER with all affected units; KNPHI PHEOC coordinates</td></tr>
+<tr><td>Cross-border risk</td><td>Level 3 path; notification to WHO through the IHR National Focal Point</td></tr>
+<tr><td>Signal turns out to be a duplicate</td><td>Data steward merges MERs; history preserved</td></tr>
+</tbody></table></div>
+
+<h2>What changes for EOC staff</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Today</th><th>With RADAR</th></tr></thead>
+<tbody>
+<tr><td>Phone calls and re-typing to piece an event together</td><td>One event page with linked records from every source</td></tr>
+<tr><td>Escalation by discussion and experience</td><td>Trigger-card rules + cited recommendation; officer decides</td></tr>
+<tr><td>Decisions in spreadsheets and paper logs</td><td>Time-stamped, attributable decision log</td></tr>
+<tr><td>7-1-7 reconstructed after the event</td><td>Live 7-1-7 clock per event</td></tr>
+<tr><td>Separate request for responders</td><td>Pre-filled GHEC-AI request from the trigger card's support package</td></tr>
+</tbody></table></div>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Verification time target.</b> Is ≤ 24 h right for all signal types? <span class="owner">Owner: KNPHI · MVP</span></li>
+<li><b>Who records 7-1-7 action completion</b> — RRT leads in RADAR, or EOC staff on their behalf? <span class="owner">Owner: KNPHI + CGP</span></li>
+<li><b>Does an L1 county authorisation also go to GHEC-AI,</b> or only L2–3? <span class="owner">Owner: KNPHI + Sobek</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — “How RADAR will fit in the surveillance and response landscape”; Measurement and Evaluation (learning question 4).</li>
+<li>RADAR deck — slide 12 (RVF scenario, RADAR–DMT-PHE–GHEC-AI complementarity); slide 8 (Ebola trigger card).</li>
+<li>Stage-gate paper — Gate 2 threshold “median time from signal detection to structured DMT-PHE risk classification ≤ 48 hours”.</li>
+<li>7-1-7 Alliance — <a href="https://717alliance.org/faq/">FAQ</a>: definitions, early response actions, Early Action Reviews.</li>
+</ul>

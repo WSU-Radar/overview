@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>08 · Signal-to-Response Workflow &amp; 7-1-7 — RADAR</title>
+<meta name="description" content="Who does what, in what order, from the first signal to an authorised response — including the 7-1-7 clock and the GHEC-AI hand-off.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html" aria-current="page"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 08</span><span>·</span><span class="track"><i style="background:#002D61"></i>Operations</span></div><h1>Signal-to-Response Workflow &amp; 7-1-7</h1><p class="lede">Who does what, in what order, from the first signal to an authorised response — including the 7-1-7 clock and the GHEC-AI hand-off.</p><div class="docmeta"><span><b>For:</b> <span class="chip">EOC &amp; surveillance</span><span class="chip">Engineering</span><span class="chip">M&amp;E / research</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>Nine steps take an event from <strong>first signal</strong> to <strong>authorised response and closure</strong>.</li>
+<li>RADAR does the assembling, scoring and time-stamping; <strong>people make every decision</strong>.</li>
+<li>Level 1 events can be authorised by the county; <strong>Level 2–3</strong> go through KNPHI PHEOC before the GHEC-AI hand-off.</li>
+<li>Each step writes a timestamp to the MER, so <strong>7-1-7 performance is measured continuously</strong> instead of reconstructed after the fact.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>This is the workflow EOC staff will be trained on and evaluated against. It is also where the time is lost today — in hand-overs between people and systems. Writing it down step by step makes clear who owns each hand-over, what RADAR automates, and what is measured at each point.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="03-minimum-event-record.html"><span class="t">03 · Minimum Event Record</span><span class="r">MER timestamps are how the 7-1-7 clock is measured.</span></a><a class="conn" href="07-dmt-phe-ai-agent.html"><span class="t">07 · DMT-PHE &amp; AI Agent</span><span class="r">Recommendations and confirmations drive the EOC workflow.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="09-deployment-adoption.html"><span class="t">09 · Deployment &amp; Adoption</span><span class="r">The workflow is what every site is trained on.</span></a><a class="conn" href="14-mel-framework.html"><span class="t">14 · MEL Framework</span><span class="r">Each workflow step is a measurement point.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#the-workflow-at-a-glance">The workflow at a glance</a></li><li><a href="#step-by-step">Step by step</a></li><li><a href="#7-1-7-in-practice">7-1-7 in practice</a></li><li><a href="#who-is-notified-and-when">Who is notified, and when</a></li><li><a href="#the-ghec-ai-hand-off">The GHEC-AI hand-off</a></li><li><a href="#worked-example-suspected-rvf-in-northern-kenya">Worked example: suspected RVF in northern Kenya</a></li><li><a href="#when-things-go-wrong">When things go wrong</a></li><li><a href="#what-changes-for-eoc-staff">What changes for EOC staff</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="the-workflow-at-a-glance"><span class="sec">1</span>The workflow at a glance</h2>
+<figure class="fig wide" id="fig-workflow-lanes">
+<svg viewBox="0 0 760 560" role="img" aria-label="Swimlane with six actor columns: community and facility, sub-county surveillance, RADAR, county EOC, KNPHI PHEOC and response. Steps: signal reported, MER opened, verification within 24 hours, link score and draft, county confirms level, national confirms level 2 or 3, GHEC-AI matches responders, actions logged and event closed." xmlns="http://www.w3.org/2000/svg">
+<rect x="2.0" y="0.0" width="122.0" height="560.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="63.0" y="16.0" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.05em">COMMUNITY &amp;</text>
+<text x="63.0" y="29.0" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.05em">FACILITY</text>
+<rect x="128.0" y="0.0" width="122.0" height="560.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="189.0" y="16.0" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.05em">SUB-COUNTY</text>
+<text x="189.0" y="29.0" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.05em">SURVEILLANCE</text>
+<rect x="254.0" y="0.0" width="122.0" height="560.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="315.0" y="16.0" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D" letter-spacing="0.05em">RADAR (SYSTEM)</text>
+<rect x="380.0" y="0.0" width="122.0" height="560.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="441.0" y="16.0" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.05em">COUNTY EOC</text>
+<rect x="506.0" y="0.0" width="122.0" height="560.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="567.0" y="16.0" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.05em">KNPHI PHEOC</text>
+<rect x="632.0" y="0.0" width="122.0" height="560.0" rx="6" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="693.0" y="16.0" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.05em">RESPONSE ·</text>
+<text x="693.0" y="29.0" font-size="9.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.05em">GHEC-AI</text>
+<polyline points="117.0,69.0 315.0,69.0 315.0,104.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="315.0,104.0 319.5,96.0 310.5,96.0" fill="#4D4D4D"/>
+<polyline points="261.0,125.0 189.0,125.0 189.0,160.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="189.0,160.0 193.5,152.0 184.5,152.0" fill="#4D4D4D"/>
+<polyline points="243.0,181.0 315.0,181.0 315.0,216.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="315.0,216.0 319.5,208.0 310.5,208.0" fill="#4D4D4D"/>
+<polyline points="369.0,237.0 441.0,237.0 441.0,272.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="441.0,272.0 445.5,264.0 436.5,264.0" fill="#4D4D4D"/>
+<polyline points="621.0,349.0 693.0,349.0 693.0,384.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="693.0,384.0 697.5,376.0 688.5,376.0" fill="#4D4D4D"/>
+<polyline points="693.0,426.0 693.0,440.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="693.0,440.0 697.5,432.0 688.5,432.0" fill="#4D4D4D"/>
+<polyline points="639.0,461.0 315.0,461.0 315.0,496.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="315.0,496.0 319.5,488.0 310.5,488.0" fill="#4D4D4D"/>
+<polyline points="495.0,293.0 567.0,293.0 567.0,328.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="567.0,328.0 571.5,320.0 562.5,320.0" fill="#4D4D4D"/>
+<polyline points="441.0,314.0 441.0,405.0 639.0,405.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="639.0,405.0 631.0,400.5 631.0,409.5" fill="#4D4D4D"/>
+<rect x="9.0" y="48.0" width="108.0" height="42.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="63.0" y="52.9" font-size="10.8" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Signal reported</text>
+<text x="63.0" y="72.4" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">m-Dharura ·</text>
+<text x="63.0" y="85.5" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">facility</text>
+<circle cx="9.0" cy="48.0" r="9" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="9.0" y="48.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">1</text>
+<rect x="261.0" y="104.0" width="108.0" height="42.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="315.0" y="115.4" font-size="10.8" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">MER opened</text>
+<text x="315.0" y="134.9" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">detection stamped</text>
+<circle cx="261.0" cy="104.0" r="9" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="261.0" y="104.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">2</text>
+<rect x="135.0" y="160.0" width="108.0" height="42.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="189.0" y="164.9" font-size="10.8" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Verify ≤ 24 h</text>
+<text x="189.0" y="184.4" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">call · visit ·</text>
+<text x="189.0" y="197.5" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">discard</text>
+<circle cx="135.0" cy="160.0" r="9" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="135.0" y="160.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">3</text>
+<rect x="261.0" y="216.0" width="108.0" height="42.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="315.0" y="220.9" font-size="10.8" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Link and score</text>
+<text x="315.0" y="240.4" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">DMT-PHE draft</text>
+<text x="315.0" y="253.5" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">ready</text>
+<circle cx="261.0" cy="216.0" r="9" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="261.0" y="216.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">4</text>
+<rect x="387.0" y="272.0" width="108.0" height="42.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="441.0" y="276.9" font-size="10.8" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Confirm level</text>
+<text x="441.0" y="296.4" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">confirm or</text>
+<text x="441.0" y="309.5" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">override</text>
+<circle cx="387.0" cy="272.0" r="9" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="387.0" y="272.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">5</text>
+<rect x="513.0" y="328.0" width="108.0" height="42.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="567.0" y="339.4" font-size="10.8" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">L2–3: national</text>
+<text x="567.0" y="358.9" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">confirm · activate</text>
+<circle cx="513.0" cy="328.0" r="9" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="513.0" y="328.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">6</text>
+<rect x="639.0" y="384.0" width="108.0" height="42.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="693.0" y="395.4" font-size="10.8" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Match team</text>
+<text x="693.0" y="414.9" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">GHEC-AI registry</text>
+<circle cx="639.0" cy="384.0" r="9" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="639.0" y="384.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">7</text>
+<rect x="639.0" y="440.0" width="108.0" height="42.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="693.0" y="451.4" font-size="10.8" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Early actions</text>
+<text x="693.0" y="470.9" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">7 actions dated</text>
+<circle cx="639.0" cy="440.0" r="9" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="639.0" y="440.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">8</text>
+<rect x="261.0" y="496.0" width="108.0" height="42.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="315.0" y="507.4" font-size="10.8" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">7-1-7 computed</text>
+<text x="315.0" y="526.9" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">close on criteria</text>
+<circle cx="261.0" cy="496.0" r="9" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="261.0" y="496.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">9</text>
+<text x="531.0" y="293.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">L2–3</text>
+<text x="447.0" y="393.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">L1: county authorises</text>
+</svg>
+<figcaption><b>Who does what, in order.</b> Columns are actors; time runs downward. RADAR (crimson) does the assembling and timestamping; people make every decision. Level 1 events can be authorised at county level (dashed path); Level 2–3 events pass through KNPHI PHEOC before the GHEC-AI hand-off.</figcaption>
+</figure>
+
+<h2 id="step-by-step"><span class="sec">2</span>Step by step</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Step</th><th>Who</th><th>What RADAR does</th><th>MER timestamp</th><th>Target</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Signal reported</td><td>CHP, health worker, vet officer, ranger, lab</td><td>Ingests from m-Dharura, KABS, KHIS2, LIMS, EIOS</td><td>source time</td><td>—</td></tr>
+<tr><td>2</td><td>MER opened or matched</td><td>RADAR</td><td>Links to an existing event or opens a new MER</td><td><code>detected_at</code></td><td>Minutes after arrival</td></tr>
+<tr><td>3</td><td>Verify</td><td>Sub-county surveillance officer</td><td>Shows the signal and related records; records outcome</td><td><code>verified_at</code></td><td>≤ 24 h <span class="tag rec">Recommended</span></td></tr>
+<tr><td>4</td><td>Link, score, draft</td><td>RADAR</td><td>Fusion, risk score, signal card; rules level; agent draft with citations</td><td>score time</td><td>Minutes</td></tr>
+<tr><td>5</td><td>Confirm level</td><td>County EOC (named officer)</td><td>Confirm / modify / override with reason</td><td><code>classified_at</code></td><td>Median ≤ 48 h from signal <span class="tag prop">Proposal</span></td></tr>
+<tr><td>6</td><td>National confirmation (L2–3)</td><td>KNPHI PHEOC incident manager</td><td>Same workspace, national view; IHR notification if required</td><td><code>escalated_at</code>, <code>notified_at</code></td><td>Notification ≤ 1 day from detection</td></tr>
+<tr><td>7</td><td>Match responders</td><td>GHEC-AI with EOC approval</td><td>Sends minimum-necessary hand-off; receives proposed team</td><td><code>response_authorised_at</code></td><td>Within level timelines (e.g. RRT ≤ 72 h)</td></tr>
+<tr><td>8</td><td>Early response actions</td><td>RRTs, county teams</td><td>Tracks the seven actions with due times</td><td><code>action_completed_at[1..7]</code></td><td>All within 7 days of notification</td></tr>
+<tr><td>9</td><td>Monitor and close</td><td>County EOC / KNPHI</td><td>Watch-period timer; computes 7-1-7 intervals</td><td><code>closed_at</code></td><td>Per trigger-card exit criteria</td></tr>
+</tbody></table></div>
+
+<h2 id="7-1-7-in-practice"><span class="sec">3</span>7-1-7 in practice</h2>
+<p>7-1-7 sets three timeliness targets: <strong>detect within 7 days</strong> of emergence, <strong>notify within 1 day</strong>, and <strong>complete early response actions within 7 days</strong>. <span class="tag res">Research</span> The seven early response actions are:</p>
+<ol>
+<li>Initiate investigation or deploy an investigation/response team</li>
+<li>Conduct epidemiological analysis of burden, severity and risk factors, and an initial risk assessment</li>
+<li>Obtain laboratory confirmation of the outbreak aetiology</li>
+<li>Initiate appropriate case management and infection prevention and control measures in health facilities</li>
+<li>Initiate appropriate public-health countermeasures in affected communities</li>
+<li>Initiate appropriate risk communication and community engagement</li>
+<li>Establish a coordination mechanism</li>
+</ol>
+<p>An action that does not apply is recorded as “N/A”, not left blank. For larger events, 7-1-7 is best applied in real time through an <strong>Early Action Review</strong> shortly after notification, feeding later intra- and after-action reviews. RADAR's event timeline is designed to be the working record for those reviews.</p>
+<div class="callout key"><span class="ct">Why this changes things</span><p>Today 7-1-7 performance in Kenya is assessed retrospectively and case by case, because the timestamps that define it sit in different systems. <span class="tag prop">Proposal</span> With the MER, the same numbers are available live for every event — and the slowest step is visible while there is still time to act.</p></div>
+
+<h2 id="who-is-notified-and-when"><span class="sec">4</span>Who is notified, and when</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Trigger</th><th>Notified</th><th>Channel</th></tr></thead>
+<tbody>
+<tr><td>New high-band signal card</td><td>County surveillance coordinator; sub-county officer</td><td>Workspace + SMS</td></tr>
+<tr><td>Signal not reviewed within agreed time</td><td>County EOC manager</td><td>SMS + email</td></tr>
+<tr><td>Level 1 confirmed</td><td>County EOC team; KNPHI PHEOC (for information)</td><td>Workspace</td></tr>
+<tr><td>Level 2–3 recommended</td><td>KNPHI PHEOC incident manager</td><td>Workspace + SMS + phone tree</td></tr>
+<tr><td>Response authorised</td><td>GHEC-AI; RRT leads; county director of health</td><td>API + SMS</td></tr>
+<tr><td>7-1-7 action overdue</td><td>Action owner and EOC manager</td><td>Workspace + SMS</td></tr>
+</tbody></table></div>
+<p class="sources">Starting proposal <span class="tag rec">Recommended</span>; confirm against DMT-PHE “responsible actors” per trigger card.</p>
+
+<h2 id="the-ghec-ai-hand-off"><span class="sec">5</span>The GHEC-AI hand-off</h2>
+<figure class="fig wide" id="fig-ghec-seq">
+<svg viewBox="0 0 760 380" role="img" aria-label="Sequence diagram with lifelines EOC officer, DMT-PHE agent, MER, GHEC-AI and responders, showing approval, decision logging, minimum-necessary hand-off, matching, proposed team approval, mobilisation and status written back to the MER." xmlns="http://www.w3.org/2000/svg">
+<line x1="70.0" y1="36.0" x2="70.0" y2="370.0" stroke="#9A9A9A" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="226.0" y1="36.0" x2="226.0" y2="370.0" stroke="#9A9A9A" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="382.0" y1="36.0" x2="382.0" y2="370.0" stroke="#9A9A9A" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="538.0" y1="36.0" x2="538.0" y2="370.0" stroke="#9A9A9A" stroke-width="1" stroke-dasharray="3 4"/>
+<line x1="690.0" y1="36.0" x2="690.0" y2="370.0" stroke="#9A9A9A" stroke-width="1" stroke-dasharray="3 4"/>
+<polyline points="72.0,64.0 224.0,64.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="224.0,64.0 216.0,59.5 216.0,68.5" fill="#4D4D4D"/>
+<polyline points="228.0,102.0 380.0,102.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="380.0,102.0 372.0,97.5 372.0,106.5" fill="#4D4D4D"/>
+<polyline points="228.0,140.0 536.0,140.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="536.0,140.0 528.0,135.5 528.0,144.5" fill="#A60F2D"/>
+<polyline points="538.0,178.0 578.0,178.0 578.0,196.0 540.0,196.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="540.0,196.0 548.0,200.5 548.0,191.5" fill="#4D4D4D"/>
+<polyline points="536.0,218.0 72.0,218.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="72.0,218.0 80.0,222.5 80.0,213.5" fill="#4D4D4D"/>
+<polyline points="72.0,256.0 536.0,256.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="536.0,256.0 528.0,251.5 528.0,260.5" fill="#4D4D4D"/>
+<polyline points="540.0,294.0 688.0,294.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="688.0,294.0 680.0,289.5 680.0,298.5" fill="#4D4D4D"/>
+<polyline points="536.0,332.0 384.0,332.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="384.0,332.0 392.0,336.5 392.0,327.5" fill="#4D4D4D"/>
+<rect x="10.0" y="0.0" width="120.0" height="36.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="70.0" y="18.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">EOC officer</text>
+<rect x="166.0" y="0.0" width="120.0" height="36.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="226.0" y="10.6" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">DMT-PHE</text>
+<text x="226.0" y="25.4" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">agent</text>
+<rect x="322.0" y="0.0" width="120.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="382.0" y="18.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">MER</text>
+<rect x="478.0" y="0.0" width="120.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="538.0" y="18.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">GHEC-AI</text>
+<rect x="630.0" y="0.0" width="120.0" height="36.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="690.0" y="18.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Responders</text>
+<text x="148.0" y="55.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">1 approve Level 2 + mobilisation</text>
+<text x="304.0" y="93.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">2 log decision · timestamp</text>
+<text x="382.0" y="131.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">3 hand-off: minimum necessary fields</text>
+<text x="584.0" y="187.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">4 match team to needs</text>
+<text x="304.0" y="209.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">5 proposed team</text>
+<text x="304.0" y="247.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">6 approve deployment</text>
+<text x="614.0" y="285.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">7 mobilise</text>
+<text x="460.0" y="323.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">8 status + response timestamps</text>
+</svg>
+<figcaption><b>The GHEC-AI hand-off, step by step.</b> Only after a named officer authorises escalation does RADAR send GHEC-AI the minimum necessary operational fields (event ID, hazard, location, level, capacities needed) — no patient identifiers. Deployment status flows back so the response timestamps land on the same MER event.</figcaption>
+</figure>
+<p>RADAR provides upstream intelligence, the DMT-PHE agent supports human-supervised classification and escalation, and GHEC-AI matches approved response needs to available workforce and capacity — RRT registry, training and skills matching, deployment readiness and mobilisation. <span class="tag prop">Proposal</span> The payload is defined in <a href="05-interoperability.html">doc 05</a>. Evaluating this hand-off (reliability, completeness and timeliness of information exchange, user experience, effect on mobilisation) is one of the four learning questions (<a href="14-mel-framework.html">doc 14</a>).</p>
+
+<h2 id="worked-example-suspected-rvf-in-northern-kenya"><span class="sec">6</span>Worked example: suspected RVF in northern Kenya</h2>
+<p>Based on the scenario in the project deck; times are illustrative. <span class="tag prop">Proposal</span></p>
+<ol class="steps">
+<li><b>Week 0 — rainfall anomaly.</b> KMD data shows heavy rainfall; RADAR's RVF forecast prior rises for several northern sub-counties. No alert, but sensitivity increases.</li>
+<li><b>Week 4, Mon 09:00 — animal signal.</b> KABS reports a cluster of livestock abortions. RADAR opens MER <code>RVF-…-001</code> (<code>detected_at</code>); the score moves to “watch”.</li>
+<li><b>Mon 15:00 — human signal.</b> m-Dharura reports two febrile patients with bleeding in the same sub-county. Linker attaches both to the MER; fusion moves the score to “alert”; signal card issued to the county.</li>
+<li><b>Tue 10:00 — verification.</b> Sub-county officer confirms by phone and visit (<code>verified_at</code>).</li>
+<li><b>Tue 11:00 — classification.</b> RVF trigger card rules return Level 2; agent drafts a recommendation (One Health investigation, joint human–animal response, samples to KEMRI/NPHL) with citations. County EOC manager confirms (<code>classified_at</code>, 26 h after detection).</li>
+<li><b>Tue 14:00 — national.</b> KNPHI PHEOC confirms Level 2, activates support (<code>escalated_at</code>, <code>notified_at</code>).</li>
+<li><b>Tue 16:00 — hand-off.</b> GHEC-AI proposes a joint human–animal RRT; EOC approves; teams mobilise (<code>response_authorised_at</code>).</li>
+<li><b>Days 2–7 — actions.</b> Investigation, lab confirmation, IPC, community countermeasures, RCCE, vector control and coordination tracked to completion; 7-1-7 computed automatically.</li>
+</ol>
+
+<h2 id="when-things-go-wrong"><span class="sec">7</span>When things go wrong</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Situation</th><th>What happens</th></tr></thead>
+<tbody>
+<tr><td>RADAR or connectivity down</td><td>Switch to paper DMT-PHE tools; record decisions with real times; back-enter when restored (flagged as back-entered)</td></tr>
+<tr><td>Officer disagrees with the recommendation</td><td>Override with reason — this is expected and valuable; overrides feed model review</td></tr>
+<tr><td>Validator blocks the AI draft</td><td>Rules level and evidence shown without the draft; senior review (<a href="07-dmt-phe-ai-agent.html">doc 07</a>)</td></tr>
+<tr><td>Event spans several counties</td><td>One MER with all affected units; KNPHI PHEOC coordinates</td></tr>
+<tr><td>Cross-border risk</td><td>Level 3 path; notification to WHO through the IHR National Focal Point</td></tr>
+<tr><td>Signal turns out to be a duplicate</td><td>Data steward merges MERs; history preserved</td></tr>
+</tbody></table></div>
+
+<h2 id="what-changes-for-eoc-staff"><span class="sec">8</span>What changes for EOC staff</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Today</th><th>With RADAR</th></tr></thead>
+<tbody>
+<tr><td>Phone calls and re-typing to piece an event together</td><td>One event page with linked records from every source</td></tr>
+<tr><td>Escalation by discussion and experience</td><td>Trigger-card rules + cited recommendation; officer decides</td></tr>
+<tr><td>Decisions in spreadsheets and paper logs</td><td>Time-stamped, attributable decision log</td></tr>
+<tr><td>7-1-7 reconstructed after the event</td><td>Live 7-1-7 clock per event</td></tr>
+<tr><td>Separate request for responders</td><td>Pre-filled GHEC-AI request from the trigger card's support package</td></tr>
+</tbody></table></div>
+
+<h2 id="open-questions"><span class="sec">9</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Verification time target.</b> Is ≤ 24 h right for all signal types? <span class="owner">Owner: KNPHI · MVP</span></li>
+<li><b>Who records 7-1-7 action completion</b> — RRT leads in RADAR, or EOC staff on their behalf? <span class="owner">Owner: KNPHI + CGP</span></li>
+<li><b>Does an L1 county authorisation also go to GHEC-AI,</b> or only L2–3? <span class="owner">Owner: KNPHI + Sobek</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — “How RADAR will fit in the surveillance and response landscape”; Measurement and Evaluation (learning question 4).</li>
+<li>RADAR deck — slide 12 (RVF scenario, RADAR–DMT-PHE–GHEC-AI complementarity); slide 8 (Ebola trigger card).</li>
+<li>Stage-gate paper — Gate 2 threshold “median time from signal detection to structured DMT-PHE risk classification ≤ 48 hours”.</li>
+<li>7-1-7 Alliance — <a href="https://717alliance.org/faq/">FAQ</a>: definitions, early response actions, Early Action Reviews.</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="07-dmt-phe-ai-agent.html"><span class="d">← Previous</span><br><span class="t">07 · DMT-PHE &amp; AI Agent</span></a><a class="next" href="09-deployment-adoption.html"><span class="d">Next →</span><br><span class="t">09 · Deployment &amp; Adoption</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

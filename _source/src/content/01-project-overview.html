@@ -1,0 +1,125 @@
+<!--inshort-->
+<ul>
+<li><strong>RADAR</strong> is an AI-assisted integration and decision layer embedded in Kenya's Emergency Operations Centres (EOCs) at KNPHI and in five priority counties.</li>
+<li>It joins signals about the <strong>same outbreak</strong> from human, animal, environmental and laboratory systems into one shared event record, scores the risk, and routes a structured recommendation into the digitised <strong>DMT-PHE</strong> — where a person confirms or overrides it.</li>
+<li>It does <strong>not</strong> replace existing systems, and it never escalates on its own.</li>
+<li>Success = faster, more consistent, measurable detection-to-response, judged against the <strong>7-1-7</strong> target.</li>
+</ul>
+<!--why-->
+<p>Kenya is data-rich but insight-limited: the facts about one outbreak sit in five different places under five different IDs. Nobody can say, without rebuilding it by hand, when an event was detected, notified or acted on — so delays are invisible and decisions inconsistent.</p>
+<p>This document is the shared starting point: every other document assumes the problem, scope and outcomes defined here.</p>
+<!--body-->
+<h2>Project at a glance</h2>
+<div class="cards">
+<div class="card accent"><span class="k">US$1.5M</span><p>Gates Foundation grant INV-110654 <span class="tag prop">Proposal</span></p></div>
+<div class="card accent"><span class="k">36 months</span><p>1 Nov 2026 – 31 Oct 2029, three stage gates</p></div>
+<div class="card accent"><span class="k">1 + 5</span><p>National EOC (KNPHI) plus five priority county EOCs</p></div>
+<div class="card accent"><span class="k">4</span><p>Outbreak categories, one disease-agnostic workflow</p></div>
+</div>
+<p><strong>Full title:</strong> Building a Real-Time Artificial Intelligence-Driven Alert &amp; Response System (RADAR) for Disease Surveillance and Outbreak Management in Kenya. <strong>Prime:</strong> Washington State University – Global Health Kenya (PI Dr Isaac Ngere). <strong>Government lead:</strong> Kenya National Public Health Institute (KNPHI), with the Digital Health Agency (DHA). <strong>Partners:</strong> University of Michigan (CGHE), CGP, KEMRI, KIPRE, an enterprise software partner (to be selected) and Sobek (GHEC-AI). See <a href="15-partners-governance.html">doc 15</a>.</p>
+
+<h2>The problem RADAR solves</h2>
+<p>Kenya's human health surveillance runs under IDSR, with reporting spread across KHIS2, eCHIS and event-based surveillance (m-Dharura). Animal and wildlife reporting runs on KABS and EarthRanger; climate and drought data sit with KMD and NDMA; laboratory results sit in laboratory information systems; and response decisions sit in EOC spreadsheets and paper logs. <span class="tag prop">Proposal</span></p>
+<!--fig:before-after-->
+<p>Independent assessments point to the same gap. The 2024 Joint External Evaluation (JEE) scored Kenya at:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>JEE indicator</th><th class="num">Score (1–5)</th><th>Why, according to the JEE</th></tr></thead>
+<tbody>
+<tr><td>Early warning surveillance</td><td class="num">3</td><td>Indicator- and event-based surveillance not fully integrated; low EBS coverage.</td></tr>
+<tr><td>Analysis and information sharing</td><td class="num">3</td><td>No cross-sector data-sharing framework; animal-sector data shared only quarterly.</td></tr>
+<tr><td>Activation and coordination of health personnel in an emergency</td><td class="num">1</td><td>Lowest score in the whole evaluation.</td></tr>
+</tbody></table></div>
+<p>The consequence runs through one mechanism: because signals from different systems are never joined into a single record of the same event, escalation depends on manual reconstruction, <strong>detection is delinked from response</strong>, and the time between them cannot even be measured consistently. <span class="tag prop">Proposal</span></p>
+
+<div class="callout note"><span class="ct">Why the decision side matters too</span>
+<p>Even after a signal is verified, escalation has historically relied on informal discussion and individual experience. KNPHI addressed this with the <strong>Decision-Making Tool for Public Health Emergencies (DMT-PHE)</strong> — validated at a national workshop in October 2025 through five simulation exercises (Ebola, cholera, RVF, chemical spill, unknown aetiology) and launched in March 2026. <span class="tag res">Research</span> But DMT-PHE is only as good as the information manually assembled for it. RADAR's job is to feed it automatically.</p></div>
+
+<h2>What RADAR is — and is not</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>RADAR is…</th><th>RADAR is not…</th></tr></thead>
+<tbody>
+<tr><td>An operational layer embedded in existing EOC workflows</td><td>A new national database or a replacement for KHIS2, KABS, ADaM or any other system</td></tr>
+<tr><td>A shared <strong>Minimum Event Record</strong> that gives one event one identity across systems</td><td>A system every institution must log into and work inside</td></tr>
+<tr><td>Risk scoring and anomaly detection across human, animal and environmental streams</td><td>An autonomous decision-maker — a named officer confirms or overrides every recommendation</td></tr>
+<tr><td>A digitised DMT-PHE with an AI assistant that cites its sources</td><td>A general chatbot; the agent only works inside the DMT-PHE workflow</td></tr>
+<tr><td>Disease-agnostic: reconfigured by changing thresholds, weights and pathways</td><td>A one-disease tool needing a rebuild for each new threat</td></tr>
+</tbody></table></div>
+
+<h2>How it works in one picture</h2>
+<p>The proposal describes four building blocks <span class="tag prop">Proposal</span>:</p>
+<ol class="steps">
+<li><b>Bridge — the Minimum Event Record (MER).</b> A small, standard set of fields and timestamps that each system can publish about an event. Achieves “systems integration” before heavy infrastructure exists. → <a href="03-minimum-event-record.html">doc 03</a></li>
+<li><b>Multi-stream integration and intelligence layer.</b> Ingests and harmonises IDSR, EBS, KABS, EarthRanger, KMD, NDMA and contextual data; uses NLP and graph-based models for semantic translation, anomaly detection and early signal fusion. → <a href="05-interoperability.html">docs 05</a> and <a href="06-intelligence-layer.html">06</a></li>
+<li><b>Decision-support layer — DMT-PHE.</b> Predefined trigger thresholds and escalation pathways aligned with IHR (2005) Annex 2 and 7-1-7. → <a href="07-dmt-phe-ai-agent.html">doc 07</a></li>
+<li><b>Agentic AI layer.</b> An assistant on top of DMT-PHE that compresses the detection-to-action loop, with citations, reasoning traces and human confirmation. → <a href="07-dmt-phe-ai-agent.html">doc 07</a></li>
+</ol>
+<!--fig:loop-->
+
+<h2>Where RADAR fits in Kenya's ecosystem</h2>
+<p>The proposal positions RADAR alongside — not over — the tools already in use <span class="tag prop">Proposal</span>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Function</th><th>Who does it</th></tr></thead>
+<tbody>
+<tr><td>Detect signals</td><td>IDSR (KHIS2), event-based surveillance (m-Dharura), WHO EIOS</td></tr>
+<tr><td>Flag outbreaks across streams</td><td><strong>RADAR</strong> (MER + intelligence layer)</td></tr>
+<tr><td>Structure and manage outbreak data (line lists, contacts)</td><td>ADaM / SHIELD</td></tr>
+<tr><td>Govern escalation decisions</td><td><strong>DMT-PHE</strong> with the RADAR AI agent, under KNPHI procedures</td></tr>
+<tr><td>Mobilise responders and surge capacity</td><td>GHEC-AI and EOC response coordination</td></tr>
+<tr><td>Governed FHIR integration where available</td><td>LATTICE (KNPHI interoperability platform)</td></tr>
+</tbody></table></div>
+
+<h2>Four outbreak categories, one workflow</h2>
+<p>RADAR is disease-agnostic in architecture but starts with four high-impact categories, each using the same detection–escalation workflow <span class="tag prop">Proposal</span>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Category</th><th>Examples</th><th>Streams that matter most <span class="tag rec">Recommended</span></th></tr></thead>
+<tbody>
+<tr><td><b>Enteric &amp; diarrhoeal</b></td><td>Cholera, typhoid, <i>E. coli</i>, other waterborne threats</td><td>IDSR/KHIS2, EBS, lab, rainfall &amp; flooding, WASH context</td></tr>
+<tr><td><b>Viral haemorrhagic fevers</b></td><td>Rift Valley fever, Bundibugyo Ebola, Marburg, yellow fever</td><td>EBS, KABS (livestock abortions), wildlife, climate, cross-border signals</td></tr>
+<tr><td><b>Febrile &amp; respiratory</b></td><td>Influenza, mpox, other systemic syndromes</td><td>IDSR, EBS, sentinel and lab data, media (EIOS)</td></tr>
+<tr><td><b>Unknown aetiology (PHEIUE)</b></td><td>Clusters of illness or death with no confirmed cause</td><td>All streams — early fusion speeds hypothesis generation before a pathogen is known</td></tr>
+</tbody></table></div>
+<p><strong>Two operating modes.</strong> In <em>rapid-response mode</em> RADAR is brought to immediate readiness to support an active high-consequence outbreak (the proposal cites the Bundibugyo Ebola situation in East Africa — declared a PHEIC by WHO in May 2026 <span class="tag res">Research</span>). In <em>continuous-monitoring mode</em> the same architecture watches endemic and outbreak-prone diseases.</p>
+
+<h2>Outcomes RADAR must prove</h2>
+<p>The proposal names four outcome measures; the stage gates turn them into thresholds (<a href="13-roadmap-stage-gates.html">doc 13</a>) and the MEL framework defines how each is measured (<a href="14-mel-framework.html">doc 14</a>).</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Outcome</th><th>End-of-grant target</th></tr></thead>
+<tbody>
+<tr><td>Better outbreak prediction and detection</td><td>Signals detected earlier, or additional actionable signals, through multi-stream input</td></tr>
+<tr><td>Shorter detection-to-escalation latency</td><td>Measurable reduction vs. baseline, sustained at Gate 3 (related Gate 2 target: median signal → DMT-PHE classification ≤ 48 h)</td></tr>
+<tr><td>Better 7-1-7 compliance</td><td>Demonstrated improvement vs. baseline at national and county sites</td></tr>
+<tr><td>Accurate, trusted AI classification</td><td>AI–expert concordance ≥ 0.90 · SUS ≥ 80 · documentation completeness ≥ 90% · false-negative rate below the agreed ceiling (and zero adverse decision events at Gates 1–2)</td></tr>
+</tbody></table></div>
+<!--fig:logic-model-->
+
+<h2>Evidence so far</h2>
+<ul>
+<li><strong>Data systems mapped</strong> with KNPHI for integration. <span class="tag prop">Proposal</span></li>
+<li><strong>Prototype AI-enabled DMT-PHE</strong> built and evaluated with 11 surveillance professionals (March 2026): mean concordance <strong>0.924</strong> against the DMT-PHE reference, SUS <strong>85.2</strong> (“excellent”), and no true adverse decision risks across <strong>33 simulated interactions</strong> in three outbreak scenarios. A prototype is online at <code>dmt-agent.streamlit.app</code>. <span class="tag prop">Proposal</span></li>
+<li>These are simulation results from a small group. The gates exist to show the same performance holds under real workload, at every site, on live data. → <a href="12-responsible-ai.html">doc 12</a></li>
+</ul>
+
+<h2>Design principles</h2>
+<div class="cards">
+<div class="card"><h4>Complement, not replace</h4><p>Existing systems stay authoritative for their own data.</p></div>
+<div class="card"><h4>Open standards</h4><p>FHIR R4, Kenya Core and MCP, so new streams plug in without a rebuild.</p></div>
+<div class="card"><h4>Incremental &amp; modular</h4><p>Start with high-value events and sources, prove value, then expand.</p></div>
+<div class="card"><h4>Government stewardship</h4><p>KNPHI owns and runs it; hosting follows DHA requirements.</p></div>
+<div class="card"><h4>EOC-embedded</h4><p>Built into the escalation workflow officers already use.</p></div>
+<div class="card"><h4>Human in the loop</h4><p>Every recommendation is confirmed or overridden, with a logged reason.</p></div>
+</div>
+
+<h2>Open questions for kick-off</h2>
+<ol class="decisions">
+<li><b>Which priority events and diseases does the MVP cover?</b> Suggest one per category, led by RVF and cholera, where multi-stream signals are richest. <span class="owner">Owner: KNPHI + WSU · by MVP design sprint</span></li>
+<li><b>Which five county EOCs?</b> The deck shows four counties for Phase 2; the proposal and stage gates say five. <span class="owner">Owner: KNPHI · before Gate 1</span></li>
+<li><b>What does “launched and deployed” DMT-PHE cover today?</b> Paper version, trigger-card count (15, 20 and 22 appear in different sources) and which counties already use it. <span class="owner">Owner: KNPHI / CGP</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 Investment Document (proposal), Sections “Project Description”, “Overall Approach”, “Preliminary work”.</li>
+<li>RADAR project deck (2026), slides 2–4 and 7–12.</li>
+<li>Center for Global Health and Pandemic Intelligence — <a href="https://pandemicintelcenter.org/kenya-validates-groundbreaking-decision-making-tool-for-public-health-emergencies-dmt-phe/">Kenya validates DMT-PHE</a> (Oct 2025).</li>
+<li>IANPHI — <a href="https://ianphi.org/news/2025/kenya-launches-its-nphi.html">Kenya launches its NPHI</a> (May 2025).</li>
+<li>Harvard Humanitarian Initiative — <a href="https://hhi.harvard.edu/news/2026/06/update-ebola-bundibugyo-outbreak">Update on Ebola Bundibugyo outbreak</a> (June 2026).</li>
+</ul>

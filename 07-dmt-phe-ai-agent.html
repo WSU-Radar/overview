@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>07 · DMT-PHE Decision Support &amp; AI Agent — RADAR</title>
+<meta name="description" content="The digitised Decision-Making Tool for Public Health Emergencies and its AI agent: rules, retrieval, citations, human confirmation and the audit trail.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html" aria-current="page"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 07</span><span>·</span><span class="track"><i style="background:#A60F2D"></i>Product &amp; Architecture</span></div><h1>DMT-PHE Decision Support &amp; AI Agent</h1><p class="lede">The digitised Decision-Making Tool for Public Health Emergencies and its AI agent: rules, retrieval, citations, human confirmation and the audit trail.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Engineering</span><span class="chip">EOC &amp; surveillance</span><span class="chip">Leadership &amp; funder</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li><strong>DMT-PHE</strong> is KNPHI's standard framework for deciding when and how far to escalate a public-health event: trigger cards, three escalation levels, support packages and 7-1-7-aligned accountability.</li>
+<li>RADAR <strong>digitises</strong> it and adds an <strong>AI agent</strong> that gathers evidence, drafts a recommendation and cites the guideline pages behind it.</li>
+<li>The rule is <strong>“LLM proposes, rules verify, a human decides”</strong>: the escalation level comes from deterministic trigger-card rules, and nothing takes effect until a named officer confirms, modifies or overrides it.</li>
+<li>Every step is logged in an auditable, time-stamped record.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>The JEE scored activation and coordination of health personnel in an emergency at 1 of 5 — its lowest score — and escalation has relied on informal discussion rather than a structured framework. Staff rotation and infrequent events mean protocols are hard to apply consistently in real time. A digitised, evidence-fed DMT-PHE makes the same decision for the same facts every time — and the AI agent makes the right guidance available in seconds rather than hours. Getting the safety design right is also what Gates 1–3 test most directly.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="04-system-architecture.html"><span class="t">04 · System Architecture</span><span class="r">The agent and rules engine run inside the decision-support layer.</span></a><a class="conn" href="06-intelligence-layer.html"><span class="t">06 · Intelligence Layer</span><span class="r">Risk scores and anomaly flags are what DMT-PHE classifies.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="08-signal-to-response.html"><span class="t">08 · Signal-to-Response Workflow</span><span class="r">Recommendations and confirmations drive the EOC workflow.</span></a><a class="conn" href="12-responsible-ai.html"><span class="t">12 · Responsible AI</span><span class="r">The agent&#x27;s behaviour is what AI assurance must test and monitor.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#dmt-phe-today">DMT-PHE today</a></li><li><a href="#the-notification-logic-it-digitises">The notification logic it digitises</a></li><li><a href="#escalation-levels-and-trigger-cards">Escalation levels and trigger cards</a></li><li><a href="#how-the-ai-agent-works">How the AI agent works</a></li><li><a href="#the-dmt-phe-workspace">The DMT-PHE workspace</a></li><li><a href="#from-prototype-to-production">From prototype to production</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="dmt-phe-today"><span class="sec">1</span>DMT-PHE today</h2>
+<p>KNPHI's Decision-Making Tool for Public Health Emergencies was developed with technical support from CGP and the TDDAP2 programme, validated at a national workshop in October 2025 (40+ participants, five simulation exercises), and launched in March 2026 as the primary escalation interface within the PHEOC. <span class="tag res">Research</span> <span class="tag prop">Proposal</span> It has four parts:</p>
+<div class="cards">
+<div class="card accent"><h4>Trigger cards</h4><p>Thresholds and actions per priority disease or event.</p></div>
+<div class="card accent"><h4>Escalation framework</h4><p>Level 1 (county) to Level 3 (national / regional).</p></div>
+<div class="card accent"><h4>Support packages</h4><p>Technical, HR, logistics, finance and RCCE support per level.</p></div>
+<div class="card accent"><h4>Monitoring &amp; accountability</h4><p>7-1-7-aligned MEAL framework.</p></div>
+</div>
+<div class="callout warn"><span class="ct">Confirm the trigger-card count</span><p>Sources differ: the deck mentions trigger cards for 15 priority diseases/events and a “22 ETC” card set; CGP's validation report mentions thresholds for 20 epidemic-prone diseases and events. The digitised version must start from KNPHI's current official set. <span class="tag open">Open</span></p></div>
+
+<h2 id="the-notification-logic-it-digitises"><span class="sec">2</span>The notification logic it digitises</h2>
+<figure class="fig wide" id="fig-dmt-ihr">
+<svg viewBox="0 0 760 356" role="img" aria-label="Event detected leads to three entry paths: always-notifiable diseases notify directly; any event of potential concern and listed diseases go through four questions on serious impact, unusual or unexpected, risk of inter-county or international spread, and risk of travel or trade restrictions; two yes answers lead to notification of KNPHI." xmlns="http://www.w3.org/2000/svg">
+<polyline points="380.0,40.0 380.0,58.0 115.0,58.0 115.0,76.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="115.0,76.0 119.5,68.0 110.5,68.0" fill="#4D4D4D"/>
+<polyline points="380.0,40.0 380.0,58.0 380.0,58.0 380.0,76.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="380.0,76.0 384.5,68.0 375.5,68.0" fill="#4D4D4D"/>
+<polyline points="380.0,40.0 380.0,58.0 645.0,58.0 645.0,76.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="645.0,76.0 649.5,68.0 640.5,68.0" fill="#4D4D4D"/>
+<polyline points="380.0,168.0 380.0,196.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="380.0,196.0 384.5,188.0 375.5,188.0" fill="#4D4D4D"/>
+<polyline points="645.0,168.0 645.0,182.0 440.0,182.0 440.0,196.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="440.0,196.0 444.5,188.0 435.5,188.0" fill="#4D4D4D"/>
+<polyline points="115.0,168.0 115.0,236.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="115.0,236.0 119.5,228.0 110.5,228.0" fill="#4D4D4D"/>
+<polyline points="265.0,312.0 245.0,312.0 245.0,268.0 230.0,268.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="230.0,268.0 238.0,272.5 238.0,263.5" fill="#A60F2D"/>
+<rect x="250.0" y="0.0" width="260.0" height="40.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="380.0" y="20.0" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Event detected by surveillance</text>
+<rect x="0.0" y="76.0" width="230.0" height="92.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="115.0" y="104.5" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Always notify</text>
+<text x="115.0" y="125.4" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">wild poliovirus · new influenza</text>
+<text x="115.0" y="139.9" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">subtype · SARS · COVID-19</text>
+<rect x="265.0" y="76.0" width="230.0" height="92.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="96.8" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Any event of potential</text>
+<text x="380.0" y="112.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">concern</text>
+<text x="380.0" y="133.1" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">unknown cause, unusual source, or</text>
+<text x="380.0" y="147.6" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">not on IDSR list</text>
+<rect x="530.0" y="76.0" width="230.0" height="92.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="645.0" y="97.3" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Always use the algorithm</text>
+<text x="645.0" y="118.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">cholera · yellow fever · VHFs; Kenya</text>
+<text x="645.0" y="132.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">adds RVF, dengue, kala-azar,</text>
+<text x="645.0" y="147.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">chikungunya, mpox</text>
+<rect x="265.0" y="196.0" width="495.0" height="28.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="275.0" y="210.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Q1 Serious public-health impact?</text>
+<rect x="265.0" y="230.0" width="495.0" height="28.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="275.0" y="244.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Q2 Unusual or unexpected?</text>
+<rect x="265.0" y="264.0" width="495.0" height="28.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="275.0" y="278.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Q3 Significant risk of inter-county / international spread?</text>
+<rect x="265.0" y="298.0" width="495.0" height="28.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="275.0" y="312.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Q4 Significant risk of travel or trade restrictions?</text>
+<rect x="0.0" y="236.0" width="230.0" height="64.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="115.0" y="258.1" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Notify KNPHI</text>
+<text x="115.0" y="279.0" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">→ WHO via IHR National Focal Point</text>
+<text x="115.0" y="202.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">always</text>
+<text x="251.0" y="294.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">2 of 4</text>
+<text x="265.0" y="344.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">Rule of thumb: YES to any two → notify; otherwise reassess as information arrives.</text>
+</svg>
+<figcaption><b>The notification logic DMT-PHE digitises (IHR 2005 Annex 2, Kenya adaptation).</b> Some diseases are always notifiable; others always go through the algorithm; any other event of concern is assessed against four questions. Kenya's version lists wild poliovirus, new influenza subtypes, SARS and COVID-19 as always notifiable, and adds inter-county spread to the third question. Simplified for orientation — the official instrument governs.</figcaption>
+</figure>
+
+<h2 id="escalation-levels-and-trigger-cards"><span class="sec">3</span>Escalation levels and trigger cards</h2>
+<figure class="fig wide" id="fig-dmt-levels">
+<svg viewBox="0 0 760 332" role="img" aria-label="Three ascending steps: level 1 sub-county or county response for a single suspected case; level 2 county or national response for two or more epidemiologically linked cases or a cluster among health workers; level 3 national or regional surge for laboratory-confirmed cases, multi-county spread or cross-border risk. Timelines: 24 hours isolate and notify, 72 hours deploy county rapid response team, 7 days confirm and expand contact tracing." xmlns="http://www.w3.org/2000/svg">
+<rect x="0.0" y="104.0" width="236.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="118.0" y="124.0" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Level 1 · Sub-county / county</text>
+<rect x="0.0" y="150.0" width="236.0" height="146.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="12.0" y="168.0" font-size="9.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">TRIGGER</text>
+<text x="12.0" y="184.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">Single suspected case or death with</text>
+<text x="12.0" y="199.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">bleeding symptoms</text>
+<text x="12.0" y="224.0" font-size="9.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">ACTIONS</text>
+<text x="12.0" y="240.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">isolate, IPC, notify</text>
+<rect x="262.0" y="60.0" width="236.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="380.0" y="80.0" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Level 2 · County / national</text>
+<rect x="262.0" y="106.0" width="236.0" height="190.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="274.0" y="124.0" font-size="9.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">TRIGGER</text>
+<text x="274.0" y="140.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">≥ 2 epi-linked suspected cases, or</text>
+<text x="274.0" y="155.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">cluster among health workers</text>
+<text x="274.0" y="180.0" font-size="9.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">ACTIONS</text>
+<text x="274.0" y="196.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">deploy county RRT, test at</text>
+<text x="274.0" y="211.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">KEMRI/NPHL</text>
+<rect x="524.0" y="16.0" width="236.0" height="40.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="642.0" y="36.0" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Level 3 · National / regional</text>
+<rect x="524.0" y="62.0" width="236.0" height="234.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="536.0" y="80.0" font-size="9.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">TRIGGER</text>
+<text x="536.0" y="96.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">Lab-confirmed case(s),</text>
+<text x="536.0" y="111.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">multi-county spread or</text>
+<text x="536.0" y="126.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">cross-border risk</text>
+<text x="536.0" y="151.0" font-size="9.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">ACTIONS</text>
+<text x="536.0" y="167.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="currentColor">national activation, IHR notification</text>
+<text x="0.0" y="318.0" font-size="12" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D">≤ 24 h</text>
+<text x="45.9" y="318.0" font-size="10.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">isolate · notify PHEOC</text>
+<text x="262.0" y="318.0" font-size="12" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D">≤ 72 h</text>
+<text x="307.9" y="318.0" font-size="10.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">county RRT deployed</text>
+<text x="524.0" y="318.0" font-size="12" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D">≤ 7 days</text>
+<text x="585.5" y="318.0" font-size="10.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">diagnosis confirmed</text>
+</svg>
+<figcaption><b>Three escalation levels, illustrated with the Ebola/Marburg trigger card.</b> Each level names who leads, the trigger that moves an event up, and the time-bound actions. RADAR's job is to surface the evidence for each trigger as soon as it exists; the trigger card, not the model, sets the level.</figcaption>
+</figure>
+<p>Each trigger card has the same structure, which makes it straightforward to encode as a versioned decision table <span class="tag prop">Proposal</span> (from the Ebola/Marburg card in the deck):</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Trigger-card column</th><th>Becomes in the digital tool</th></tr></thead>
+<tbody>
+<tr><td>Case definitions &amp; outbreak definition</td><td>Coded criteria checked against MER fields and linked records</td></tr>
+<tr><td>Alert thresholds (early signals)</td><td>Rules that raise a “consider this card” flag from signal cards</td></tr>
+<tr><td>Escalation triggers (tiered, 3 levels)</td><td>Deterministic rules that compute the candidate level</td></tr>
+<tr><td>Required actions &amp; timelines (7-1-7)</td><td>Action checklist with due times, tracked as MER tasks</td></tr>
+<tr><td>Support package (technical / HR / logistics / finance / RCCE)</td><td>Pre-filled resource request for the GHEC-AI hand-off</td></tr>
+<tr><td>Responsible actors</td><td>Routing: who is notified and who may confirm at each level</td></tr>
+<tr><td>Monitoring &amp; de-escalation / exit criteria</td><td>Watch-period timers and closure rules</td></tr>
+</tbody></table></div>
+
+<h2 id="how-the-ai-agent-works"><span class="sec">4</span>How the AI agent works</h2>
+<figure class="fig wide" id="fig-dmt-agent">
+<svg viewBox="0 0 760 346" role="img" aria-label="Flow: signal card into rules engine, retrieval of guidelines, LLM draft, validator; if checks pass the EOC officer confirms, modifies or overrides with a reason; the decision goes to the audit log and then to escalation or GHEC-AI hand-off; failed checks route to senior review." xmlns="http://www.w3.org/2000/svg">
+<polyline points="168.0,66.0 197.0,66.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="197.0,66.0 189.0,61.5 189.0,70.5" fill="#4D4D4D"/>
+<polyline points="365.0,66.0 394.0,66.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="394.0,66.0 386.0,61.5 386.0,70.5" fill="#4D4D4D"/>
+<polyline points="562.0,66.0 591.0,66.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="591.0,66.0 583.0,61.5 583.0,70.5" fill="#4D4D4D"/>
+<polyline points="675.0,102.0 675.0,160.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="675.0,160.0 679.5,152.0 670.5,152.0" fill="#4D4D4D"/>
+<polyline points="591.0,196.0 562.0,196.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="562.0,196.0 570.0,200.5 570.0,191.5" fill="#A60F2D"/>
+<polyline points="394.0,196.0 365.0,196.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="365.0,196.0 373.0,200.5 373.0,191.5" fill="#4D4D4D"/>
+<polyline points="197.0,196.0 168.0,196.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="168.0,196.0 176.0,200.5 176.0,191.5" fill="#4D4D4D"/>
+<polyline points="675.0,232.0 675.0,298.0 662.0,298.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="662.0,298.0 670.0,302.5 670.0,293.5" fill="#A60F2D"/>
+<polyline points="434.0,298.0 414.0,298.0 414.0,232.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="414.0,232.0 409.5,240.0 418.5,240.0" fill="#4D4D4D"/>
+<polyline points="281.0,102.0 281.0,132.0 625.0,132.0 625.0,160.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="625.0,160.0 629.5,152.0 620.5,152.0" fill="#9A9A9A"/>
+<rect x="0.0" y="30.0" width="168.0" height="72.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="84.0" y="48.5" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Signal card</text>
+<text x="84.0" y="69.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">from RADAR: event,</text>
+<text x="84.0" y="84.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">evidence, risk</text>
+<rect x="197.0" y="30.0" width="168.0" height="72.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="281.0" y="48.5" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">1 · Rules engine</text>
+<text x="281.0" y="69.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">trigger-card thresholds</text>
+<text x="281.0" y="84.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">→ level</text>
+<rect x="394.0" y="30.0" width="168.0" height="72.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="478.0" y="48.5" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">2 · Retrieve</text>
+<text x="478.0" y="69.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">guidelines KB · cited</text>
+<text x="478.0" y="84.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">pages</text>
+<rect x="591.0" y="30.0" width="168.0" height="72.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="675.0" y="48.5" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">3 · LLM draft</text>
+<text x="675.0" y="69.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">classification, actions,</text>
+<text x="675.0" y="84.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">reasoning trace</text>
+<rect x="591.0" y="160.0" width="168.0" height="72.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="675.0" y="178.5" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">4 · Validator</text>
+<text x="675.0" y="199.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">schema · citations exist</text>
+<text x="675.0" y="214.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">· agrees with rules?</text>
+<rect x="394.0" y="160.0" width="168.0" height="72.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="478.0" y="178.5" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">5 · EOC officer</text>
+<text x="478.0" y="199.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">confirm · modify ·</text>
+<text x="478.0" y="214.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">override (+ reason)</text>
+<text x="577.0" y="150.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">pass</text>
+<rect x="197.0" y="160.0" width="168.0" height="72.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="281.0" y="178.5" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">6 · Audit log</text>
+<text x="281.0" y="199.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">inputs, draft, decision,</text>
+<text x="281.0" y="214.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">who, when</text>
+<rect x="0.0" y="160.0" width="168.0" height="72.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="84.0" y="170.5" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Escalation /</text>
+<text x="84.0" y="186.5" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">hand-off</text>
+<text x="84.0" y="207.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">notify level owner ·</text>
+<text x="84.0" y="222.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">GHEC-AI</text>
+<rect x="434.0" y="272.0" width="228.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="548.0" y="281.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Senior review</text>
+<text x="548.0" y="301.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">draft withheld · rules level shown</text>
+<text x="548.0" y="315.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">alone</text>
+<text x="693.0" y="270.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">fail</text>
+<text x="430.0" y="132.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">level used as check</text>
+</svg>
+<figcaption><b>LLM proposes, rules verify, a human decides.</b> The escalation level always comes from the deterministic trigger-card rules; the language model explains, gathers context and drafts actions with page-level citations. A validator blocks drafts that disagree with the rules or cite nothing, and no recommendation takes effect until a named officer confirms, modifies or overrides it.</figcaption>
+</figure>
+<p>The agent draws on an expert-curated knowledge base — the DMT-PHE user guides, MoH-approved national and international outbreak guidelines, and relevant scientific literature. To prevent hallucinations it cites specific documents and pages and shows a transparent reasoning trace; the responsible EOC officer confirms or overrides each recommendation, with the justification logged. <span class="tag prop">Proposal</span></p>
+<h3>Division of labour</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Task</th><th>Done by</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>Compute candidate escalation level</td><td><b>Rules engine</b></td><td>Deterministic, testable, identical every time</td></tr>
+<tr><td>Assemble evidence and context</td><td>Agent (tools via MCP)</td><td>Saves officers the manual reconstruction</td></tr>
+<tr><td>Explain, summarise, draft actions and messages</td><td>LLM</td><td>Where language models add real value</td></tr>
+<tr><td>Check the draft</td><td><b>Validator</b></td><td>Schema valid · every claim cited · level matches the rules · no forbidden content</td></tr>
+<tr><td>Decide</td><td><b>Named officer</b></td><td>Accountability stays with people under KNPHI procedures</td></tr>
+</tbody></table></div>
+
+<h3>The recommendation contract</h3>
+<p>The LLM must return structured output that the validator can check. <span class="tag rec">Recommended</span></p>
+<pre><code>{
+  "mer_id": "…",
+  "rules_level": 2,                      // copied from rules engine, not generated
+  "recommended_level": 2,                // must equal rules_level, else flagged
+  "classification": "suspected RVF cluster",
+  "actions": [ { "action": "Deploy county RRT", "due_within_hours": 72,
+                 "citation": { "doc": "DMT-PHE user guide v1.0", "page": 34 } } ],
+  "missing_information": [ "Lab results for KABS case #22" ],
+  "reasoning_summary": "…",
+  "citations": [ { "doc": "…", "page": 12, "quote": "…" } ]
+}</code></pre>
+
+<h3>Where the model runs</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Pros</th><th>Cons</th><th>Fit</th></tr></thead>
+<tbody>
+<tr><td><b>Open-weight model on KNPHI/DHA infrastructure</b></td><td>Data stays in Government custody; predictable cost; works offline from the internet</td><td>Needs a GPU and model-ops skills; smaller models than frontier APIs</td><td>Recommended for production <span class="tag rec">Recommended</span></td></tr>
+<tr><td>Government-authorised hosted endpoint</td><td>No GPU to run; can use larger models</td><td>Needs explicit authorisation, data-use agreement and security review</td><td>Fallback if GPU is not funded</td></tr>
+<tr><td>Public generative-AI API</td><td>Easiest</td><td>Identifiable or restricted data may not go there without explicit Government authorisation <span class="tag prop">Proposal</span></td><td>Development with synthetic data only</td></tr>
+</tbody></table></div>
+<p>Model choice should be made by evaluation, not reputation: shortlist two or three open-weight models of a size the GPU can serve (current families include gpt-oss, Qwen, Llama, Gemma and Mistral), run the same test set (<a href="12-responsible-ai.html">doc 12</a>) and pick on concordance, citation accuracy, Kiswahili/English handling and speed.</p>
+
+<h3>Managing the knowledge base</h3>
+<ul>
+<li>A <strong>document register</strong>: title, version, approving body, effective date, status (approved / superseded).</li>
+<li>Only <strong>approved, current</strong> documents are indexed; superseded versions are removed from retrieval but kept for audit.</li>
+<li>Chunks keep their <strong>page anchors</strong> so citations point to a real page a reviewer can open.</li>
+<li>Hybrid retrieval (keyword + vector) so exact phrases like case definitions are found reliably.</li>
+</ul>
+
+<h2 id="the-dmt-phe-workspace"><span class="sec">5</span>The DMT-PHE workspace</h2>
+<p>What officers see. <span class="tag rec">Recommended</span></p>
+<ol class="steps">
+<li><b>Inbox of signal cards</b> sorted by risk band and time waiting, filtered to the officer's county or national view.</li>
+<li><b>Event page</b>: timeline, map, linked records, evidence per stream, data caveats.</li>
+<li><b>Recommendation panel</b>: rules level, agent draft, citations (click to open the page), missing information.</li>
+<li><b>Decision</b>: confirm, modify or override — a reason is mandatory for modify/override, chosen from a short list plus free text.</li>
+<li><b>Actions</b>: the 7-1-7 checklist with due times; GHEC-AI request when authorised.</li>
+</ol>
+<p><strong>Timers:</strong> if a high-band signal card is not reviewed within an agreed time, the supervisor is alerted; if a Level 2–3 decision is pending, KNPHI PHEOC is alerted. Escalation should never depend on someone happening to open the app.</p>
+
+<h2 id="from-prototype-to-production"><span class="sec">6</span>From prototype to production</h2>
+<ul>
+<li>A digitised DMT-PHE and an agentic version, developed by the consortium, already exist; the prototype (<code>dmt-agent.streamlit.app</code>) was tested on PHEIUE, RVF and mpox scenarios and benchmarked to 7-1-7 and IHR Annex 2. <span class="tag prop">Proposal</span></li>
+<li>University of Michigan (CGHE) leads the agentic decision-support architecture, guardrails, containerisation and maintenance; WSU leads integration with the MER and connectors (<a href="15-partners-governance.html">doc 15</a>).</li>
+<li>Production keeps the prototype's prompts and evaluation set as a baseline, and moves the code into the RADAR stack with the validator, audit log and access control.</li>
+</ul>
+
+<h2 id="open-questions"><span class="sec">7</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Which documents form the approved knowledge base for the MVP?</b> <span class="owner">Owner: KNPHI · MVP</span></li>
+<li><b>Who may confirm each level?</b> E.g. county surveillance coordinator for L1, county EOC manager for L2, KNPHI PHEOC incident manager for L3. <span class="owner">Owner: KNPHI</span></li>
+<li><b>Review-time limits</b> for each risk band and level before supervisors are alerted. <span class="owner">Owner: KNPHI PHEOC</span></li>
+<li><b>GPU or hosted model?</b> See <a href="04-system-architecture.html">doc 04</a>. <span class="owner">Owner: WSU + KNPHI/DHA</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — DMT-PHE decision-support layer and agentic AI version; Preliminary work.</li>
+<li>RADAR deck — slides 6–12 (DMT-PHE gaps, trigger card, data streams, AI assistant evaluation, pilot case studies, GHEC-AI complementarity).</li>
+<li>CGP — <a href="https://pandemicintelcenter.org/kenya-validates-groundbreaking-decision-making-tool-for-public-health-emergencies-dmt-phe/">Kenya validates DMT-PHE</a>.</li>
+<li>WHO — International Health Regulations (2005), Annex 2 decision instrument; <a href="https://www.who.int/news/item/19-09-2025-amended-international-health-regulations-enter-into-force">amended IHR entered into force 19 Sep 2025</a>.</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="06-intelligence-layer.html"><span class="d">← Previous</span><br><span class="t">06 · Intelligence Layer</span></a><a class="next" href="08-signal-to-response.html"><span class="d">Next →</span><br><span class="t">08 · Signal-to-Response Workflow</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

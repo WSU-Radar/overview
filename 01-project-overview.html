@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01 · Project Overview — RADAR</title>
+<meta name="description" content="The problem RADAR solves, what it is (and is not), its three working layers, the four outbreak categories and the outcomes it must prove.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html" aria-current="page"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 01</span><span>·</span><span class="track"><i style="background:#4D4D4D"></i>Orientation</span></div><h1>Project Overview</h1><p class="lede">The problem RADAR solves, what it is (and is not), its three working layers, the four outbreak categories and the outcomes it must prove.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Leadership &amp; funder</span><span class="chip">Engineering</span><span class="chip">EOC &amp; surveillance</span><span class="chip">M&amp;E / research</span><span class="chip">Governance &amp; legal</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li><strong>RADAR</strong> is an AI-assisted integration and decision layer embedded in Kenya's Emergency Operations Centres (EOCs) at KNPHI and in five priority counties.</li>
+<li>It joins signals about the <strong>same outbreak</strong> from human, animal, environmental and laboratory systems into one shared event record, scores the risk, and routes a structured recommendation into the digitised <strong>DMT-PHE</strong> — where a person confirms or overrides it.</li>
+<li>It does <strong>not</strong> replace existing systems, and it never escalates on its own.</li>
+<li>Success = faster, more consistent, measurable detection-to-response, judged against the <strong>7-1-7</strong> target.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>Kenya is data-rich but insight-limited: the facts about one outbreak sit in five different places under five different IDs. Nobody can say, without rebuilding it by hand, when an event was detected, notified or acted on — so delays are invisible and decisions inconsistent.</p>
+<p>This document is the shared starting point: every other document assumes the problem, scope and outcomes defined here.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="assets/source-documents/INV110654_2026_WSU%20Kenya_Proposal_Investment_Document_WSUCleared%20%281%29.pdf"><span class="t">INV-110654 Investment Document (proposal)</span><span class="r">Source document in the _docs folder</span></a><a class="conn" href="assets/source-documents/RADAR_Stage_Gates_Proposed_WSURevClean.pdf"><span class="t">Proposed Milestone-Based Stage Gates</span><span class="r">Source document in the _docs folder</span></a><a class="conn" href="assets/source-documents/PowerPoint%20Presentation.pdf"><span class="t">RADAR slide deck</span><span class="r">Source document in the _docs folder</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="02-surveillance-landscape.html"><span class="t">02 · Surveillance Landscape</span><span class="r">The problem statement decides which source systems matter first.</span></a><a class="conn" href="13-roadmap-stage-gates.html"><span class="t">13 · Roadmap &amp; Stage Gates</span><span class="r">The outcomes promised in the proposal become the stage-gate thresholds.</span></a><a class="conn" href="14-mel-framework.html"><span class="t">14 · MEL Framework</span><span class="r">The four outcome measures are what MEL has to prove.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#project-at-a-glance">Project at a glance</a></li><li><a href="#the-problem-radar-solves">The problem RADAR solves</a></li><li><a href="#what-radar-is-and-is-not">What RADAR is — and is not</a></li><li><a href="#how-it-works-in-one-picture">How it works in one picture</a></li><li><a href="#where-radar-fits-in-kenya-s-ecosystem">Where RADAR fits in Kenya&#x27;s ecosystem</a></li><li><a href="#four-outbreak-categories-one-workflow">Four outbreak categories, one workflow</a></li><li><a href="#outcomes-radar-must-prove">Outcomes RADAR must prove</a></li><li><a href="#evidence-so-far">Evidence so far</a></li><li><a href="#design-principles">Design principles</a></li><li><a href="#open-questions-for-kick-off">Open questions for kick-off</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="project-at-a-glance"><span class="sec">1</span>Project at a glance</h2>
+<div class="cards">
+<div class="card accent"><span class="k">US$1.5M</span><p>Gates Foundation grant INV-110654 <span class="tag prop">Proposal</span></p></div>
+<div class="card accent"><span class="k">36 months</span><p>1 Nov 2026 – 31 Oct 2029, three stage gates</p></div>
+<div class="card accent"><span class="k">1 + 5</span><p>National EOC (KNPHI) plus five priority county EOCs</p></div>
+<div class="card accent"><span class="k">4</span><p>Outbreak categories, one disease-agnostic workflow</p></div>
+</div>
+<p><strong>Full title:</strong> Building a Real-Time Artificial Intelligence-Driven Alert &amp; Response System (RADAR) for Disease Surveillance and Outbreak Management in Kenya. <strong>Prime:</strong> Washington State University – Global Health Kenya (PI Dr Isaac Ngere). <strong>Government lead:</strong> Kenya National Public Health Institute (KNPHI), with the Digital Health Agency (DHA). <strong>Partners:</strong> University of Michigan (CGHE), CGP, KEMRI, KIPRE, an enterprise software partner (to be selected) and Sobek (GHEC-AI). See <a href="15-partners-governance.html">doc 15</a>.</p>
+
+<h2 id="the-problem-radar-solves"><span class="sec">2</span>The problem RADAR solves</h2>
+<p>Kenya's human health surveillance runs under IDSR, with reporting spread across KHIS2, eCHIS and event-based surveillance (m-Dharura). Animal and wildlife reporting runs on KABS and EarthRanger; climate and drought data sit with KMD and NDMA; laboratory results sit in laboratory information systems; and response decisions sit in EOC spreadsheets and paper logs. <span class="tag prop">Proposal</span></p>
+<figure class="fig" id="fig-before-after">
+<svg viewBox="0 0 760 340" role="img" aria-label="Side-by-side comparison: today five systems hold separate IDs for the same outbreak with no link; with RADAR they all link to one Minimum Event Record that feeds DMT-PHE." xmlns="http://www.w3.org/2000/svg">
+<rect x="0.0" y="0.0" width="370.0" height="340.0" rx="8" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="12.0" y="14.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">TODAY</text>
+<rect x="390.0" y="0.0" width="370.0" height="340.0" rx="8" fill="#F8F8F8" stroke="#F8F8F8" stroke-width="1"/>
+<text x="402.0" y="14.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" letter-spacing="0.08em">WITH RADAR</text>
+<polyline points="166.0,57.0 214.0,57.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polyline points="166.0,115.0 214.0,115.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polyline points="166.0,173.0 214.0,173.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polyline points="166.0,231.0 214.0,231.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polyline points="166.0,289.0 214.0,289.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polyline points="556.0,57.0 585.0,57.0 585.0,100.0 600.0,100.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="600.0,100.0 592.0,95.5 592.0,104.5" fill="#A60F2D"/>
+<polyline points="556.0,115.0 585.0,115.0 585.0,115.0 600.0,115.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="600.0,115.0 592.0,110.5 592.0,119.5" fill="#A60F2D"/>
+<polyline points="556.0,173.0 585.0,173.0 585.0,173.0 600.0,173.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="600.0,173.0 592.0,168.5 592.0,177.5" fill="#A60F2D"/>
+<polyline points="556.0,231.0 585.0,231.0 585.0,204.0 600.0,204.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="600.0,204.0 592.0,199.5 592.0,208.5" fill="#A60F2D"/>
+<polyline points="556.0,289.0 585.0,289.0 585.0,204.0 600.0,204.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="600.0,204.0 592.0,199.5 592.0,208.5" fill="#A60F2D"/>
+<polyline points="675.0,212.0 675.0,246.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="675.0,246.0 679.5,238.0 670.5,238.0" fill="#A60F2D"/>
+<rect x="16.0" y="34.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="28.0" y="46.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Community signal</text>
+<text x="28.0" y="67.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">m-Dharura #S-118</text>
+<text x="222.0" y="57.0" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">?</text>
+<rect x="406.0" y="34.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="418.0" y="46.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Community signal</text>
+<text x="418.0" y="67.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">m-Dharura #S-118</text>
+<rect x="16.0" y="92.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="28.0" y="104.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Animal report</text>
+<text x="28.0" y="125.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">KABS case #22</text>
+<text x="222.0" y="115.0" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">?</text>
+<rect x="406.0" y="92.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="418.0" y="104.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Animal report</text>
+<text x="418.0" y="125.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">KABS case #22</text>
+<rect x="16.0" y="150.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="28.0" y="162.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Case counts</text>
+<text x="28.0" y="183.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">KHIS2 weekly form</text>
+<text x="222.0" y="173.0" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">?</text>
+<rect x="406.0" y="150.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="418.0" y="162.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Case counts</text>
+<text x="418.0" y="183.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">KHIS2 weekly form</text>
+<rect x="16.0" y="208.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="28.0" y="220.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Lab result</text>
+<text x="28.0" y="241.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">LIMS ref #83</text>
+<text x="222.0" y="231.0" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">?</text>
+<rect x="406.0" y="208.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="418.0" y="220.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Lab result</text>
+<text x="418.0" y="241.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">LIMS ref #83</text>
+<rect x="16.0" y="266.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="28.0" y="278.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Response decision</text>
+<text x="28.0" y="299.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">EOC spreadsheet row</text>
+<text x="222.0" y="289.0" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">?</text>
+<rect x="406.0" y="266.0" width="150.0" height="46.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="418.0" y="278.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Response decision</text>
+<text x="418.0" y="299.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">EOC spreadsheet row</text>
+<rect x="240.0" y="120.0" width="116.0" height="96.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="298.0" y="135.9" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Manual</text>
+<text x="298.0" y="150.6" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">reconstruction</text>
+<text x="298.0" y="171.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">phone calls,</text>
+<text x="298.0" y="185.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">re-typing,</text>
+<text x="298.0" y="200.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">memory</text>
+<text x="185.0" y="318.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">No shared event ID · timestamps scattered</text>
+<rect x="600.0" y="92.0" width="150.0" height="120.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="675.0" y="134.5" font-size="14" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">MER</text>
+<text x="675.0" y="156.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">RVF-ISI-2026-001 ·</text>
+<text x="675.0" y="171.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">one ID, one timeline</text>
+<rect x="600.0" y="246.0" width="150.0" height="50.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="675.0" y="260.8" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">DMT-PHE</text>
+<text x="675.0" y="281.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">classify · escalate</text>
+<text x="575.0" y="318.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">publish a few fields · subscribe to the rest</text>
+</svg>
+<figcaption><b>Today vs. with RADAR.</b> Today each system holds its own piece of one outbreak under its own ID, so the EOC must rebuild the story by hand. With RADAR each system publishes a few standard fields to a shared Minimum Event Record, so the same event has one identity and one timeline that DMT-PHE can act on.</figcaption>
+</figure>
+<p>Independent assessments point to the same gap. The 2024 Joint External Evaluation (JEE) scored Kenya at:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>JEE indicator</th><th class="num">Score (1–5)</th><th>Why, according to the JEE</th></tr></thead>
+<tbody>
+<tr><td>Early warning surveillance</td><td class="num">3</td><td>Indicator- and event-based surveillance not fully integrated; low EBS coverage.</td></tr>
+<tr><td>Analysis and information sharing</td><td class="num">3</td><td>No cross-sector data-sharing framework; animal-sector data shared only quarterly.</td></tr>
+<tr><td>Activation and coordination of health personnel in an emergency</td><td class="num">1</td><td>Lowest score in the whole evaluation.</td></tr>
+</tbody></table></div>
+<p>The consequence runs through one mechanism: because signals from different systems are never joined into a single record of the same event, escalation depends on manual reconstruction, <strong>detection is delinked from response</strong>, and the time between them cannot even be measured consistently. <span class="tag prop">Proposal</span></p>
+
+<div class="callout note"><span class="ct">Why the decision side matters too</span>
+<p>Even after a signal is verified, escalation has historically relied on informal discussion and individual experience. KNPHI addressed this with the <strong>Decision-Making Tool for Public Health Emergencies (DMT-PHE)</strong> — validated at a national workshop in October 2025 through five simulation exercises (Ebola, cholera, RVF, chemical spill, unknown aetiology) and launched in March 2026. <span class="tag res">Research</span> But DMT-PHE is only as good as the information manually assembled for it. RADAR's job is to feed it automatically.</p></div>
+
+<h2 id="what-radar-is-and-is-not"><span class="sec">3</span>What RADAR is — and is not</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>RADAR is…</th><th>RADAR is not…</th></tr></thead>
+<tbody>
+<tr><td>An operational layer embedded in existing EOC workflows</td><td>A new national database or a replacement for KHIS2, KABS, ADaM or any other system</td></tr>
+<tr><td>A shared <strong>Minimum Event Record</strong> that gives one event one identity across systems</td><td>A system every institution must log into and work inside</td></tr>
+<tr><td>Risk scoring and anomaly detection across human, animal and environmental streams</td><td>An autonomous decision-maker — a named officer confirms or overrides every recommendation</td></tr>
+<tr><td>A digitised DMT-PHE with an AI assistant that cites its sources</td><td>A general chatbot; the agent only works inside the DMT-PHE workflow</td></tr>
+<tr><td>Disease-agnostic: reconfigured by changing thresholds, weights and pathways</td><td>A one-disease tool needing a rebuild for each new threat</td></tr>
+</tbody></table></div>
+
+<h2 id="how-it-works-in-one-picture"><span class="sec">4</span>How it works in one picture</h2>
+<p>The proposal describes four building blocks <span class="tag prop">Proposal</span>:</p>
+<ol class="steps">
+<li><b>Bridge — the Minimum Event Record (MER).</b> A small, standard set of fields and timestamps that each system can publish about an event. Achieves “systems integration” before heavy infrastructure exists. → <a href="03-minimum-event-record.html">doc 03</a></li>
+<li><b>Multi-stream integration and intelligence layer.</b> Ingests and harmonises IDSR, EBS, KABS, EarthRanger, KMD, NDMA and contextual data; uses NLP and graph-based models for semantic translation, anomaly detection and early signal fusion. → <a href="05-interoperability.html">docs 05</a> and <a href="06-intelligence-layer.html">06</a></li>
+<li><b>Decision-support layer — DMT-PHE.</b> Predefined trigger thresholds and escalation pathways aligned with IHR (2005) Annex 2 and 7-1-7. → <a href="07-dmt-phe-ai-agent.html">doc 07</a></li>
+<li><b>Agentic AI layer.</b> An assistant on top of DMT-PHE that compresses the detection-to-action loop, with citations, reasoning traces and human confirmation. → <a href="07-dmt-phe-ai-agent.html">doc 07</a></li>
+</ol>
+<figure class="fig" id="fig-loop">
+<svg viewBox="0 0 760 250" role="img" aria-label="Six-step loop: ingest signals, link to an event, score risk, classify and escalate with human confirmation, mobilise response, learn from outcomes back to ingest." xmlns="http://www.w3.org/2000/svg">
+<polyline points="116.0,92.0 136.0,92.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="136.0,92.0 128.0,87.5 128.0,96.5" fill="#4D4D4D"/>
+<polyline points="242.0,92.0 262.0,92.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="262.0,92.0 254.0,87.5 254.0,96.5" fill="#4D4D4D"/>
+<polyline points="368.0,92.0 388.0,92.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="388.0,92.0 380.0,87.5 380.0,96.5" fill="#4D4D4D"/>
+<polyline points="494.0,92.0 514.0,92.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="514.0,92.0 506.0,87.5 506.0,96.5" fill="#4D4D4D"/>
+<polyline points="620.0,92.0 640.0,92.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="640.0,92.0 632.0,87.5 632.0,96.5" fill="#4D4D4D"/>
+<polyline points="693.0,124.0 693.0,170.0 63.0,170.0 63.0,124.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="63.0,124.0 58.5,132.0 67.5,132.0" fill="#4D4D4D"/>
+<line x1="10.0" y1="30.0" x2="368.0" y2="30.0" stroke="#A60F2D" stroke-width="2"/>
+<line x1="388.0" y1="30.0" x2="494.0" y2="30.0" stroke="#4D4D4D" stroke-width="2"/>
+<rect x="10.0" y="60.0" width="106.0" height="64.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="63.0" y="74.5" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Ingest</text>
+<text x="63.0" y="96.1" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">multi-stream</text>
+<text x="63.0" y="110.6" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">feeds</text>
+<rect x="136.0" y="60.0" width="106.0" height="64.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="189.0" y="74.5" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Link</text>
+<text x="189.0" y="96.1" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">one event</text>
+<text x="189.0" y="110.6" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">record</text>
+<rect x="262.0" y="60.0" width="106.0" height="64.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="315.0" y="81.8" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Score</text>
+<text x="315.0" y="103.3" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">anomaly + risk</text>
+<rect x="388.0" y="60.0" width="106.0" height="64.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="441.0" y="74.5" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Decide</text>
+<text x="441.0" y="96.1" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">DMT-PHE +</text>
+<text x="441.0" y="110.6" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">human</text>
+<rect x="514.0" y="60.0" width="106.0" height="64.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="567.0" y="81.8" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Mobilise</text>
+<text x="567.0" y="103.3" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">GHEC-AI, EOC</text>
+<rect x="640.0" y="60.0" width="106.0" height="64.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="693.0" y="74.5" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Learn</text>
+<text x="693.0" y="96.1" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">overrides,</text>
+<text x="693.0" y="110.6" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">outcomes</text>
+<text x="380.0" y="170.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">feedback improves thresholds and models</text>
+<text x="189.0" y="18.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D" letter-spacing="0.08em">AUTOMATED BY RADAR</text>
+<text x="441.0" y="18.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D" letter-spacing="0.08em">HUMAN DECIDES</text>
+<text x="380.0" y="222.0" font-size="11" font-weight="500" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Every arrow writes a timestamp to the MER → detection, notification and response times become measurable.</text>
+</svg>
+<figcaption><b>The detection-to-action loop RADAR shortens.</b> Each hand-over in the loop is where time is lost today. RADAR automates the first three steps, keeps a human in charge of the decision, and records every timestamp so the loop can be measured against 7-1-7.</figcaption>
+</figure>
+
+<h2 id="where-radar-fits-in-kenya-s-ecosystem"><span class="sec">5</span>Where RADAR fits in Kenya's ecosystem</h2>
+<p>The proposal positions RADAR alongside — not over — the tools already in use <span class="tag prop">Proposal</span>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Function</th><th>Who does it</th></tr></thead>
+<tbody>
+<tr><td>Detect signals</td><td>IDSR (KHIS2), event-based surveillance (m-Dharura), WHO EIOS</td></tr>
+<tr><td>Flag outbreaks across streams</td><td><strong>RADAR</strong> (MER + intelligence layer)</td></tr>
+<tr><td>Structure and manage outbreak data (line lists, contacts)</td><td>ADaM / SHIELD</td></tr>
+<tr><td>Govern escalation decisions</td><td><strong>DMT-PHE</strong> with the RADAR AI agent, under KNPHI procedures</td></tr>
+<tr><td>Mobilise responders and surge capacity</td><td>GHEC-AI and EOC response coordination</td></tr>
+<tr><td>Governed FHIR integration where available</td><td>LATTICE (KNPHI interoperability platform)</td></tr>
+</tbody></table></div>
+
+<h2 id="four-outbreak-categories-one-workflow"><span class="sec">6</span>Four outbreak categories, one workflow</h2>
+<p>RADAR is disease-agnostic in architecture but starts with four high-impact categories, each using the same detection–escalation workflow <span class="tag prop">Proposal</span>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Category</th><th>Examples</th><th>Streams that matter most <span class="tag rec">Recommended</span></th></tr></thead>
+<tbody>
+<tr><td><b>Enteric &amp; diarrhoeal</b></td><td>Cholera, typhoid, <i>E. coli</i>, other waterborne threats</td><td>IDSR/KHIS2, EBS, lab, rainfall &amp; flooding, WASH context</td></tr>
+<tr><td><b>Viral haemorrhagic fevers</b></td><td>Rift Valley fever, Bundibugyo Ebola, Marburg, yellow fever</td><td>EBS, KABS (livestock abortions), wildlife, climate, cross-border signals</td></tr>
+<tr><td><b>Febrile &amp; respiratory</b></td><td>Influenza, mpox, other systemic syndromes</td><td>IDSR, EBS, sentinel and lab data, media (EIOS)</td></tr>
+<tr><td><b>Unknown aetiology (PHEIUE)</b></td><td>Clusters of illness or death with no confirmed cause</td><td>All streams — early fusion speeds hypothesis generation before a pathogen is known</td></tr>
+</tbody></table></div>
+<p><strong>Two operating modes.</strong> In <em>rapid-response mode</em> RADAR is brought to immediate readiness to support an active high-consequence outbreak (the proposal cites the Bundibugyo Ebola situation in East Africa — declared a PHEIC by WHO in May 2026 <span class="tag res">Research</span>). In <em>continuous-monitoring mode</em> the same architecture watches endemic and outbreak-prone diseases.</p>
+
+<h2 id="outcomes-radar-must-prove"><span class="sec">7</span>Outcomes RADAR must prove</h2>
+<p>The proposal names four outcome measures; the stage gates turn them into thresholds (<a href="13-roadmap-stage-gates.html">doc 13</a>) and the MEL framework defines how each is measured (<a href="14-mel-framework.html">doc 14</a>).</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Outcome</th><th>End-of-grant target</th></tr></thead>
+<tbody>
+<tr><td>Better outbreak prediction and detection</td><td>Signals detected earlier, or additional actionable signals, through multi-stream input</td></tr>
+<tr><td>Shorter detection-to-escalation latency</td><td>Measurable reduction vs. baseline, sustained at Gate 3 (related Gate 2 target: median signal → DMT-PHE classification ≤ 48 h)</td></tr>
+<tr><td>Better 7-1-7 compliance</td><td>Demonstrated improvement vs. baseline at national and county sites</td></tr>
+<tr><td>Accurate, trusted AI classification</td><td>AI–expert concordance ≥ 0.90 · SUS ≥ 80 · documentation completeness ≥ 90% · false-negative rate below the agreed ceiling (and zero adverse decision events at Gates 1–2)</td></tr>
+</tbody></table></div>
+<figure class="fig" id="fig-logic-model">
+<svg viewBox="0 0 760 320" role="img" aria-label="Logic model with five columns: inputs, activities, outputs, outcomes and impact, connected left to right." xmlns="http://www.w3.org/2000/svg">
+<polyline points="141.0,27.0 154.0,27.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="154.0,27.0 146.0,22.5 146.0,31.5" fill="#4D4D4D"/>
+<polyline points="296.0,27.0 309.0,27.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="309.0,27.0 301.0,22.5 301.0,31.5" fill="#4D4D4D"/>
+<polyline points="451.0,27.0 464.0,27.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="464.0,27.0 456.0,22.5 456.0,31.5" fill="#4D4D4D"/>
+<polyline points="606.0,27.0 619.0,27.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="619.0,27.0 611.0,22.5 611.0,31.5" fill="#4D4D4D"/>
+<rect x="0.0" y="10.0" width="140.0" height="34.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="70.0" y="27.0" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Inputs</text>
+<rect x="0.0" y="56.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="70.0" y="69.1" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">US$1.5M over 3</text>
+<text x="70.0" y="82.9" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">years</text>
+<rect x="0.0" y="106.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="70.0" y="126.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Consortium team</text>
+<rect x="0.0" y="156.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="70.0" y="176.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">KNPHI data &amp; EOCs</text>
+<rect x="0.0" y="206.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="70.0" y="219.1" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">DMT-PHE</text>
+<text x="70.0" y="232.9" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">prototype</text>
+<rect x="155.0" y="10.0" width="140.0" height="34.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="225.0" y="27.0" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Activities</text>
+<rect x="155.0" y="56.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="225.0" y="76.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Define MER</text>
+<rect x="155.0" y="106.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="225.0" y="126.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Build connectors</text>
+<rect x="155.0" y="156.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="225.0" y="169.1" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Build analytics &amp;</text>
+<text x="225.0" y="182.9" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">agent</text>
+<rect x="155.0" y="206.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="225.0" y="226.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Train &amp; deploy</text>
+<rect x="155.0" y="256.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="225.0" y="276.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Evaluate</text>
+<rect x="310.0" y="10.0" width="140.0" height="34.0" rx="6" fill="#F4F4F4" stroke="#F4F4F4" stroke-width="1"/>
+<text x="380.0" y="27.0" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Outputs</text>
+<rect x="310.0" y="56.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="76.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">MER standard</text>
+<rect x="310.0" y="106.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="126.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">RADAR platform</text>
+<rect x="310.0" y="156.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="176.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Digital DMT-PHE</text>
+<rect x="310.0" y="206.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="226.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Trained EOC staff</text>
+<rect x="310.0" y="256.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="276.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">User guides</text>
+<rect x="465.0" y="10.0" width="140.0" height="34.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="535.0" y="27.0" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Outcomes</text>
+<rect x="465.0" y="56.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="535.0" y="76.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Faster detection</text>
+<rect x="465.0" y="106.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="535.0" y="119.1" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Shorter detect →</text>
+<text x="535.0" y="132.9" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">escalate</text>
+<rect x="465.0" y="156.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="535.0" y="176.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Better 7-1-7</text>
+<rect x="465.0" y="206.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="535.0" y="219.1" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Accurate AI</text>
+<text x="535.0" y="232.9" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">classification</text>
+<rect x="620.0" y="10.0" width="140.0" height="34.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="690.0" y="27.0" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Impact</text>
+<rect x="620.0" y="56.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="690.0" y="69.1" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Earlier</text>
+<text x="690.0" y="82.9" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">containment</text>
+<rect x="620.0" y="106.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="690.0" y="119.1" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Disease-agnostic</text>
+<text x="690.0" y="132.9" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">platform</text>
+<rect x="620.0" y="156.0" width="140.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="690.0" y="176.0" font-size="10.8" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Regional reference</text>
+</svg>
+<figcaption><b>Logic model.</b> What the grant buys (inputs), what the team does, what it produces, the change it must demonstrate by the end of the grant, and the long-term impact. The outcomes column is exactly what the stage gates and MEL framework measure.</figcaption>
+</figure>
+
+<h2 id="evidence-so-far"><span class="sec">8</span>Evidence so far</h2>
+<ul>
+<li><strong>Data systems mapped</strong> with KNPHI for integration. <span class="tag prop">Proposal</span></li>
+<li><strong>Prototype AI-enabled DMT-PHE</strong> built and evaluated with 11 surveillance professionals (March 2026): mean concordance <strong>0.924</strong> against the DMT-PHE reference, SUS <strong>85.2</strong> (“excellent”), and no true adverse decision risks across <strong>33 simulated interactions</strong> in three outbreak scenarios. A prototype is online at <code>dmt-agent.streamlit.app</code>. <span class="tag prop">Proposal</span></li>
+<li>These are simulation results from a small group. The gates exist to show the same performance holds under real workload, at every site, on live data. → <a href="12-responsible-ai.html">doc 12</a></li>
+</ul>
+
+<h2 id="design-principles"><span class="sec">9</span>Design principles</h2>
+<div class="cards">
+<div class="card"><h4>Complement, not replace</h4><p>Existing systems stay authoritative for their own data.</p></div>
+<div class="card"><h4>Open standards</h4><p>FHIR R4, Kenya Core and MCP, so new streams plug in without a rebuild.</p></div>
+<div class="card"><h4>Incremental &amp; modular</h4><p>Start with high-value events and sources, prove value, then expand.</p></div>
+<div class="card"><h4>Government stewardship</h4><p>KNPHI owns and runs it; hosting follows DHA requirements.</p></div>
+<div class="card"><h4>EOC-embedded</h4><p>Built into the escalation workflow officers already use.</p></div>
+<div class="card"><h4>Human in the loop</h4><p>Every recommendation is confirmed or overridden, with a logged reason.</p></div>
+</div>
+
+<h2 id="open-questions-for-kick-off"><span class="sec">10</span>Open questions for kick-off</h2>
+<ol class="decisions">
+<li><b>Which priority events and diseases does the MVP cover?</b> Suggest one per category, led by RVF and cholera, where multi-stream signals are richest. <span class="owner">Owner: KNPHI + WSU · by MVP design sprint</span></li>
+<li><b>Which five county EOCs?</b> The deck shows four counties for Phase 2; the proposal and stage gates say five. <span class="owner">Owner: KNPHI · before Gate 1</span></li>
+<li><b>What does “launched and deployed” DMT-PHE cover today?</b> Paper version, trigger-card count (15, 20 and 22 appear in different sources) and which counties already use it. <span class="owner">Owner: KNPHI / CGP</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 Investment Document (proposal), Sections “Project Description”, “Overall Approach”, “Preliminary work”.</li>
+<li>RADAR project deck (2026), slides 2–4 and 7–12.</li>
+<li>Center for Global Health and Pandemic Intelligence — <a href="https://pandemicintelcenter.org/kenya-validates-groundbreaking-decision-making-tool-for-public-health-emergencies-dmt-phe/">Kenya validates DMT-PHE</a> (Oct 2025).</li>
+<li>IANPHI — <a href="https://ianphi.org/news/2025/kenya-launches-its-nphi.html">Kenya launches its NPHI</a> (May 2025).</li>
+<li>Harvard Humanitarian Initiative — <a href="https://hhi.harvard.edu/news/2026/06/update-ebola-bundibugyo-outbreak">Update on Ebola Bundibugyo outbreak</a> (June 2026).</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="index.html"><span class="d">← Previous</span><br><span class="t">00 · Start Here</span></a><a class="next" href="02-surveillance-landscape.html"><span class="d">Next →</span><br><span class="t">02 · Surveillance Landscape</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

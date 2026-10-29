@@ -1,0 +1,89 @@
+<!--inshort-->
+<ul>
+<li>Production runs on <strong>KNPHI/DHA-approved or other Government-authorised infrastructure</strong>; the budgeted Dell PowerEdge R770 is the project's main server; development uses non-identifiable data only.</li>
+<li>The network is split into <strong>zones</strong> with a few allowed paths; the AI zone has <strong>no internet egress</strong>.</li>
+<li>Controls follow the proposal's list — RBAC, least privilege, MFA, encryption, audit logging, backup/recovery and incident response — mapped to recognised standards.</li>
+<li>Before production: <strong>load, penetration and interface testing</strong> with reports shared with the foundation (Gate 2).</li>
+</ul>
+<!--why-->
+<p>RADAR concentrates sensitive signals from many institutions and sits in the escalation path for emergencies. A breach would damage trust in every connected system; an outage during an outbreak would push EOCs back to paper exactly when speed matters. Security and resilience are therefore gate criteria, not afterthoughts.</p>
+<!--body-->
+<h2>Hosting model</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tier</th><th>Where</th><th>Data allowed</th></tr></thead>
+<tbody>
+<tr><td>Development</td><td>Approved cloud or WSU-hosted (hosting subscription budgeted)</td><td>Synthetic and approved non-identifiable data</td></tr>
+<tr><td>Staging / UAT</td><td>KNPHI/DHA-approved infrastructure</td><td>De-identified replays of real feeds</td></tr>
+<tr><td>Production</td><td>KNPHI/DHA-approved on-premise or Government-authorised infrastructure <span class="tag prop">Proposal</span></td><td>Live data, including restricted classes where unavoidable</td></tr>
+<tr><td>Recovery</td><td>Second Government-authorised site <span class="tag rec">Recommended</span></td><td>Encrypted backups; warm standby if funded</td></tr>
+</tbody></table></div>
+<p>Administration and data-residency requirements are defined by KNPHI/DHA. <span class="tag prop">Proposal</span> See <a href="04-system-architecture.html">doc 04</a> for server sizing and the GPU question.</p>
+
+<h2>Network zones</h2>
+<!--fig:sec-zones-->
+
+<h2>Security controls</h2>
+<p>Each control the proposal commits to, with how RADAR implements it and the reference standard to test against. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Control <span class="tag prop">Proposal</span></th><th>Implementation</th><th>Reference</th></tr></thead>
+<tbody>
+<tr><td>Role-based permissions &amp; least privilege</td><td>Keycloak roles mapped to geography and function (<a href="10-data-governance.html">doc 10</a>); admin access just-in-time; quarterly access reviews</td><td>ISO/IEC 27001 Annex A (access control)</td></tr>
+<tr><td>Multifactor authentication</td><td>Mandatory for every user; phishing-resistant factors for administrators</td><td>NIST SP 800-63B</td></tr>
+<tr><td>Encryption</td><td>TLS 1.2+ (1.3 preferred) in transit; mutual TLS between systems; encrypted disks/self-encrypting drives; encrypted backups; keys outside the data host</td><td>ISO/IEC 27001; OWASP ASVS</td></tr>
+<tr><td>Audit logging</td><td>Append-only, hash-chained audit log for decisions and data access; OpenHIM transaction log; logs shipped off-host</td><td>IHE ATNA</td></tr>
+<tr><td>Backup &amp; recovery</td><td>Continuous database archiving + nightly full backups; off-site encrypted copies; quarterly restore tests</td><td>See targets below</td></tr>
+<tr><td>Incident response</td><td>Runbook, contact tree, severity levels, breach-notification duties (DHA 48 h, ODPC 72 h)</td><td>Data Protection Act; Digital Health Act</td></tr>
+<tr><td>Secure development</td><td>Threat modelling, code review, dependency and image scanning, SBOM, signed images, secrets in a vault</td><td>OWASP ASVS; OWASP SAMM</td></tr>
+<tr><td>AI-specific threats</td><td>Prompt-injection defences, output validation, no agent write access without approval, model supply-chain checks</td><td>OWASP Top 10 for LLM Applications 2025 (<a href="12-responsible-ai.html">doc 12</a>)</td></tr>
+<tr><td>Hardened platform</td><td>CIS benchmarks for OS and Kubernetes; R770 secure boot, TPM 2.0, silicon root of trust, system lockdown</td><td>CIS Benchmarks</td></tr>
+</tbody></table></div>
+
+<h2>Backup, recovery and availability targets</h2>
+<p>Starting targets to agree with KNPHI <span class="tag rec">Recommended</span>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Component</th><th>Recovery point objective</th><th>Recovery time objective</th></tr></thead>
+<tbody>
+<tr><td>MER / FHIR database and audit log</td><td>≤ 15 minutes</td><td>≤ 4 hours</td></tr>
+<tr><td>Raw landing store</td><td>≤ 24 hours (sources can be re-pulled)</td><td>≤ 24 hours</td></tr>
+<tr><td>Analytics and signal store</td><td>Recomputable</td><td>≤ 8 hours</td></tr>
+<tr><td>LLM service</td><td>Stateless (model files backed up)</td><td>≤ 8 hours; rules-only mode meanwhile</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>Availability:</strong> aim for 99.5% monthly for the DMT-PHE workspace, with planned maintenance outside working hours and frozen during active Level 2–3 events.</li>
+<li><strong>Degraded modes:</strong> if the LLM is down, the workspace still shows rules levels and evidence; if RADAR is down, EOCs use paper DMT-PHE tools and back-enter.</li>
+<li><strong>Power and connectivity:</strong> UPS on all EOC equipment; Starlink connectivity budgeted for KNPHI and sites. <span class="tag prop">Proposal</span></li>
+</ul>
+
+<h2>Pre-production checklist (Gate 2)</h2>
+<p>The stage gates require product hardening with test reports available to the foundation: scalability and load testing, cybersecurity and penetration testing, interface validation, and deployment within KNPHI/DHA-approved infrastructure. <span class="tag prop">Proposal</span></p>
+<ol class="steps">
+<li><b>Load test</b> at 10× normal volume (simulated national outbreak week) with workspace response times measured.</li>
+<li><b>Penetration test</b> by an independent party covering web app, APIs, gateway and MCP tools; findings fixed and re-tested.</li>
+<li><b>Interface validation</b> for every connector and the GHEC-AI hand-off, with signed test records.</li>
+<li><b>Restore test</b> from off-site backup into a clean environment, timed against RTO.</li>
+<li><b>Access review</b> confirming every account, role and break-glass path.</li>
+<li><b>Runbooks</b> for operations, incidents and upgrades handed to KNPHI ICT.</li>
+</ol>
+
+<h2>Operations</h2>
+<ul>
+<li><strong>Monitoring:</strong> pipeline freshness per source, error rates, queue depth, GPU/CPU/disk, certificate expiry, failed logins — alerts to an on-call rota.</li>
+<li><strong>Patching:</strong> monthly for OS and dependencies; emergency patches within 72 hours for critical vulnerabilities.</li>
+<li><strong>Change management:</strong> all changes via CI/CD; production changes approved by the KNPHI system owner.</li>
+<li><strong>Transition:</strong> by Gate 3 the system runs on Government infrastructure with administrative rights transferred and maintenance, support and security procedures handed over. <span class="tag prop">Proposal</span></li>
+</ul>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Where is the recovery site, and is a warm standby affordable?</b> <span class="owner">Owner: KNPHI + DHA</span></li>
+<li><b>Who operates production day to day before transition</b> — WSU engineers with KNPHI shadowing, or KNPHI ICT from the start? <span class="owner">Owner: Steering committee</span></li>
+<li><b>Which independent firm performs the penetration test,</b> and does DHA certification require a specific one? <span class="owner">Owner: WSU + DHA</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — Data Access (security controls, hosting); Budget (server, hosting, Starlink).</li>
+<li>Stage-gate paper — Gate 2 milestone 2; Gate 3 milestone 2.</li>
+<li>Dell Technologies — <a href="https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-r770-spec-sheet.pdf">PowerEdge R770 specification sheet</a> (security features).</li>
+<li>OWASP — <a href="https://www.invicti.com/blog/web-security/owasp-top-10-risks-llm-security-2025">Top 10 for LLM Applications 2025</a> (summary).</li>
+<li>Breach-notification timelines — see <a href="10-data-governance.html">doc 10</a> sources.</li>
+</ul>

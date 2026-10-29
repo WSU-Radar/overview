@@ -1,0 +1,98 @@
+<!--inshort-->
+<ul>
+<li>The intelligence layer turns harmonised feeds into <strong>signal cards</strong>: a risk score plus the evidence behind it, ready for DMT-PHE.</li>
+<li>It works in stages: <strong>baselines → aberration detection → space-time clustering → cross-stream fusion → risk score</strong>, with climate forecasts as an extra input.</li>
+<li><strong>Transparent statistics first</strong>, machine learning only where it clearly adds value — every alert must be explainable to an EOC officer.</li>
+<li>Thresholds are tuned to keep <strong>alert burden</strong> manageable per county, and recalibrated from confirmed and discarded outcomes.</li>
+</ul>
+<!--why-->
+<p>This is where “predictive risk-based analytics” and “earlier detection” — two of the proposal's outcome claims — are either earned or not. The value comes from <strong>fusion</strong>: animal and climate signals often appear weeks before human cases, so seeing them together on one event buys time. But a noisy detector that floods EOCs with false alarms would destroy trust faster than any other failure.</p>
+<!--body-->
+<h2>From feeds to a signal card</h2>
+<!--fig:intel-pipeline-->
+
+<h2>Methods by stage</h2>
+<p>Recommended starting methods. All are established in public-health surveillance and run on open-source libraries. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Stage</th><th>Method</th><th>Why this one</th></tr></thead>
+<tbody>
+<tr><td><b>Linkage &amp; de-duplication</b></td><td>Deterministic rules, then Fellegi–Sunter probabilistic linkage (Splink)</td><td>Explainable match weights; review queue for borderline pairs</td></tr>
+<tr><td><b>Baselines</b></td><td>Quasi-Poisson / negative-binomial regression with seasonality and trend, per place × syndrome</td><td>Handles over-dispersion and seasonal diseases (cholera, RVF)</td></tr>
+<tr><td><b>Aberration detection</b></td><td>Farrington Flexible; EARS C1–C3; negative-binomial regression; CUSUM</td><td>Different strengths — see evidence below; run more than one and compare</td></tr>
+<tr><td><b>Space-time clustering</b></td><td>Prospective space-time scan statistic (Kulldorff); R <code>scanstatistics</code></td><td>Finds unusual places, not just unusual weeks</td></tr>
+<tr><td><b>Text signals</b></td><td>Classify free-text EBS and media items into syndromes and places (English and Kiswahili), LLM-assisted with human review</td><td>Turns narrative signals into countable, linkable fields</td></tr>
+<tr><td><b>Cross-stream fusion</b></td><td>One Health concordance rules + evidence accumulation (log-likelihood-ratio style weights per stream) over the MER event graph</td><td>Weights are visible and editable by epidemiologists</td></tr>
+<tr><td><b>Forecasts</b></td><td>Climate-driven risk models (rainfall, vegetation index, sea-surface temperature) for RVF; rainfall/flooding and WASH context for cholera</td><td>Gives a prior risk before any case appears</td></tr>
+<tr><td><b>Risk score</b></td><td>Calibrated 0–1 score with bands (low · watch · alert · high)</td><td>Same scale across diseases; bands map to suggested trigger cards</td></tr>
+</tbody></table></div>
+
+<h3>What the evidence says about detectors</h3>
+<p>A comparison of daily syndromic surveillance algorithms (Noufaily et al., <i>Bioinformatics</i> 2019) found no single best method <span class="tag res">Research</span>:</p>
+<ul>
+<li><strong>Farrington Flexible</strong> had the highest specificity (~0.98) and positive predictive value — fewest false alarms — but lower power for small outbreaks.</li>
+<li><strong>Negative-binomial regression</strong> (UKHSA's RAMMIE) detected outbreaks most often and typically <strong>2–3 days earlier</strong>.</li>
+<li><strong>EARS C1–C3</strong> had markedly lower specificity (0.81–0.92) and are less suited to multi-purpose surveillance.</li>
+</ul>
+<p>For RADAR this suggests a pairing: a high-specificity detector to raise alerts, and a high-sensitivity detector to raise “watch” flags that only escalate when another stream agrees — exactly what fusion is for.</p>
+
+<h2>Why fusion buys time</h2>
+<!--fig:intel-rvf-->
+<p>Rift Valley fever is the clearest One Health case: heavy rainfall and flooding create mosquito breeding conditions; livestock abortions and deaths follow; human febrile illness comes later. KABS contributed to detecting the 2018 RVF outbreak in livestock and humans across three counties. <span class="tag res">Research</span></p>
+<p>Climate-based RVF models in Kenya show both promise and limits: a dynamic model using 30 years of rainfall, temperature, humidity, vegetation index and sea-surface temperature predicted observed events with high skill (Brier scores 0.007–0.022), but explained variance differed sharply by ecology — R² 0.66 in Garissa versus 0.16–0.21 in Murang'a and Kwale. <span class="tag res">Research</span> Forecasts should therefore act as a <em>prior</em> that raises sensitivity in at-risk areas, not as an alert on their own.</p>
+
+<h2>The signal card</h2>
+<p>The signal card is the hand-over object to DMT-PHE. Every field must be explainable. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Field</th><th>Content</th></tr></thead>
+<tbody>
+<tr><td>Event</td><td>MER ID and display code, hazard, place, species</td></tr>
+<tr><td>Score &amp; band</td><td>Current risk score, band, and change since last run</td></tr>
+<tr><td>Evidence</td><td>Each contributing stream: what was observed, vs. what was expected, by which detector, with links to source records</td></tr>
+<tr><td>Context</td><td>Forecast prior, neighbouring-area activity, recent similar events</td></tr>
+<tr><td>Data caveats</td><td>Late or incomplete sources, reporting artefacts, unmapped codes</td></tr>
+<tr><td>Suggested trigger card</td><td>Which DMT-PHE trigger card(s) the evidence points to — the rules engine evaluates them</td></tr>
+</tbody></table></div>
+
+<h2>Configured per outbreak category, not rebuilt</h2>
+<p>Repurposing RADAR for a new threat is a configuration change — syndrome-specific thresholds, stream weightings and escalation parameters — not a new development cycle. <span class="tag prop">Proposal</span> Configuration lives in versioned files reviewed by KNPHI epidemiologists.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Setting</th><th>Enteric (e.g. cholera)</th><th>VHF (e.g. RVF)</th><th>Febrile / resp.</th><th>Unknown aetiology</th></tr></thead>
+<tbody>
+<tr><td>Main streams</td><td>IDSR, EBS, lab, rainfall</td><td>KABS, EBS, climate, lab</td><td>IDSR, EBS, lab, EIOS</td><td>EBS, EIOS, all others</td></tr>
+<tr><td>Linking time window</td><td>Short (days)</td><td>Long (weeks)</td><td>Medium</td><td>Medium, wide geography</td></tr>
+<tr><td>Detector emphasis</td><td>High specificity</td><td>Sensitivity + fusion</td><td>Seasonal baselines</td><td>Clustering + text signals</td></tr>
+<tr><td>Forecast prior</td><td>Rainfall / flooding</td><td>Rainfall, vegetation, SST</td><td>Seasonality</td><td>None</td></tr>
+</tbody></table></div>
+<p class="sources">Illustrative starting points to be set with KNPHI and validated by back-testing.</p>
+
+<h2>How detectors are evaluated and tuned</h2>
+<ol class="steps">
+<li><b>Back-test on history.</b> Replay past seasons (including known outbreaks such as 2018 RVF and recent cholera and mpox) and measure sensitivity, specificity, positive predictive value and timeliness.</li>
+<li><b>Set an alert budget.</b> Agree with each EOC how many alerts per week it can realistically review; tune thresholds to stay within it.</li>
+<li><b>Shadow first.</b> Run new detectors silently alongside live ones before they raise alerts.</li>
+<li><b>Learn from outcomes.</b> Every confirmed and discarded event becomes a label for recalibration (<a href="12-responsible-ai.html">doc 12</a>).</li>
+</ol>
+
+<h2>Data realities to design for</h2>
+<ul>
+<li><strong>Reporting artefacts.</strong> Training drives, app outages and funding changes move counts as much as disease does. Track reporting completeness alongside cases.</li>
+<li><strong>Zero vs. missing.</strong> A KABS “zero report” is information; a missing week is not. Never treat missing as zero.</li>
+<li><strong>Delays.</strong> Weekly aggregates arrive late and get revised; use nowcasting adjustments or wait windows.</li>
+<li><strong>Small numbers.</strong> Many sub-counties have very low counts; aggregate spatially when needed.</li>
+<li><strong>Mobility and telecom data</strong> are used only where legally and operationally permitted, at minimum granularity, aggregated or de-identified. <span class="tag prop">Proposal</span></li>
+</ul>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>How many years of history can each MVP source provide?</b> Seasonal baselines need several seasons. <span class="owner">Owner: data analyst · inventory</span></li>
+<li><b>What alert budget can the national and county EOCs absorb?</b> <span class="owner">Owner: KNPHI PHEOC · MVP</span></li>
+<li><b>Which historic outbreaks are documented well enough for back-testing?</b> <span class="owner">Owner: KNPHI + KEMRI</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — operational focus (ii) predictive risk-based analytics; multi-stream integration layer; future scalability and repurposing.</li>
+<li>Noufaily A. et al. — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6736430">Comparison of statistical algorithms for daily syndromic surveillance aberration detection</a>, <i>Bioinformatics</i> 2019.</li>
+<li><a href="https://geospatialhealth.net/gh/article/view/377">Dynamic risk model for Rift Valley fever outbreaks in Kenya based on climate and disease outbreak data</a>, <i>Geospatial Health</i>.</li>
+<li>KABS evaluation — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8415615">PMC8415615</a> (2018 RVF detection).</li>
+<li>RADAR deck — slide 11 (Mpox, PHEIUE and RVF pilot case studies).</li>
+</ul>

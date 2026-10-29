@@ -1,0 +1,116 @@
+<!--inshort-->
+<ul>
+<li><strong>DMT-PHE</strong> is KNPHI's standard framework for deciding when and how far to escalate a public-health event: trigger cards, three escalation levels, support packages and 7-1-7-aligned accountability.</li>
+<li>RADAR <strong>digitises</strong> it and adds an <strong>AI agent</strong> that gathers evidence, drafts a recommendation and cites the guideline pages behind it.</li>
+<li>The rule is <strong>“LLM proposes, rules verify, a human decides”</strong>: the escalation level comes from deterministic trigger-card rules, and nothing takes effect until a named officer confirms, modifies or overrides it.</li>
+<li>Every step is logged in an auditable, time-stamped record.</li>
+</ul>
+<!--why-->
+<p>The JEE scored activation and coordination of health personnel in an emergency at 1 of 5 — its lowest score — and escalation has relied on informal discussion rather than a structured framework. Staff rotation and infrequent events mean protocols are hard to apply consistently in real time. A digitised, evidence-fed DMT-PHE makes the same decision for the same facts every time — and the AI agent makes the right guidance available in seconds rather than hours. Getting the safety design right is also what Gates 1–3 test most directly.</p>
+<!--body-->
+<h2>DMT-PHE today</h2>
+<p>KNPHI's Decision-Making Tool for Public Health Emergencies was developed with technical support from CGP and the TDDAP2 programme, validated at a national workshop in October 2025 (40+ participants, five simulation exercises), and launched in March 2026 as the primary escalation interface within the PHEOC. <span class="tag res">Research</span> <span class="tag prop">Proposal</span> It has four parts:</p>
+<div class="cards">
+<div class="card accent"><h4>Trigger cards</h4><p>Thresholds and actions per priority disease or event.</p></div>
+<div class="card accent"><h4>Escalation framework</h4><p>Level 1 (county) to Level 3 (national / regional).</p></div>
+<div class="card accent"><h4>Support packages</h4><p>Technical, HR, logistics, finance and RCCE support per level.</p></div>
+<div class="card accent"><h4>Monitoring &amp; accountability</h4><p>7-1-7-aligned MEAL framework.</p></div>
+</div>
+<div class="callout warn"><span class="ct">Confirm the trigger-card count</span><p>Sources differ: the deck mentions trigger cards for 15 priority diseases/events and a “22 ETC” card set; CGP's validation report mentions thresholds for 20 epidemic-prone diseases and events. The digitised version must start from KNPHI's current official set. <span class="tag open">Open</span></p></div>
+
+<h2>The notification logic it digitises</h2>
+<!--fig:dmt-ihr-->
+
+<h2>Escalation levels and trigger cards</h2>
+<!--fig:dmt-levels-->
+<p>Each trigger card has the same structure, which makes it straightforward to encode as a versioned decision table <span class="tag prop">Proposal</span> (from the Ebola/Marburg card in the deck):</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Trigger-card column</th><th>Becomes in the digital tool</th></tr></thead>
+<tbody>
+<tr><td>Case definitions &amp; outbreak definition</td><td>Coded criteria checked against MER fields and linked records</td></tr>
+<tr><td>Alert thresholds (early signals)</td><td>Rules that raise a “consider this card” flag from signal cards</td></tr>
+<tr><td>Escalation triggers (tiered, 3 levels)</td><td>Deterministic rules that compute the candidate level</td></tr>
+<tr><td>Required actions &amp; timelines (7-1-7)</td><td>Action checklist with due times, tracked as MER tasks</td></tr>
+<tr><td>Support package (technical / HR / logistics / finance / RCCE)</td><td>Pre-filled resource request for the GHEC-AI hand-off</td></tr>
+<tr><td>Responsible actors</td><td>Routing: who is notified and who may confirm at each level</td></tr>
+<tr><td>Monitoring &amp; de-escalation / exit criteria</td><td>Watch-period timers and closure rules</td></tr>
+</tbody></table></div>
+
+<h2>How the AI agent works</h2>
+<!--fig:dmt-agent-->
+<p>The agent draws on an expert-curated knowledge base — the DMT-PHE user guides, MoH-approved national and international outbreak guidelines, and relevant scientific literature. To prevent hallucinations it cites specific documents and pages and shows a transparent reasoning trace; the responsible EOC officer confirms or overrides each recommendation, with the justification logged. <span class="tag prop">Proposal</span></p>
+<h3>Division of labour</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Task</th><th>Done by</th><th>Why</th></tr></thead>
+<tbody>
+<tr><td>Compute candidate escalation level</td><td><b>Rules engine</b></td><td>Deterministic, testable, identical every time</td></tr>
+<tr><td>Assemble evidence and context</td><td>Agent (tools via MCP)</td><td>Saves officers the manual reconstruction</td></tr>
+<tr><td>Explain, summarise, draft actions and messages</td><td>LLM</td><td>Where language models add real value</td></tr>
+<tr><td>Check the draft</td><td><b>Validator</b></td><td>Schema valid · every claim cited · level matches the rules · no forbidden content</td></tr>
+<tr><td>Decide</td><td><b>Named officer</b></td><td>Accountability stays with people under KNPHI procedures</td></tr>
+</tbody></table></div>
+
+<h3>The recommendation contract</h3>
+<p>The LLM must return structured output that the validator can check. <span class="tag rec">Recommended</span></p>
+<pre><code>{
+  "mer_id": "…",
+  "rules_level": 2,                      // copied from rules engine, not generated
+  "recommended_level": 2,                // must equal rules_level, else flagged
+  "classification": "suspected RVF cluster",
+  "actions": [ { "action": "Deploy county RRT", "due_within_hours": 72,
+                 "citation": { "doc": "DMT-PHE user guide v1.0", "page": 34 } } ],
+  "missing_information": [ "Lab results for KABS case #22" ],
+  "reasoning_summary": "…",
+  "citations": [ { "doc": "…", "page": 12, "quote": "…" } ]
+}</code></pre>
+
+<h3>Where the model runs</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Option</th><th>Pros</th><th>Cons</th><th>Fit</th></tr></thead>
+<tbody>
+<tr><td><b>Open-weight model on KNPHI/DHA infrastructure</b></td><td>Data stays in Government custody; predictable cost; works offline from the internet</td><td>Needs a GPU and model-ops skills; smaller models than frontier APIs</td><td>Recommended for production <span class="tag rec">Recommended</span></td></tr>
+<tr><td>Government-authorised hosted endpoint</td><td>No GPU to run; can use larger models</td><td>Needs explicit authorisation, data-use agreement and security review</td><td>Fallback if GPU is not funded</td></tr>
+<tr><td>Public generative-AI API</td><td>Easiest</td><td>Identifiable or restricted data may not go there without explicit Government authorisation <span class="tag prop">Proposal</span></td><td>Development with synthetic data only</td></tr>
+</tbody></table></div>
+<p>Model choice should be made by evaluation, not reputation: shortlist two or three open-weight models of a size the GPU can serve (current families include gpt-oss, Qwen, Llama, Gemma and Mistral), run the same test set (<a href="12-responsible-ai.html">doc 12</a>) and pick on concordance, citation accuracy, Kiswahili/English handling and speed.</p>
+
+<h3>Managing the knowledge base</h3>
+<ul>
+<li>A <strong>document register</strong>: title, version, approving body, effective date, status (approved / superseded).</li>
+<li>Only <strong>approved, current</strong> documents are indexed; superseded versions are removed from retrieval but kept for audit.</li>
+<li>Chunks keep their <strong>page anchors</strong> so citations point to a real page a reviewer can open.</li>
+<li>Hybrid retrieval (keyword + vector) so exact phrases like case definitions are found reliably.</li>
+</ul>
+
+<h2>The DMT-PHE workspace</h2>
+<p>What officers see. <span class="tag rec">Recommended</span></p>
+<ol class="steps">
+<li><b>Inbox of signal cards</b> sorted by risk band and time waiting, filtered to the officer's county or national view.</li>
+<li><b>Event page</b>: timeline, map, linked records, evidence per stream, data caveats.</li>
+<li><b>Recommendation panel</b>: rules level, agent draft, citations (click to open the page), missing information.</li>
+<li><b>Decision</b>: confirm, modify or override — a reason is mandatory for modify/override, chosen from a short list plus free text.</li>
+<li><b>Actions</b>: the 7-1-7 checklist with due times; GHEC-AI request when authorised.</li>
+</ol>
+<p><strong>Timers:</strong> if a high-band signal card is not reviewed within an agreed time, the supervisor is alerted; if a Level 2–3 decision is pending, KNPHI PHEOC is alerted. Escalation should never depend on someone happening to open the app.</p>
+
+<h2>From prototype to production</h2>
+<ul>
+<li>A digitised DMT-PHE and an agentic version, developed by the consortium, already exist; the prototype (<code>dmt-agent.streamlit.app</code>) was tested on PHEIUE, RVF and mpox scenarios and benchmarked to 7-1-7 and IHR Annex 2. <span class="tag prop">Proposal</span></li>
+<li>University of Michigan (CGHE) leads the agentic decision-support architecture, guardrails, containerisation and maintenance; WSU leads integration with the MER and connectors (<a href="15-partners-governance.html">doc 15</a>).</li>
+<li>Production keeps the prototype's prompts and evaluation set as a baseline, and moves the code into the RADAR stack with the validator, audit log and access control.</li>
+</ul>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Which documents form the approved knowledge base for the MVP?</b> <span class="owner">Owner: KNPHI · MVP</span></li>
+<li><b>Who may confirm each level?</b> E.g. county surveillance coordinator for L1, county EOC manager for L2, KNPHI PHEOC incident manager for L3. <span class="owner">Owner: KNPHI</span></li>
+<li><b>Review-time limits</b> for each risk band and level before supervisors are alerted. <span class="owner">Owner: KNPHI PHEOC</span></li>
+<li><b>GPU or hosted model?</b> See <a href="04-system-architecture.html">doc 04</a>. <span class="owner">Owner: WSU + KNPHI/DHA</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — DMT-PHE decision-support layer and agentic AI version; Preliminary work.</li>
+<li>RADAR deck — slides 6–12 (DMT-PHE gaps, trigger card, data streams, AI assistant evaluation, pilot case studies, GHEC-AI complementarity).</li>
+<li>CGP — <a href="https://pandemicintelcenter.org/kenya-validates-groundbreaking-decision-making-tool-for-public-health-emergencies-dmt-phe/">Kenya validates DMT-PHE</a>.</li>
+<li>WHO — International Health Regulations (2005), Annex 2 decision instrument; <a href="https://www.who.int/news/item/19-09-2025-amended-international-health-regulations-enter-into-force">amended IHR entered into force 19 Sep 2025</a>.</li>
+</ul>

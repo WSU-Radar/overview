@@ -1,0 +1,105 @@
+<!--inshort-->
+<ul>
+<li>RADAR rolls out to the <strong>national EOC first</strong> (Gate 1), then to <strong>five priority county EOCs</strong> (Gate 2).</li>
+<li>Every site follows the same <strong>seven steps</strong>: readiness, ICT &amp; access, training, an <strong>eight-week parallel run</strong>, go/no-go, live use, support.</li>
+<li>The parallel run produces the <strong>concordance dataset</strong> by comparing RADAR and usual practice against a blinded expert panel.</li>
+<li>Adoption is designed in: champions, less (not more) work for officers, fast support, and refreshers to counter staff turnover.</li>
+</ul>
+<!--why-->
+<p>A technically excellent RADAR that county officers do not use fails every gate: SUS, documentation completeness and 7-1-7 all depend on real use. The JEE scored activation and coordination of personnel at the lowest level; uneven county readiness after devolution and frequent staff rotation are named gaps. <span class="tag prop">Proposal</span> Deployment and adoption need as much design as the software.</p>
+<!--body-->
+<h2>Rollout sequence</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Wave</th><th>Sites</th><th>Timing</th><th>Gate</th></tr></thead>
+<tbody>
+<tr><td>0 · MVP demonstration</td><td>KNPHI PHEOC (test environment)</td><td>By June 2027</td><td>Gate 1 (MVP acceptance)</td></tr>
+<tr><td>1 · National</td><td>KNPHI PHEOC — 8-week parallel run</td><td>Mid-2027</td><td>Gate 1</td></tr>
+<tr><td>2 · Counties</td><td>Five priority county EOCs <span class="tag prop">Proposal</span></td><td>Oct 2027 – Sep 2028</td><td>Gate 2</td></tr>
+<tr><td>3 · Sustain</td><td>All sites under KNPHI operation</td><td>Oct 2028 – Sep 2029 (grant ends 31 Oct 2029)</td><td>Gate 3</td></tr>
+</tbody></table></div>
+<h3>Choosing the five counties</h3>
+<p>Selection criteria to agree with KNPHI <span class="tag rec">Recommended</span>:</p>
+<ul>
+<li><strong>Outbreak burden</strong> across the four categories (e.g. cholera, RVF, VHF risk).</li>
+<li><strong>One Health relevance</strong> — pastoral and wildlife interfaces where animal signals matter.</li>
+<li><strong>Cross-border exposure</strong> — points of entry, neighbouring outbreaks.</li>
+<li><strong>Readiness</strong> — functioning county EOC, KABS and EBS coverage, connectivity, leadership commitment.</li>
+<li><strong>Overlap with DMT-PHE pilots</strong> — CGP reports that DMT-PHE pilot testing was planned in ten high-risk counties. <span class="tag res">Research</span></li>
+<li><strong>Diversity</strong> — include at least one county with weaker infrastructure so the design is tested where it is hardest.</li>
+</ul>
+
+<h2>Seven steps per site</h2>
+<!--fig:deploy-pipeline-->
+<h3>Site readiness checklist</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Area</th><th>Check</th></tr></thead>
+<tbody>
+<tr><td>People</td><td>Named EOC manager and site champion; surveillance officers identified for training; supervisor for review timers</td></tr>
+<tr><td>Workflow</td><td>Current escalation path documented; DMT-PHE paper tools in use; baseline 7-1-7 and detection-to-classification measured</td></tr>
+<tr><td>Power</td><td>Grid reliability; UPS or solar backup for EOC devices and network</td></tr>
+<tr><td>Connectivity</td><td>Measured bandwidth and uptime; Starlink installed where needed; fallback mobile data</td></tr>
+<tr><td>Devices</td><td>Laptops/monitors per role (ICT supplies budgeted per period); browser versions; security baseline</td></tr>
+<tr><td>Access</td><td>User accounts with MFA; roles assigned; data-sharing agreements cover the county's sources</td></tr>
+<tr><td>Support</td><td>Helpdesk contact known; escalation path for incidents; paper fallback procedure printed</td></tr>
+</tbody></table></div>
+
+<h2>Training plan</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Audience</th><th>Learns</th><th>Format</th></tr></thead>
+<tbody>
+<tr><td>EOC managers &amp; incident managers</td><td>Signal cards, confirming levels, overrides, 7-1-7 dashboard, GHEC-AI approvals</td><td>Workshop + simulation exercise (SIMEX)</td></tr>
+<tr><td>Surveillance officers</td><td>Verification, event pages, recording actions, back-entry</td><td>Hands-on sessions, job aids, mentorship</td></tr>
+<tr><td>Data analysts &amp; stewards</td><td>Quarantine queues, merges/splits, data-quality dashboard, analytics configuration</td><td>Technical training</td></tr>
+<tr><td>ICT administrators</td><td>Accounts, backups, monitoring, patching, incident response</td><td>Runbooks + shadowing the engineering team</td></tr>
+<tr><td>Trainers (ToT)</td><td>All of the above + facilitation</td><td>Training of trainers so KNPHI can train new staff after the grant</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>Competency assessment</strong> after training, with records kept — an Output 4 deliverable for Gate 2. <span class="tag prop">Proposal</span></li>
+<li><strong>Outbreak user guides</strong> for all four outbreak categories, plus algorithms and workflow materials — Output 5. <span class="tag prop">Proposal</span></li>
+<li><strong>Refreshers</strong> every six months and on-boarding packs for new staff, because rotation and infrequent events erode practice. <span class="tag rec">Recommended</span></li>
+<li><strong>Simulation drills</strong> using RADAR's synthetic outbreak replay, so staff practise before a real event.</li>
+</ul>
+
+<h2>The eight-week parallel run</h2>
+<!--fig:deploy-parallel-->
+<p>The proposal and stage gates require an eight-week parallel validation deployment of DMT-PHE at the national EOC, generating a concordance dataset against independent expert-panel review. <span class="tag prop">Proposal</span> Design points <span class="tag rec">Recommended</span>:</p>
+<ul>
+<li><strong>Blinding.</strong> Panel members see the same facts but not the AI or usual-practice answer. For the first weeks, keep the AI recommendation hidden from decision-makers (shadow mode) so the comparison is clean; reveal it once the protocol allows.</li>
+<li><strong>Enough cases.</strong> Real Level 2–3 events in eight weeks may be few. Pre-agree a minimum number of assessed events and top up with structured simulation cases and retrospective events so the concordance estimate is meaningful.</li>
+<li><strong>Pre-registered analysis.</strong> Define concordance (exact level agreement, plus a chance-corrected statistic such as weighted kappa), timeliness and documentation completeness before the run starts (<a href="14-mel-framework.html">doc 14</a>).</li>
+<li><strong>Weekly discrepancy review.</strong> Every disagreement is reviewed by KNPHI and UM/CGHE; safety concerns stop the clock.</li>
+<li><strong>County runs repeat this</strong> in Phase 2, with AI retraining on national operational data in between.</li>
+</ul>
+
+<h2>Adoption by design</h2>
+<div class="cards">
+<div class="card"><h4>Less work, not more</h4><p>RADAR must remove re-typing and phone reconstruction. Measure time-on-task; cut any step that adds burden.</p></div>
+<div class="card"><h4>Site champions</h4><p>One trained champion per EOC, first line of support and feedback channel.</p></div>
+<div class="card"><h4>Closing the loop</h4><p>Show officers what happened to their signals and how their overrides improved the system.</p></div>
+<div class="card"><h4>Official backing</h4><p>Update KNPHI SOPs so RADAR is the recognised record, not an optional extra.</p></div>
+</div>
+
+<h2>Support model</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tier</th><th>Who</th><th>Handles</th><th>Target response</th></tr></thead>
+<tbody>
+<tr><td>L1</td><td>Site champion + CGP helpdesk</td><td>How-to questions, accounts, password resets, simple data fixes</td><td>Same working day</td></tr>
+<tr><td>L2</td><td>KNPHI ICT / data stewards</td><td>Connector failures, data-quality issues, configuration</td><td>Next working day; 4 h during an active Level 2–3 event</td></tr>
+<tr><td>L3</td><td>WSU / UM engineering, enterprise partner</td><td>Bugs, outages, security incidents, model issues</td><td>1 h for outages during an active event</td></tr>
+</tbody></table></div>
+<p class="sources">Targets are a starting proposal <span class="tag rec">Recommended</span>; formalise in a support agreement before the first county go-live.</p>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Which five counties, and in what order?</b> <span class="owner">Owner: KNPHI · before Gate 1</span></li>
+<li><b>Minimum number of assessed events for the national parallel run.</b> <span class="owner">Owner: MEL + KEMRI · protocol</span></li>
+<li><b>Is shadow mode acceptable to KNPHI for the first weeks?</b> <span class="owner">Owner: KNPHI</span></li>
+<li><b>Who funds county connectivity and devices after the grant?</b> Feeds the recurrent budget (<a href="16-budget-resources.html">doc 16</a>). <span class="owner">Owner: KNPHI + counties</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — Phase 1–2 descriptions; Budget (training materials, ICT, Starlink, participant reimbursements).</li>
+<li>Stage-gate paper — Gate 1 milestone 4 (parallel validation); Gate 2 milestones 1, 4, 5.</li>
+<li>RADAR deck — slide 7 (gaps: county readiness, workforce turnover); slide 14 (CGP role: rollout, training, helpdesk).</li>
+<li>CGP — <a href="https://pandemicintelcenter.org/kenya-validates-groundbreaking-decision-making-tool-for-public-health-emergencies-dmt-phe/">DMT-PHE validation and planned pilots</a>.</li>
+</ul>

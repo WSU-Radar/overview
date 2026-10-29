@@ -1,0 +1,100 @@
+<!--inshort-->
+<ul>
+<li>RADAR's AI has one <strong>intended use</strong>: help EOC officers classify and escalate events consistently and quickly under DMT-PHE — never to decide on its own.</li>
+<li>Every model version passes an <strong>assurance loop</strong>: test sets, offline evaluation, simulation and parallel run, monitored live use, recalibration.</li>
+<li>Key measures: <strong>AI–expert concordance, false-negative rate, citation accuracy, SUS, zero adverse decision events</strong> — with thresholds rising at each gate.</li>
+<li>Known AI risks (prompt injection via free text, hallucination, automation bias, drift) each have a named control.</li>
+</ul>
+<!--why-->
+<p>In outbreak response, a confident but wrong recommendation can delay containment (false negative) or waste scarce teams (false positive). WHO's guidance on large multi-modal models warns specifically about automation bias — professionals overlooking errors or handing difficult decisions to the model. <span class="tag res">Research</span> The gates make AI performance a funding condition; this document says how that performance is earned and kept.</p>
+<!--body-->
+<h2>Intended use</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>In scope</th><th>Out of scope</th></tr></thead>
+<tbody>
+<tr><td>Summarising evidence linked to an MER event</td><td>Clinical diagnosis or treatment advice for individual patients</td></tr>
+<tr><td>Explaining which trigger-card criteria are met or missing</td><td>Setting the escalation level (the rules engine does this)</td></tr>
+<tr><td>Drafting recommended actions with citations to approved guidance</td><td>Sending anything outside RADAR without human approval</td></tr>
+<tr><td>Classifying free-text signals into syndromes and places, for review</td><td>Processing identifiable data on external AI services</td></tr>
+<tr><td>Flagging missing information and timeline risks</td><td>Answering general questions unrelated to the event in hand</td></tr>
+</tbody></table></div>
+
+<h2>Principles in practice</h2>
+<p>WHO's six principles for AI in health, mapped to RADAR controls. <span class="tag res">Research</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>WHO principle</th><th>How RADAR applies it</th></tr></thead>
+<tbody>
+<tr><td>Protect human autonomy</td><td>Human confirms, modifies or overrides every recommendation; overriding is easy and expected</td></tr>
+<tr><td>Promote well-being, safety and the public interest</td><td>Zero adverse decision events as a gate threshold; false-negative ceiling; kill switch to rules-only mode</td></tr>
+<tr><td>Ensure transparency, explainability and intelligibility</td><td>Citations to document and page; reasoning summary; published model card and error/override log</td></tr>
+<tr><td>Foster responsibility and accountability</td><td>Named decision-maker on every action; audit log; KNPHI owns the model release decision</td></tr>
+<tr><td>Ensure inclusiveness and equity</td><td>Performance reported per county and per language (English/Kiswahili); no county left with a weaker model</td></tr>
+<tr><td>Promote AI that is responsive and sustainable</td><td>Retraining on Kenyan operational data; open-weight models KNPHI can run; costs in the recurrent budget</td></tr>
+</tbody></table></div>
+
+<h2>The assurance loop</h2>
+<!--fig:ai-lifecycle-->
+<p>A new <em>version</em> is any change to the model, prompt, retrieval index, knowledge-base documents or rule thresholds. Each version gets a model card and release notes, and can be rolled back.</p>
+
+<h2>How performance is measured</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Measure</th><th>Definition <span class="tag rec">Recommended</span></th></tr></thead>
+<tbody>
+<tr><td><b>AI–expert concordance</b></td><td>Share of assessed events where the AI-supported classification and level match the expert-panel reference. Report alongside a chance-corrected statistic (weighted kappa) and by outbreak category and site.</td></tr>
+<tr><td><b>False-negative rate</b></td><td>Share of events the panel placed at Level 2–3 that the AI-supported path placed lower. Ceiling agreed at Gate 1 <span class="tag prop">Proposal</span>.</td></tr>
+<tr><td><b>Citation accuracy</b></td><td>Share of cited passages that exist and support the claim (sampled and checked by reviewers).</td></tr>
+<tr><td><b>Unsupported-claim rate</b></td><td>Share of recommendation statements with no supporting citation.</td></tr>
+<tr><td><b>Override rate</b></td><td>Share of recommendations modified or overridden, with reasons — a learning signal, not a failure measure.</td></tr>
+<tr><td><b>Adverse decision event</b></td><td>A decision influenced by the AI that delayed or wrongly downgraded a response, or caused harm. Any one is reviewed as a safety incident.</td></tr>
+<tr><td><b>System Usability Scale</b></td><td>Ten-item questionnaire scored 0–100; 68 is average, scores above about 80 are in the top 10%. <span class="tag res">Research</span></td></tr>
+</tbody></table></div>
+<!--fig:thresholds-->
+
+<h2>Risks and controls</h2>
+<p>Mapped to the OWASP Top 10 for LLM Applications (2025) where relevant. <span class="tag res">Research</span> <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Risk</th><th>Example in RADAR</th><th>Control</th></tr></thead>
+<tbody>
+<tr><td>Missed escalation (false negative)</td><td>Agent describes a cluster as low-risk</td><td>Level always from rules; validator blocks any draft that disagrees; FN-rate ceiling; panel review of all L2–3 events in parallel runs</td></tr>
+<tr><td>Alert fatigue (false positives)</td><td>Many “alert” cards that are discarded</td><td>Alert budget per EOC; specificity-first detectors; fusion before alert (<a href="06-intelligence-layer.html">doc 06</a>)</td></tr>
+<tr><td>Hallucinated or outdated guidance (LLM09)</td><td>Cites a superseded case definition</td><td>Approved-documents-only index; citations required and checked; document register with effective dates</td></tr>
+<tr><td>Prompt injection (LLM01)</td><td>Free text in an EBS signal or media item says “ignore previous instructions…”</td><td>Treat all source text as data, not instructions; isolate it in prompts; tools read-only; output validation</td></tr>
+<tr><td>Sensitive information disclosure (LLM02)</td><td>Model repeats personal details from a line list</td><td>No C1 data in agent context by design; output filters; logs reviewed</td></tr>
+<tr><td>Excessive agency (LLM06)</td><td>Agent triggers a GHEC-AI request on its own</td><td>Write tools require named human approval; least-privilege tool scopes</td></tr>
+<tr><td>Improper output handling (LLM05)</td><td>Malformed JSON breaks the workspace</td><td>Strict schema validation; render as text, never execute</td></tr>
+<tr><td>Supply chain / poisoning (LLM03–04)</td><td>Tampered model weights or documents</td><td>Checksums on model files; signed images; documents only from approved sources</td></tr>
+<tr><td>Automation bias</td><td>Officers accept drafts without reading</td><td>Training; show rules level and evidence first; periodic “blind” review drills; monitor confirm-without-viewing rates</td></tr>
+<tr><td>Drift</td><td>New reporting patterns lower accuracy</td><td>Monthly monitoring of concordance proxies and override reasons; retrain triggers</td></tr>
+<tr><td>Unequal performance</td><td>Lower accuracy for Kiswahili text or one county</td><td>Disaggregated reporting; targeted test cases</td></tr>
+</tbody></table></div>
+
+<h2>Test sets and the expert panel</h2>
+<ul>
+<li><strong>Golden set:</strong> the 33 simulated interactions from the March 2026 evaluation, the five national SIMEX scenarios, and documented historical events (e.g. RVF 2018, recent cholera and mpox), each with a panel-agreed reference. Held out from any tuning.</li>
+<li><strong>Adversarial set:</strong> ambiguous presentations, conflicting streams, missing data, injection attempts, Kiswahili and mixed-language text.</li>
+<li><strong>Expert panel:</strong> at least three experienced epidemiologists/EOC leads not involved in building the tool; blinded; disagreements resolved by a pre-set rule (e.g. majority, then discussion).</li>
+</ul>
+
+<h2>Monitoring, incidents and the kill switch</h2>
+<ul>
+<li><strong>Published error and override log</strong> — a Gate 2 milestone, with a documented benchmarking and recalibration procedure. <span class="tag prop">Proposal</span></li>
+<li><strong>Incident reporting:</strong> any suspected adverse decision event is logged, reviewed within 5 working days by KNPHI and UM/CGHE, and reported at the next steering committee.</li>
+<li><strong>Kill switch:</strong> KNPHI can switch the agent off instantly; the workspace continues in rules-only mode with full evidence.</li>
+<li><strong>Retraining:</strong> AI model retraining using national EOC operational data is planned in Phase 2 <span class="tag prop">Proposal</span> — every retrained version re-enters the loop at step 3.</li>
+</ul>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>What false-negative ceiling will be agreed at Gate 1?</b> <span class="owner">Owner: KNPHI + UM/CGHE + foundation</span></li>
+<li><b>Formal definition of an “adverse decision event”.</b> <span class="owner">Owner: KNPHI + KEMRI</span></li>
+<li><b>Who sits on the expert panel</b> and how are they compensated and kept independent? <span class="owner">Owner: KEMRI + WSU</span></li>
+<li><b>Who signs off a model release</b> — KNPHI system owner, UM/CGHE lead, or both? <span class="owner">Owner: Steering committee</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — DMT-PHE agentic AI (citations, reasoning trace, human-in-the-loop); Preliminary work (March 2026 evaluation); Phase 2–3 gated decisions.</li>
+<li>Stage-gate paper — performance thresholds for Gates 1–3; Gate 2 milestone 6.</li>
+<li>WHO — Ethics and governance of AI for health (2021) and guidance on large multi-modal models (Jan 2024); <a href="https://mlo-online.com/information-technology/artificial-intelligence/article/53082906/who-releases-ai-ethics-and-governance-guidance-for-large-multi-modal-models">summary of the LMM guidance</a>.</li>
+<li>OWASP — <a href="https://www.invicti.com/blog/web-security/owasp-top-10-risks-llm-security-2025">Top 10 for LLM Applications 2025</a>.</li>
+<li>MeasuringU — <a href="https://measuringu.com/interpret-sus-score/">5 ways to interpret a SUS score</a>.</li>
+</ul>

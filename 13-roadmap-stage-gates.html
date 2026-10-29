@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>13 · Roadmap &amp; Stage Gates — RADAR</title>
+<meta name="description" content="The three-year plan from MVP to KNPHI transition, the three funding gates, their milestones and the thresholds that must be met.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html" aria-current="page"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 13</span><span>·</span><span class="track"><i style="background:#E16727"></i>Delivery &amp; Management</span></div><h1>Roadmap &amp; Stage Gates</h1><p class="lede">The three-year plan from MVP to KNPHI transition, the three funding gates, their milestones and the thresholds that must be met.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Leadership &amp; funder</span><span class="chip">Engineering</span><span class="chip">M&amp;E / research</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>Three years, <strong>three stage gates</strong>: Gate 1 (MVP + national validation, to Sep 2027), Gate 2 (county deployment, to Sep 2028), Gate 3 (evaluation + transition, to Sep 2029, verified at the final report). Payments are attached to Gates 1 and 2.</li>
+<li>The <strong>four-component MVP</strong> is a hard internal deadline: accepted by KNPHI by <strong>30 June 2027</strong>. A partly delivered MVP cannot pass Gate 1.</li>
+<li>Thresholds <strong>rise</strong> at each gate: concordance 0.85 → 0.88 → 0.90; SUS 75 → 78 → 80; documentation completeness 80% → 85% → 90%.</li>
+<li>A few figures differ between the proposal, the stage-gate paper and the deck — they are listed here to settle at kick-off.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>Payments are tied to gates, and each gate asks for evidence of both product quality (accuracy, usability) and real-world effect (7-1-7, latency). Planning backwards from those tests — especially the MVP deadline and the pre-deployment baseline, which cannot be recreated later — is the difference between passing on time and asking for a remediation window.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="01-project-overview.html"><span class="t">01 · Project Overview</span><span class="r">The outcomes promised in the proposal become the stage-gate thresholds.</span></a><a class="conn" href="09-deployment-adoption.html"><span class="t">09 · Deployment &amp; Adoption</span><span class="r">Site rollout is the core of Gate 2.</span></a><a class="conn" href="12-responsible-ai.html"><span class="t">12 · Responsible AI</span><span class="r">Concordance, SUS and adverse-event thresholds are gate criteria.</span></a><a class="conn" href="14-mel-framework.html"><span class="t">14 · MEL Framework</span><span class="r">MEL produces the evidence each gate is judged on.</span></a><a class="conn" href="15-partners-governance.html"><span class="t">15 · Partners &amp; Governance</span><span class="r">The governance structure decides who signs off each gate.</span></a><a class="conn" href="16-budget-resources.html"><span class="t">16 · Budget &amp; Resources</span><span class="r">Funding is released per gate and period.</span></a><a class="conn" href="17-risk-register.html"><span class="t">17 · Risk Register</span><span class="r">Open risks are reviewed at every gate decision.</span></a></div><div class="conn-col"><h4>Informs →</h4><span class="conn"><span class="r">—</span></span></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#three-year-timeline">Three-year timeline</a></li><li><a href="#gate-1-mvp-delivered-and-platform-validated">Gate 1 — MVP delivered and platform validated</a></li><li><a href="#gate-2-deployed-hardened-and-validated-in-operational-use">Gate 2 — Deployed, hardened and validated in operational use</a></li><li><a href="#gate-3-evaluated-institutionalised-and-transitioned">Gate 3 — Evaluated, institutionalised and transitioned</a></li><li><a href="#thresholds-side-by-side">Thresholds side by side</a></li><li><a href="#how-a-gate-decision-is-made">How a gate decision is made</a></li><li><a href="#differences-between-the-source-documents">Differences between the source documents</a></li><li><a href="#first-100-days">First 100 days</a></li><li><a href="#critical-path">Critical path</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="three-year-timeline"><span class="sec">1</span>Three-year timeline</h2>
+<figure class="fig wide" id="fig-roadmap-gantt">
+<svg viewBox="0 0 760 350" role="img" aria-label="Gantt chart from November 2026 to October 2029 with Phase 0 MVP, baseline measurement, Phase 1 platform and national parallel run, Phase 2 county deployment, Phase 3 evaluation and transition, endline evaluation; milestones MVP acceptance 30 June 2027 and gates 1 to 3 with payments 2 and 3." xmlns="http://www.w3.org/2000/svg">
+<line x1="196.0" y1="18.0" x2="196.0" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="226.9" y1="18.0" x2="226.9" y2="300.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="412.2" y1="18.0" x2="412.2" y2="300.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="597.6" y1="18.0" x2="597.6" y2="300.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="196.0" y1="24.0" x2="196.0" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="242.3" y1="24.0" x2="242.3" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="288.7" y1="24.0" x2="288.7" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="335.0" y1="24.0" x2="335.0" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="381.3" y1="24.0" x2="381.3" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="427.7" y1="24.0" x2="427.7" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="474.0" y1="24.0" x2="474.0" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="520.3" y1="24.0" x2="520.3" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="566.7" y1="24.0" x2="566.7" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="613.0" y1="24.0" x2="613.0" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="659.3" y1="24.0" x2="659.3" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="705.7" y1="24.0" x2="705.7" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="752.0" y1="24.0" x2="752.0" y2="300.0" stroke="#EBEBEB" stroke-width="1"/>
+<text x="200.0" y="12.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">2026</text>
+<text x="230.9" y="12.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">2027</text>
+<text x="416.2" y="12.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">2028</text>
+<text x="601.6" y="12.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">2029</text>
+<text x="0.0" y="36.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Phase 0 · MVP</text>
+<text x="0.0" y="50.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">4 components</text>
+<rect x="197.0" y="34.0" width="90.7" height="16.0" rx="4" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="0.0" y="68.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Baseline measurement</text>
+<text x="0.0" y="82.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">pre-deployment</text>
+<rect x="212.4" y="66.0" width="75.2" height="16.0" rx="4" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="0.0" y="100.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Phase 1 · platform + national EOC</text>
+<text x="0.0" y="114.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">connectors, guides, TPP</text>
+<rect x="289.7" y="98.0" width="75.2" height="16.0" rx="4" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="0.0" y="132.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">8-week parallel run</text>
+<text x="0.0" y="146.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">national EOC</text>
+<rect x="328.3" y="130.0" width="28.9" height="16.0" rx="4" fill="#002D61" stroke="#002D61" stroke-width="1"/>
+<text x="0.0" y="164.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Phase 2 · 5 county EOCs</text>
+<text x="0.0" y="178.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">hardening, training</text>
+<rect x="366.9" y="162.0" width="183.3" height="16.0" rx="4" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="0.0" y="196.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Phase 3 · evaluate + transition</text>
+<text x="0.0" y="210.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">handover to KNPHI</text>
+<rect x="552.2" y="194.0" width="198.8" height="16.0" rx="4" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="0.0" y="228.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Endline evaluation</text>
+<text x="0.0" y="242.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">mixed methods</text>
+<rect x="644.9" y="226.0" width="75.2" height="16.0" rx="4" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<line x1="319.6" y1="26.0" x2="319.6" y2="270.0" stroke="#A60F2D" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polygon points="319.6,270.0 326.6,279.0 319.6,288.0 312.6,279.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="309.6" y="314.0" font-size="11" font-weight="700" text-anchor="end" dominant-baseline="middle" fill="#A60F2D">MVP accepted</text>
+<text x="309.6" y="328.0" font-size="9.5" font-weight="500" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">30 Jun 2027</text>
+<line x1="365.9" y1="26.0" x2="365.9" y2="270.0" stroke="#4D4D4D" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polygon points="365.9,270.0 372.9,279.0 365.9,288.0 358.9,279.0" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="375.9" y="296.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">Gate 1</text>
+<text x="375.9" y="310.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">PR 1 · Payment 2</text>
+<line x1="551.2" y1="26.0" x2="551.2" y2="270.0" stroke="#4D4D4D" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polygon points="551.2,270.0 558.2,279.0 551.2,288.0 544.2,279.0" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="561.2" y="296.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">Gate 2</text>
+<text x="561.2" y="310.0" font-size="9.5" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">PR 2 · Payment 3</text>
+<line x1="752.0" y1="26.0" x2="752.0" y2="270.0" stroke="#4D4D4D" stroke-width="1.6" stroke-dasharray="4 3"/>
+<polygon points="752.0,270.0 759.0,279.0 752.0,288.0 745.0,279.0" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="742.0" y="296.0" font-size="11" font-weight="700" text-anchor="end" dominant-baseline="middle" fill="#4D4D4D">Gate 3</text>
+<text x="742.0" y="310.0" font-size="9.5" font-weight="500" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">final report</text>
+</svg>
+<figcaption><b>Three years, three gates.</b> Bars follow the stage-gate paper (the funding schedule). The MVP is a hard internal deadline inside Gate 1; the eight-week parallel run and the pre-deployment baseline must both finish before the Gate 1 report. Placement of the parallel run and baseline within their windows is a recommendation.</figcaption>
+</figure>
+<div class="table-wrap"><table>
+<thead><tr><th>Proposal phase</th><th>Content</th><th>Stage-gate mapping</th></tr></thead>
+<tbody>
+<tr><td><b>Phase 0</b> · months 1–6</td><td>MVP: agreed MER; initial data flows for priority sources; integrated DMT-PHE workflow (ingest → classify → escalate → human confirmation); initial RADAR/DMT-PHE–GHEC-AI interface specs with Sobek</td><td rowspan="2">Gate 1 · Nov 2026 – Sep 2027 · Progress Report 1 · Payment 2</td></tr>
+<tr><td><b>Phase 1</b> · months 7–12</td><td>Platform preparation, dataset inventory and mapping, priority connectors, outbreak user guides, national DMT-PHE deployment plan, TPP and architecture, GHEC-AI interface prototype, 8-week national parallel run</td></tr>
+<tr><td><b>Phase 2</b> · year 1–2</td><td>Deployment and parallel validation at national and five county EOCs; site readiness, ICT, training; AI retraining; hardening, load and security testing; deployment on KNPHI/DHA infrastructure</td><td>Gate 2 · Oct 2027 – Sep 2028 · Progress Report 2 · Payment 3</td></tr>
+<tr><td><b>Phase 3</b> · year 2–3</td><td>Prospective evaluation, endline, scale-up evidence and policy brief, KNPHI operational transition, regional dissemination (Africa CDC, WHO)</td><td>Gate 3 · Oct 2028 – Sep 2029 · Final report</td></tr>
+</tbody></table></div>
+
+<h2 id="gate-1-mvp-delivered-and-platform-validated"><span class="sec">2</span>Gate 1 — MVP delivered and platform validated</h2>
+<p>Reporting period November 2026 – September 2027. Decision: proceed to national and county deployment, or hold and remediate. <span class="tag prop">Proposal</span></p>
+<h3>Milestones</h3>
+<ol>
+<li>RADAR MVP demonstrated and <strong>accepted by KNPHI by June 2027</strong>, with all four components (MER; functioning data flows for priority sources; integrated DMT-PHE workflow; GHEC-AI interface specifications agreed with Sobek).</li>
+<li>Technical Product Profile and architecture signed off by WSU, UM/CGHE, KNPHI/DHA and the enterprise software partner.</li>
+<li>Dataset inventory and system mapping complete; priority connectors and API/MCP interfaces working; outbreak user guides drafted for all four categories; national DMT-PHE deployment plan approved.</li>
+<li>Eight-week parallel validation at the national EOC completed, generating a concordance dataset against independent expert-panel review.</li>
+<li>Governance conditions met: KEMRI SERU amendment, WSU IRB extension, data-sharing agreements/MOUs for all MVP data streams.</li>
+<li>Baseline measured and reported: detection-to-classification time, detection-to-escalation latency and 7-1-7 compliance at the national EOC before RADAR deployment.</li>
+</ol>
+<h3>Thresholds</h3>
+<ul>
+<li>AI–expert concordance ≥ 0.85 on the parallel-validation dataset</li>
+<li>SUS ≥ 75 among national EOC users</li>
+<li>DMT-PHE documentation completeness ≥ 80% across escalation events</li>
+<li>Zero adverse decision events attributable to the AI layer</li>
+<li>Minimum event record agreed with KNPHI and in operational use</li>
+<li>Baseline 7-1-7 and detection-to-classification measures documented and agreed</li>
+</ul>
+<div class="callout warn"><span class="ct">MVP rule</span><p>If the MVP is not accepted by <strong>30 June 2027</strong>, the consortium notifies the foundation within 30 days with a remediation plan — not waiting for the progress report. Gate 1 cannot be passed on a partially delivered MVP, because Gate 2 depends on all four components. <span class="tag prop">Proposal</span></p></div>
+
+<h2 id="gate-2-deployed-hardened-and-validated-in-operational-use"><span class="sec">3</span>Gate 2 — Deployed, hardened and validated in operational use</h2>
+<p>Reporting period October 2027 – September 2028. Decision: proceed to prospective evaluation and KNPHI transition, or hold scale-up. <span class="tag prop">Proposal</span></p>
+<h3>Milestones</h3>
+<ol>
+<li>RADAR and AI-enabled DMT-PHE in routine use at the national EOC and five priority county EOCs, with readiness assessments, ICT setup and training complete at every site.</li>
+<li>Product hardening complete: load, cybersecurity and penetration testing, interface validation, deployment on KNPHI/DHA-approved infrastructure, with test reports available to the foundation.</li>
+<li>GHEC-AI escalation-to-response hand-off validated in live workflow — only authorised, minimum-necessary information passes.</li>
+<li>EOC staff trained at national and county level with training records and competency results (Output 4).</li>
+<li>Validated outbreak user guides, algorithms, workflow and training materials for all four categories (Output 5).</li>
+<li>AI model retrained on national EOC operational data, with a documented benchmarking and recalibration procedure and a published error and override log.</li>
+<li>Minimum event record published and adopted as a KNPHI standard.</li>
+</ol>
+<h3>Thresholds</h3>
+<ul>
+<li>Dataset integration ≥ 80% of the baseline inventory</li>
+<li>AI–expert concordance ≥ 0.88 at every deployment site</li>
+<li>SUS ≥ 78 at every site</li>
+<li>Documentation completeness ≥ 85%</li>
+<li>Zero adverse decision events attributable to the AI layer</li>
+<li>Median signal detection → structured DMT-PHE classification ≤ 48 hours</li>
+<li>Measurable reduction vs. baseline in 7-1-7 detection and notification timelines at the national EOC and a majority of county sites</li>
+</ul>
+
+<h2 id="gate-3-evaluated-institutionalised-and-transitioned"><span class="sec">4</span>Gate 3 — Evaluated, institutionalised and transitioned</h2>
+<p>Reporting period October 2028 – September 2029; verified at the final report; no payment attached. Decision: confirm close-out and inform any follow-on investment. <span class="tag prop">Proposal</span></p>
+<h3>Milestones</h3>
+<ol>
+<li>Prospective evaluation and endline assessment completed by WSU with KNPHI.</li>
+<li>KNPHI operational transition: system on Government infrastructure, admin rights transferred, maintenance, support and security procedures handed over.</li>
+<li>Recurrent budget pathway documented and reflected in a KNPHI budget submission or departmental statement.</li>
+<li>Scale-up evidence report and policy brief (Output 6).</li>
+<li>Two manuscripts submitted to peer-reviewed journals, with preprints.</li>
+<li>Regional dissemination through Africa CDC epidemic-intelligence networks and the WHO Preparedness Data Exchange.</li>
+<li>Open outputs released: de-identified/aggregated datasets, metadata, code, data dictionaries, model documentation.</li>
+</ol>
+<h3>Thresholds</h3>
+<ul>
+<li>AI–expert concordance ≥ 0.90 · SUS ≥ 80 · documentation completeness ≥ 90%</li>
+<li>False-negative rate below the ceiling agreed at Gate 1</li>
+<li>Sustained reduction in detection-to-escalation latency vs. baseline</li>
+<li>Demonstrated improvement in 7-1-7 compliance vs. baseline at national and county sites</li>
+</ul>
+
+<h2 id="thresholds-side-by-side"><span class="sec">5</span>Thresholds side by side</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Measure</th><th class="num">Prelim. (Mar 2026)</th><th class="num">Gate 1</th><th class="num">Gate 2</th><th class="num">Gate 3</th></tr></thead>
+<tbody>
+<tr><td>AI–expert concordance</td><td class="num">0.924</td><td class="num">≥ 0.85</td><td class="num">≥ 0.88</td><td class="num">≥ 0.90</td></tr>
+<tr><td>System Usability Scale</td><td class="num">85.2</td><td class="num">≥ 75</td><td class="num">≥ 78 every site</td><td class="num">≥ 80</td></tr>
+<tr><td>Documentation completeness</td><td class="num">—</td><td class="num">≥ 80%</td><td class="num">≥ 85%</td><td class="num">≥ 90%</td></tr>
+<tr><td>Adverse decision events (AI)</td><td class="num">0 true risks</td><td class="num">0</td><td class="num">0</td><td class="num">—</td></tr>
+<tr><td>Dataset integration</td><td class="num">—</td><td class="num">inventory</td><td class="num">≥ 80%</td><td class="num">—</td></tr>
+<tr><td>Signal → classification (median)</td><td class="num">—</td><td class="num">baseline</td><td class="num">≤ 48 h</td><td class="num">—</td></tr>
+<tr><td>Detection → escalation latency</td><td class="num">—</td><td class="num">baseline</td><td class="num">—</td><td class="num">sustained ↓</td></tr>
+<tr><td>7-1-7 compliance</td><td class="num">—</td><td class="num">baseline</td><td class="num">↓ vs. baseline</td><td class="num">↑ vs. baseline</td></tr>
+<tr><td>False-negative rate</td><td class="num">—</td><td class="num">ceiling agreed</td><td class="num">—</td><td class="num">below ceiling</td></tr>
+</tbody></table></div>
+<p>See <a href="12-responsible-ai.html">doc 12</a> for how each AI measure is defined, and <a href="14-mel-framework.html">doc 14</a> for data sources.</p>
+
+<h2 id="how-a-gate-decision-is-made"><span class="sec">6</span>How a gate decision is made</h2>
+<figure class="fig" id="fig-gate-decision">
+<svg viewBox="0 0 760 236" role="img" aria-label="Flow: evidence pack, gate review, decision whether all milestones and thresholds are met; yes leads to proceed and payment release; no leads to hold and remediation plan within 30 days, then re-review." xmlns="http://www.w3.org/2000/svg">
+<polyline points="150.0,105.0 190.0,105.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="190.0,105.0 182.0,100.5 182.0,109.5" fill="#4D4D4D"/>
+<polyline points="340.0,105.0 380.0,105.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="380.0,105.0 372.0,100.5 372.0,109.5" fill="#4D4D4D"/>
+<polyline points="530.0,91.0 556.0,91.0 556.0,45.0 580.0,45.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="580.0,45.0 572.0,40.5 572.0,49.5" fill="#A60F2D"/>
+<polyline points="530.0,119.0 556.0,119.0 556.0,165.0 580.0,165.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="580.0,165.0 572.0,160.5 572.0,169.5" fill="#4D4D4D"/>
+<polyline points="670.0,200.0 670.0,222.0 265.0,222.0 265.0,140.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="265.0,140.0 260.5,148.0 269.5,148.0" fill="#4D4D4D"/>
+<rect x="0.0" y="70.0" width="150.0" height="70.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="75.0" y="88.2" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Evidence pack</text>
+<text x="75.0" y="109.1" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">MEL data · test</text>
+<text x="75.0" y="122.9" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">reports · approvals</text>
+<rect x="190.0" y="70.0" width="150.0" height="70.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="265.0" y="88.2" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Gate review</text>
+<text x="265.0" y="109.1" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">WSU · KNPHI ·</text>
+<text x="265.0" y="122.9" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">foundation</text>
+<rect x="380.0" y="70.0" width="150.0" height="70.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="455.0" y="97.3" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">All milestones +</text>
+<text x="455.0" y="112.7" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">thresholds met?</text>
+<rect x="580.0" y="10.0" width="180.0" height="70.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="670.0" y="28.2" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Proceed</text>
+<text x="670.0" y="49.1" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">payment released · next</text>
+<text x="670.0" y="62.9" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">phase</text>
+<rect x="580.0" y="130.0" width="180.0" height="70.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="670.0" y="155.1" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Hold</text>
+<text x="670.0" y="176.0" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">remediation plan ≤ 30 days</text>
+<text x="556.0" y="70.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">yes</text>
+<text x="556.0" y="148.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">no</text>
+<text x="450.0" y="222.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">re-review after fixes</text>
+</svg>
+<figcaption><b>How a gate decision is made.</b> The consortium assembles the evidence pack; the review checks every milestone and threshold. A partly met gate is a hold, not a pass. For the MVP specifically, if it is not accepted by 30 June 2027 the foundation is notified within 30 days with a remediation plan — without waiting for the progress report.</figcaption>
+</figure>
+
+<h2 id="differences-between-the-source-documents"><span class="sec">7</span>Differences between the source documents</h2>
+<p>To settle at kick-off so everyone plans against the same numbers. <span class="tag open">Open</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Item</th><th>Proposal</th><th>Stage-gate paper</th><th>Deck</th><th>Suggested resolution</th></tr></thead>
+<tbody>
+<tr><td>Number of county EOCs in Phase 2</td><td>Five</td><td>Five</td><td>Four</td><td>Five (funding schedule); update the deck</td></tr>
+<tr><td>Gate 2 concordance</td><td>≥ 0.85</td><td>≥ 0.88 (rising standard)</td><td>≥ 0.88</td><td>0.88, as the stage-gate paper proposes</td></tr>
+<tr><td>Gate 2 SUS</td><td>≥ 75 and ≥ 78 at all sites (both stated)</td><td>≥ 78 every site</td><td>≥ 78</td><td>78 at every site</td></tr>
+<tr><td>Number of phases/gates</td><td>“Three-phase” approach, Phases 0–3 with four gated decisions</td><td>Three gates (Phases 0+1 combined)</td><td>Four phases, gates 0–3</td><td>Three funding gates; keep Phase 0 → 1 as an internal go/no-go</td></tr>
+<tr><td>MVP timing</td><td>Months 1–6</td><td>Accepted by June 2027 (month 8)</td><td>Months 1–6</td><td>Build in months 1–6; acceptance deadline 30 June 2027</td></tr>
+<tr><td>Phase 1 length</td><td>6 months – 1 year</td><td>Ends Sept 2027</td><td>Months 7–18</td><td>Follow the stage-gate paper</td></tr>
+<tr><td>7-1-7 in gate thresholds</td><td>Gate 2 only</td><td>Added at Gates 2 and 3</td><td>—</td><td>Follow the stage-gate paper</td></tr>
+</tbody></table></div>
+
+<h2 id="first-100-days"><span class="sec">8</span>First 100 days</h2>
+<p>A suggested start plan, working back from the Gate 1 tests. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>When</th><th>Focus</th><th>Outputs</th></tr></thead>
+<tbody>
+<tr><td>Weeks 1–2 (Nov 2026)</td><td>Kick-off and governance</td><td>Inception meeting; steering committee and TWG terms of reference; RACI agreed; recruitment of project coordinator and data analyst launched</td></tr>
+<tr><td>Weeks 2–6</td><td>Approvals on the critical path</td><td>DPIA drafted and lodged; KEMRI SERU amendment and WSU IRB extension submitted; DSA templates agreed; MOUs started for MVP sources</td></tr>
+<tr><td>Weeks 3–8</td><td>Data and MER</td><td>Dataset inventory for MVP sources; MER v0.1 workshop with KNPHI; baseline measurement protocol</td></tr>
+<tr><td>Weeks 4–10</td><td>Engineering foundations</td><td>Repositories, CI/CD, dev environment, synthetic data generator; ADRs 001–007 decided; GPU/server order placed</td></tr>
+<tr><td>Weeks 6–14</td><td>First vertical slice</td><td>One source (KABS or m-Dharura) → MER → signal card → digital DMT-PHE → logged decision, in development</td></tr>
+<tr><td>By day 100 (early Feb 2027)</td><td>Checkpoint</td><td>Internal MVP review; GHEC-AI interface draft with Sobek; enterprise partner selected; risk register reviewed</td></tr>
+</tbody></table></div>
+
+<h2 id="critical-path"><span class="sec">9</span>Critical path</h2>
+<ol class="steps">
+<li><b>Agreements and DPIA</b> → no live data before they are in place.</li>
+<li><b>MER v0.1</b> → connectors, linker and DMT-PHE integration all depend on it.</li>
+<li><b>Baseline measurement</b> → must happen before deployment changes behaviour; cannot be recreated later.</li>
+<li><b>Server/GPU procurement</b> → staging and production depend on it; lead times can be months.</li>
+<li><b>MVP acceptance (30 June 2027)</b> → leaves about three months for the eight-week parallel run and the Gate 1 report.</li>
+</ol>
+
+<h2 id="open-questions"><span class="sec">10</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Agree the reconciled numbers above</b> and update all three source documents. <span class="owner">Owner: PI + foundation · kick-off</span></li>
+<li><b>When exactly is the national parallel run?</b> It must finish before the Gate 1 report. <span class="owner">Owner: KNPHI + WSU</span></li>
+<li><b>What counts as “KNPHI acceptance” of the MVP?</b> A signed acceptance protocol avoids ambiguity in June 2027. <span class="owner">Owner: KNPHI + WSU</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>Proposed Milestone-Based Stage Gates (WSU revision) — all gate milestones, thresholds and notes.</li>
+<li>INV-110654 proposal — Phased implementation steps; gated decisions.</li>
+<li>RADAR deck — slide 13 “Phased RADAR implementation”.</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="12-responsible-ai.html"><span class="d">← Previous</span><br><span class="t">12 · Responsible AI</span></a><a class="next" href="14-mel-framework.html"><span class="d">Next →</span><br><span class="t">14 · MEL Framework</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

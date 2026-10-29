@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>09 · Deployment, Training &amp; Adoption — RADAR</title>
+<meta name="description" content="How each EOC goes live: readiness assessment, ICT setup, training, the eight-week parallel run, go-live and ongoing support.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html" aria-current="page"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 09</span><span>·</span><span class="track"><i style="background:#002D61"></i>Operations</span></div><h1>Deployment, Training &amp; Adoption</h1><p class="lede">How each EOC goes live: readiness assessment, ICT setup, training, the eight-week parallel run, go-live and ongoing support.</p><div class="docmeta"><span><b>For:</b> <span class="chip">EOC &amp; surveillance</span><span class="chip">Leadership &amp; funder</span><span class="chip">Engineering</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>RADAR rolls out to the <strong>national EOC first</strong> (Gate 1), then to <strong>five priority county EOCs</strong> (Gate 2).</li>
+<li>Every site follows the same <strong>seven steps</strong>: readiness, ICT &amp; access, training, an <strong>eight-week parallel run</strong>, go/no-go, live use, support.</li>
+<li>The parallel run produces the <strong>concordance dataset</strong> by comparing RADAR and usual practice against a blinded expert panel.</li>
+<li>Adoption is designed in: champions, less (not more) work for officers, fast support, and refreshers to counter staff turnover.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>A technically excellent RADAR that county officers do not use fails every gate: SUS, documentation completeness and 7-1-7 all depend on real use. The JEE scored activation and coordination of personnel at the lowest level; uneven county readiness after devolution and frequent staff rotation are named gaps. <span class="tag prop">Proposal</span> Deployment and adoption need as much design as the software.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="08-signal-to-response.html"><span class="t">08 · Signal-to-Response Workflow</span><span class="r">The workflow is what every site is trained on.</span></a><a class="conn" href="11-security-infrastructure.html"><span class="t">11 · Security &amp; Infrastructure</span><span class="r">ICT and hosting readiness are site go-live prerequisites.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="13-roadmap-stage-gates.html"><span class="t">13 · Roadmap &amp; Stage Gates</span><span class="r">Site rollout is the core of Gate 2.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#rollout-sequence">Rollout sequence</a></li><li><a href="#seven-steps-per-site">Seven steps per site</a></li><li><a href="#training-plan">Training plan</a></li><li><a href="#the-eight-week-parallel-run">The eight-week parallel run</a></li><li><a href="#adoption-by-design">Adoption by design</a></li><li><a href="#support-model">Support model</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="rollout-sequence"><span class="sec">1</span>Rollout sequence</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Wave</th><th>Sites</th><th>Timing</th><th>Gate</th></tr></thead>
+<tbody>
+<tr><td>0 · MVP demonstration</td><td>KNPHI PHEOC (test environment)</td><td>By June 2027</td><td>Gate 1 (MVP acceptance)</td></tr>
+<tr><td>1 · National</td><td>KNPHI PHEOC — 8-week parallel run</td><td>Mid-2027</td><td>Gate 1</td></tr>
+<tr><td>2 · Counties</td><td>Five priority county EOCs <span class="tag prop">Proposal</span></td><td>Oct 2027 – Sep 2028</td><td>Gate 2</td></tr>
+<tr><td>3 · Sustain</td><td>All sites under KNPHI operation</td><td>Oct 2028 – Sep 2029 (grant ends 31 Oct 2029)</td><td>Gate 3</td></tr>
+</tbody></table></div>
+<h3>Choosing the five counties</h3>
+<p>Selection criteria to agree with KNPHI <span class="tag rec">Recommended</span>:</p>
+<ul>
+<li><strong>Outbreak burden</strong> across the four categories (e.g. cholera, RVF, VHF risk).</li>
+<li><strong>One Health relevance</strong> — pastoral and wildlife interfaces where animal signals matter.</li>
+<li><strong>Cross-border exposure</strong> — points of entry, neighbouring outbreaks.</li>
+<li><strong>Readiness</strong> — functioning county EOC, KABS and EBS coverage, connectivity, leadership commitment.</li>
+<li><strong>Overlap with DMT-PHE pilots</strong> — CGP reports that DMT-PHE pilot testing was planned in ten high-risk counties. <span class="tag res">Research</span></li>
+<li><strong>Diversity</strong> — include at least one county with weaker infrastructure so the design is tested where it is hardest.</li>
+</ul>
+
+<h2 id="seven-steps-per-site"><span class="sec">2</span>Seven steps per site</h2>
+<figure class="fig wide" id="fig-deploy-pipeline">
+<svg viewBox="0 0 760 236" role="img" aria-label="Seven-step site rollout: readiness assessment, ICT and access setup, training, eight-week parallel run, go or no-go, live use, support and refreshers; a no-go loops back to remediation and an extended parallel run." xmlns="http://www.w3.org/2000/svg">
+<polyline points="96.0,78.0 110.0,78.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="110.0,78.0 102.0,73.5 102.0,82.5" fill="#4D4D4D"/>
+<polyline points="206.0,78.0 220.0,78.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="220.0,78.0 212.0,73.5 212.0,82.5" fill="#4D4D4D"/>
+<polyline points="316.0,78.0 330.0,78.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="330.0,78.0 322.0,73.5 322.0,82.5" fill="#4D4D4D"/>
+<polyline points="426.0,78.0 440.0,78.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="440.0,78.0 432.0,73.5 432.0,82.5" fill="#4D4D4D"/>
+<polyline points="536.0,78.0 550.0,78.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="550.0,78.0 542.0,73.5 542.0,82.5" fill="#4D4D4D"/>
+<polyline points="646.0,78.0 660.0,78.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="660.0,78.0 652.0,73.5 652.0,82.5" fill="#4D4D4D"/>
+<polyline points="488.0,116.0 488.0,170.0 378.0,170.0 378.0,116.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="378.0,116.0 373.5,124.0 382.5,124.0" fill="#A60F2D"/>
+<rect x="0.0" y="40.0" width="96.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="48.0" y="54.3" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Readiness</text>
+<text x="48.0" y="74.9" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">people,</text>
+<text x="48.0" y="88.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">power,</text>
+<text x="48.0" y="102.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">network</text>
+<rect x="110.0" y="40.0" width="96.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="158.0" y="53.5" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">ICT &amp;</text>
+<text x="158.0" y="68.9" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">access</text>
+<text x="158.0" y="89.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">devices,</text>
+<text x="158.0" y="103.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">accounts</text>
+<rect x="220.0" y="40.0" width="96.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="268.0" y="61.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Training</text>
+<text x="268.0" y="81.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">ToT + all</text>
+<text x="268.0" y="95.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">users</text>
+<rect x="330.0" y="40.0" width="96.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="378.0" y="53.5" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Parallel</text>
+<text x="378.0" y="68.9" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">run</text>
+<text x="378.0" y="89.5" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">8 weeks,</text>
+<text x="378.0" y="103.3" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">both paths</text>
+<rect x="440.0" y="40.0" width="96.0" height="76.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="488.0" y="61.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Go / no-go</text>
+<text x="488.0" y="81.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">thresholds</text>
+<text x="488.0" y="95.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">met?</text>
+<rect x="550.0" y="40.0" width="96.0" height="76.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="598.0" y="61.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Live use</text>
+<text x="598.0" y="81.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">RADAR in</text>
+<text x="598.0" y="95.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">routine use</text>
+<rect x="660.0" y="40.0" width="96.0" height="76.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="708.0" y="61.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Support</text>
+<text x="708.0" y="81.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">helpdesk,</text>
+<text x="708.0" y="95.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">refreshers</text>
+<text x="543.0" y="30.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">go</text>
+<text x="433.0" y="186.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">no-go → remediate, extend</text>
+<text x="0.0" y="16.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">WEEKS −6 TO −1</text>
+<text x="330.0" y="16.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" letter-spacing="0.06em">WEEKS 1–8</text>
+<text x="550.0" y="16.0" font-size="10" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">WEEK 9 ONWARDS</text>
+<text x="0.0" y="220.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">Site order (proposal): national EOC first (Gate 1), then five priority county EOCs (Gate 2).</text>
+</svg>
+<figcaption><b>Every site follows the same seven steps.</b> A site does not go live until its parallel run meets the gate thresholds; if it falls short, the team remediates and extends the parallel run rather than switching on early.</figcaption>
+</figure>
+<h3>Site readiness checklist</h3>
+<div class="table-wrap"><table>
+<thead><tr><th>Area</th><th>Check</th></tr></thead>
+<tbody>
+<tr><td>People</td><td>Named EOC manager and site champion; surveillance officers identified for training; supervisor for review timers</td></tr>
+<tr><td>Workflow</td><td>Current escalation path documented; DMT-PHE paper tools in use; baseline 7-1-7 and detection-to-classification measured</td></tr>
+<tr><td>Power</td><td>Grid reliability; UPS or solar backup for EOC devices and network</td></tr>
+<tr><td>Connectivity</td><td>Measured bandwidth and uptime; Starlink installed where needed; fallback mobile data</td></tr>
+<tr><td>Devices</td><td>Laptops/monitors per role (ICT supplies budgeted per period); browser versions; security baseline</td></tr>
+<tr><td>Access</td><td>User accounts with MFA; roles assigned; data-sharing agreements cover the county's sources</td></tr>
+<tr><td>Support</td><td>Helpdesk contact known; escalation path for incidents; paper fallback procedure printed</td></tr>
+</tbody></table></div>
+
+<h2 id="training-plan"><span class="sec">3</span>Training plan</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Audience</th><th>Learns</th><th>Format</th></tr></thead>
+<tbody>
+<tr><td>EOC managers &amp; incident managers</td><td>Signal cards, confirming levels, overrides, 7-1-7 dashboard, GHEC-AI approvals</td><td>Workshop + simulation exercise (SIMEX)</td></tr>
+<tr><td>Surveillance officers</td><td>Verification, event pages, recording actions, back-entry</td><td>Hands-on sessions, job aids, mentorship</td></tr>
+<tr><td>Data analysts &amp; stewards</td><td>Quarantine queues, merges/splits, data-quality dashboard, analytics configuration</td><td>Technical training</td></tr>
+<tr><td>ICT administrators</td><td>Accounts, backups, monitoring, patching, incident response</td><td>Runbooks + shadowing the engineering team</td></tr>
+<tr><td>Trainers (ToT)</td><td>All of the above + facilitation</td><td>Training of trainers so KNPHI can train new staff after the grant</td></tr>
+</tbody></table></div>
+<ul>
+<li><strong>Competency assessment</strong> after training, with records kept — an Output 4 deliverable for Gate 2. <span class="tag prop">Proposal</span></li>
+<li><strong>Outbreak user guides</strong> for all four outbreak categories, plus algorithms and workflow materials — Output 5. <span class="tag prop">Proposal</span></li>
+<li><strong>Refreshers</strong> every six months and on-boarding packs for new staff, because rotation and infrequent events erode practice. <span class="tag rec">Recommended</span></li>
+<li><strong>Simulation drills</strong> using RADAR's synthetic outbreak replay, so staff practise before a real event.</li>
+</ul>
+
+<h2 id="the-eight-week-parallel-run"><span class="sec">4</span>The eight-week parallel run</h2>
+<figure class="fig wide" id="fig-deploy-parallel">
+<svg viewBox="0 0 760 300" role="img" aria-label="One event feeds three paths: usual EOC process with paper DMT-PHE, RADAR plus AI recommendation, and a blinded expert panel reference; outputs are compared for concordance, timeliness and discrepancies, reviewed weekly." xmlns="http://www.w3.org/2000/svg">
+<polyline points="130.0,142.0 165.0,142.0 165.0,52.0 200.0,52.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="200.0,52.0 192.0,47.5 192.0,56.5" fill="#4D4D4D"/>
+<polyline points="130.0,142.0 165.0,142.0 165.0,142.0 200.0,142.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="200.0,142.0 192.0,137.5 192.0,146.5" fill="#4D4D4D"/>
+<polyline points="130.0,142.0 165.0,142.0 165.0,232.0 200.0,232.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="200.0,232.0 192.0,227.5 192.0,236.5" fill="#4D4D4D"/>
+<polyline points="400.0,52.0 440.0,52.0 440.0,142.0 470.0,142.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="470.0,142.0 462.0,137.5 462.0,146.5" fill="#4D4D4D"/>
+<polyline points="400.0,142.0 440.0,142.0 440.0,142.0 470.0,142.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="470.0,142.0 462.0,137.5 462.0,146.5" fill="#4D4D4D"/>
+<polyline points="400.0,232.0 440.0,232.0 440.0,142.0 470.0,142.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="470.0,142.0 462.0,137.5 462.0,146.5" fill="#4D4D4D"/>
+<polyline points="600.0,142.0 620.0,142.0 620.0,70.0 640.0,70.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="640.0,70.0 632.0,65.5 632.0,74.5" fill="#4D4D4D"/>
+<polyline points="600.0,142.0 620.0,142.0 620.0,144.0 640.0,144.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="640.0,144.0 632.0,139.5 632.0,148.5" fill="#4D4D4D"/>
+<polyline points="600.0,142.0 620.0,142.0 620.0,218.0 640.0,218.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="640.0,218.0 632.0,213.5 632.0,222.5" fill="#4D4D4D"/>
+<rect x="0.0" y="110.0" width="130.0" height="64.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="65.0" y="125.2" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Event</text>
+<text x="65.0" y="146.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">same facts, same</text>
+<text x="65.0" y="160.2" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">time</text>
+<rect x="200.0" y="20.0" width="200.0" height="64.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="300.0" y="35.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Usual process</text>
+<text x="300.0" y="55.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">EOC team + paper DMT-PHE ·</text>
+<text x="300.0" y="69.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">level, time</text>
+<rect x="200.0" y="110.0" width="200.0" height="64.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="300.0" y="132.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">RADAR + AI agent</text>
+<text x="300.0" y="152.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">recommendation, citations, time</text>
+<rect x="200.0" y="200.0" width="200.0" height="64.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="300.0" y="222.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Expert panel (blinded)</text>
+<text x="300.0" y="242.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">reference classification</text>
+<rect x="470.0" y="80.0" width="130.0" height="124.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="535.0" y="125.2" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Compare</text>
+<text x="535.0" y="146.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">agreement · speed</text>
+<text x="535.0" y="160.2" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">· completeness</text>
+<rect x="640.0" y="40.0" width="120.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="700.0" y="53.9" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Concordance</text>
+<text x="700.0" y="73.8" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">AI vs panel, usual</text>
+<text x="700.0" y="86.9" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">vs panel</text>
+<rect x="640.0" y="114.0" width="120.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="700.0" y="127.9" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Timeliness</text>
+<text x="700.0" y="147.8" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">detection →</text>
+<text x="700.0" y="160.9" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">classification</text>
+<rect x="640.0" y="188.0" width="120.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="700.0" y="201.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Discrepancy</text>
+<text x="700.0" y="215.8" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">log</text>
+<text x="700.0" y="235.7" font-size="9.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">reviewed weekly</text>
+</svg>
+<figcaption><b>How the parallel run produces the concordance dataset.</b> Each event is decided the usual way and, separately, by RADAR + DMT-PHE. An independent expert panel classifies the same event from the same facts without seeing either answer. Comparing both paths to the panel shows accuracy, speed and where they disagree — without risking a live decision on an unvalidated tool.</figcaption>
+</figure>
+<p>The proposal and stage gates require an eight-week parallel validation deployment of DMT-PHE at the national EOC, generating a concordance dataset against independent expert-panel review. <span class="tag prop">Proposal</span> Design points <span class="tag rec">Recommended</span>:</p>
+<ul>
+<li><strong>Blinding.</strong> Panel members see the same facts but not the AI or usual-practice answer. For the first weeks, keep the AI recommendation hidden from decision-makers (shadow mode) so the comparison is clean; reveal it once the protocol allows.</li>
+<li><strong>Enough cases.</strong> Real Level 2–3 events in eight weeks may be few. Pre-agree a minimum number of assessed events and top up with structured simulation cases and retrospective events so the concordance estimate is meaningful.</li>
+<li><strong>Pre-registered analysis.</strong> Define concordance (exact level agreement, plus a chance-corrected statistic such as weighted kappa), timeliness and documentation completeness before the run starts (<a href="14-mel-framework.html">doc 14</a>).</li>
+<li><strong>Weekly discrepancy review.</strong> Every disagreement is reviewed by KNPHI and UM/CGHE; safety concerns stop the clock.</li>
+<li><strong>County runs repeat this</strong> in Phase 2, with AI retraining on national operational data in between.</li>
+</ul>
+
+<h2 id="adoption-by-design"><span class="sec">5</span>Adoption by design</h2>
+<div class="cards">
+<div class="card"><h4>Less work, not more</h4><p>RADAR must remove re-typing and phone reconstruction. Measure time-on-task; cut any step that adds burden.</p></div>
+<div class="card"><h4>Site champions</h4><p>One trained champion per EOC, first line of support and feedback channel.</p></div>
+<div class="card"><h4>Closing the loop</h4><p>Show officers what happened to their signals and how their overrides improved the system.</p></div>
+<div class="card"><h4>Official backing</h4><p>Update KNPHI SOPs so RADAR is the recognised record, not an optional extra.</p></div>
+</div>
+
+<h2 id="support-model"><span class="sec">6</span>Support model</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Tier</th><th>Who</th><th>Handles</th><th>Target response</th></tr></thead>
+<tbody>
+<tr><td>L1</td><td>Site champion + CGP helpdesk</td><td>How-to questions, accounts, password resets, simple data fixes</td><td>Same working day</td></tr>
+<tr><td>L2</td><td>KNPHI ICT / data stewards</td><td>Connector failures, data-quality issues, configuration</td><td>Next working day; 4 h during an active Level 2–3 event</td></tr>
+<tr><td>L3</td><td>WSU / UM engineering, enterprise partner</td><td>Bugs, outages, security incidents, model issues</td><td>1 h for outages during an active event</td></tr>
+</tbody></table></div>
+<p class="sources">Targets are a starting proposal <span class="tag rec">Recommended</span>; formalise in a support agreement before the first county go-live.</p>
+
+<h2 id="open-questions"><span class="sec">7</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Which five counties, and in what order?</b> <span class="owner">Owner: KNPHI · before Gate 1</span></li>
+<li><b>Minimum number of assessed events for the national parallel run.</b> <span class="owner">Owner: MEL + KEMRI · protocol</span></li>
+<li><b>Is shadow mode acceptable to KNPHI for the first weeks?</b> <span class="owner">Owner: KNPHI</span></li>
+<li><b>Who funds county connectivity and devices after the grant?</b> Feeds the recurrent budget (<a href="16-budget-resources.html">doc 16</a>). <span class="owner">Owner: KNPHI + counties</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — Phase 1–2 descriptions; Budget (training materials, ICT, Starlink, participant reimbursements).</li>
+<li>Stage-gate paper — Gate 1 milestone 4 (parallel validation); Gate 2 milestones 1, 4, 5.</li>
+<li>RADAR deck — slide 7 (gaps: county readiness, workforce turnover); slide 14 (CGP role: rollout, training, helpdesk).</li>
+<li>CGP — <a href="https://pandemicintelcenter.org/kenya-validates-groundbreaking-decision-making-tool-for-public-health-emergencies-dmt-phe/">DMT-PHE validation and planned pilots</a>.</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="08-signal-to-response.html"><span class="d">← Previous</span><br><span class="t">08 · Signal-to-Response Workflow</span></a><a class="next" href="10-data-governance.html"><span class="d">Next →</span><br><span class="t">10 · Data Governance</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

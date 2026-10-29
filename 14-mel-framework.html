@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>14 · Monitoring, Evaluation &amp; Learning — RADAR</title>
+<meta name="description" content="Learning questions, exact metric definitions, where each number comes from, and the baseline-to-endline evaluation design.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html" aria-current="page"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 14</span><span>·</span><span class="track"><i style="background:#E16727"></i>Delivery &amp; Management</span></div><h1>Monitoring, Evaluation &amp; Learning</h1><p class="lede">Learning questions, exact metric definitions, where each number comes from, and the baseline-to-endline evaluation design.</p><div class="docmeta"><span><b>For:</b> <span class="chip">M&amp;E / research</span><span class="chip">Leadership &amp; funder</span><span class="chip">EOC &amp; surveillance</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>Four <strong>learning questions</strong>: Is it faster? Is it more accurate and usable? Do multiple streams add intelligence? Does the GHEC-AI hand-off work?</li>
+<li>Every indicator has one <strong>exact definition</strong>, one data source and one owner — most come straight from RADAR's own timestamps and logs.</li>
+<li>Design: <strong>baseline before deployment</strong>, routine monitoring, <strong>endline</strong> near the end; mixed methods; internally led by WSU with KNPHI.</li>
+<li>Evidence feeds three decisions: gate go/no-go, model recalibration, and scale-up policy.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>The gates are judged on numbers. If “concordance” or “detection-to-classification time” are defined loosely, two people can compute different answers from the same data — and a gate can be missed on a technicality or passed without real improvement. Precise definitions agreed now also protect the credibility of the two planned publications.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="01-project-overview.html"><span class="t">01 · Project Overview</span><span class="r">The four outcome measures are what MEL has to prove.</span></a><a class="conn" href="03-minimum-event-record.html"><span class="t">03 · Minimum Event Record</span><span class="r">Latency metrics are computed directly from MER timestamps.</span></a><a class="conn" href="08-signal-to-response.html"><span class="t">08 · Signal-to-Response Workflow</span><span class="r">Each workflow step is a measurement point.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="13-roadmap-stage-gates.html"><span class="t">13 · Roadmap &amp; Stage Gates</span><span class="r">MEL produces the evidence each gate is judged on.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#learning-questions">Learning questions</a></li><li><a href="#from-evidence-to-decisions">From evidence to decisions</a></li><li><a href="#indicator-reference-sheet">Indicator reference sheet</a></li><li><a href="#evaluation-design">Evaluation design</a></li><li><a href="#data-collection-and-ethics">Data collection and ethics</a></li><li><a href="#reporting-and-dissemination">Reporting and dissemination</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="learning-questions"><span class="sec">1</span>Learning questions</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>#</th><th>Question <span class="tag prop">Proposal</span></th><th>Main evidence</th></tr></thead>
+<tbody>
+<tr><td>LQ1</td><td>Does RADAR reduce time from signal detection to DMT-PHE classification and escalation?</td><td>MER timestamps, baseline vs. post-deployment</td></tr>
+<tr><td>LQ2</td><td>Does it improve concordance with expert classification, documentation completeness, 7-1-7 performance and user acceptability?</td><td>Parallel runs, expert panel, decision logs, SUS</td></tr>
+<tr><td>LQ3</td><td>Does integrating multiple streams give earlier or additional actionable intelligence, and what technical, workflow or safety challenges affect adoption and scale-up?</td><td>Signal cards (which stream first), back-testing, interviews</td></tr>
+<tr><td>LQ4</td><td>Does the RADAR/DMT-PHE–GHEC-AI hand-off work — reliability, completeness, timeliness, user experience, effect on mobilisation?</td><td>Interface logs, response timestamps, interviews</td></tr>
+</tbody></table></div>
+
+<h2 id="from-evidence-to-decisions"><span class="sec">2</span>From evidence to decisions</h2>
+<figure class="fig wide" id="fig-mel-chain">
+<svg viewBox="0 0 760 330" role="img" aria-label="Four columns: data sources, metrics, learning questions and decisions, connected left to right." xmlns="http://www.w3.org/2000/svg">
+<polyline points="175.0,176.0 193.0,176.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="193.0,176.0 185.0,171.5 185.0,180.5" fill="#4D4D4D"/>
+<polyline points="371.0,176.0 389.0,176.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="389.0,176.0 381.0,171.5 381.0,180.5" fill="#4D4D4D"/>
+<polyline points="567.0,176.0 585.0,176.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="585.0,176.0 577.0,171.5 577.0,180.5" fill="#4D4D4D"/>
+<text x="0.0" y="10.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">DATA SOURCES</text>
+<rect x="0.0" y="26.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="86.0" y="46.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">MER timestamps</text>
+<rect x="0.0" y="76.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="86.0" y="96.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Audit &amp; override log</text>
+<rect x="0.0" y="126.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="86.0" y="146.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Expert-panel reviews</text>
+<rect x="0.0" y="176.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="86.0" y="196.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">SUS &amp; user surveys</text>
+<rect x="0.0" y="226.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="86.0" y="246.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Interviews, observation</text>
+<rect x="0.0" y="276.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="86.0" y="296.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Data-quality reports</text>
+<text x="196.0" y="10.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D" letter-spacing="0.08em">METRICS</text>
+<rect x="196.0" y="26.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="282.0" y="39.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Detection →</text>
+<text x="282.0" y="53.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">classification</text>
+<rect x="196.0" y="76.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="282.0" y="96.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">7-1-7 compliance</text>
+<rect x="196.0" y="126.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="282.0" y="146.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">AI-expert concordance</text>
+<rect x="196.0" y="176.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="282.0" y="196.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">False-negative rate</text>
+<rect x="196.0" y="226.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="282.0" y="239.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Documentation</text>
+<text x="282.0" y="253.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">completeness</text>
+<rect x="196.0" y="276.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="282.0" y="296.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Dataset integration %</text>
+<text x="392.0" y="10.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">LEARNING QUESTIONS</text>
+<rect x="392.0" y="76.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="478.0" y="96.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LQ1 Faster?</text>
+<rect x="392.0" y="126.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="478.0" y="139.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LQ2 More accurate &amp;</text>
+<text x="478.0" y="153.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">usable?</text>
+<rect x="392.0" y="176.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="478.0" y="189.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LQ3 Multi-stream adds</text>
+<text x="478.0" y="203.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">value?</text>
+<rect x="392.0" y="226.0" width="172.0" height="40.0" rx="6" fill="#FFFFFF" stroke="#EBEBEB" stroke-width="1"/>
+<text x="478.0" y="239.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LQ4 GHEC-AI hand-off</text>
+<text x="478.0" y="253.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="currentColor">works?</text>
+<text x="588.0" y="10.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">DECISIONS</text>
+<rect x="588.0" y="101.0" width="172.0" height="40.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="674.0" y="121.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Gate go / no-go</text>
+<rect x="588.0" y="151.0" width="172.0" height="40.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="674.0" y="171.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Retrain / recalibrate</text>
+<rect x="588.0" y="201.0" width="172.0" height="40.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="674.0" y="221.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Scale-up &amp; policy</text>
+</svg>
+<figcaption><b>From raw evidence to decisions.</b> Most numbers come from data RADAR already writes (MER timestamps, audit and override logs), so measurement adds little burden. Each metric answers a learning question, and the answers feed the gate, retraining and scale-up decisions.</figcaption>
+</figure>
+
+<h2 id="indicator-reference-sheet"><span class="sec">3</span>Indicator reference sheet</h2>
+<p>Definitions are proposals for the MEL protocol <span class="tag rec">Recommended</span>; targets are from the stage gates <span class="tag prop">Proposal</span>.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Indicator</th><th>Definition</th><th>Source</th><th>Target</th></tr></thead>
+<tbody>
+<tr><td><b>Signal → classification time</b></td><td>Median (and IQR) hours from <code>detected_at</code> to first human-confirmed <code>classified_at</code>, for verified events</td><td>MER</td><td>≤ 48 h (Gate 2)</td></tr>
+<tr><td><b>Detection → escalation latency</b></td><td>Median hours from <code>detected_at</code> to first <code>escalated_at</code> at Level ≥ 2</td><td>MER</td><td>Reduction vs. baseline</td></tr>
+<tr><td><b>7-1-7 compliance</b></td><td>% of events meeting each target separately (detect ≤ 7 d, notify ≤ 1 d, respond ≤ 7 d) and all three together</td><td>MER, Early Action Reviews</td><td>Improvement vs. baseline (Gates 2–3)</td></tr>
+<tr><td><b>AI–expert concordance</b></td><td>% of assessed events where AI-supported level = panel reference level; plus weighted kappa</td><td>Parallel runs, panel</td><td>0.85 / 0.88 / 0.90</td></tr>
+<tr><td><b>False-negative rate</b></td><td>% of panel Level 2–3 events classified lower by the AI-supported path</td><td>Parallel runs, panel</td><td>Below ceiling (set at Gate 1)</td></tr>
+<tr><td><b>Documentation completeness</b></td><td>% of required DMT-PHE fields completed across escalation events (required set fixed in the protocol)</td><td>Decision log</td><td>80% / 85% / 90%</td></tr>
+<tr><td><b>Adverse decision events</b></td><td>Count of reviewed incidents meeting the agreed definition (<a href="12-responsible-ai.html">doc 12</a>)</td><td>Incident log</td><td>Zero</td></tr>
+<tr><td><b>System Usability Scale</b></td><td>Standard 10-item SUS, 0–100, per site</td><td>User survey</td><td>75 / 78 / 80</td></tr>
+<tr><td><b>Dataset integration</b></td><td>% of baseline-inventory datasets at integration Level ≥ 2 with monitored automated flows</td><td>Connector registry</td><td>≥ 80% (Gate 2)</td></tr>
+<tr><td><b>Additive intelligence</b></td><td>% of verified events where a non-human stream (animal, climate, OSINT) signalled first, and median lead time</td><td>MER links, signal cards</td><td>Reported (LQ3)</td></tr>
+<tr><td><b>Hand-off performance</b></td><td>% of authorised responses with a complete hand-off; median time authorisation → team mobilised</td><td>Interface logs, MER</td><td>Reported (LQ4)</td></tr>
+</tbody></table></div>
+
+<h2 id="evaluation-design"><span class="sec">4</span>Evaluation design</h2>
+<ol class="steps">
+<li><b>Baseline (before deployment).</b> At the national EOC, reconstruct detection-to-classification, detection-to-escalation and 7-1-7 for recent events from existing records — a Gate 1 milestone that cannot be redone later. <span class="tag prop">Proposal</span> Repeat at each county before its go-live. <span class="tag rec">Recommended</span></li>
+<li><b>Routine monitoring.</b> Indicators computed automatically from MER and logs; monthly dashboard; quarterly review.</li>
+<li><b>Parallel runs.</b> Eight weeks per site generating concordance datasets (<a href="09-deployment-adoption.html">doc 09</a>).</li>
+<li><b>Endline.</b> Toward the end of the grant: the same measures, plus surveys, key-informant interviews and workflow observation. <span class="tag prop">Proposal</span></li>
+<li><b>Analysis.</b> Pre/post comparison per site; where enough events exist, an interrupted time-series design; qualitative analysis of adoption barriers.</li>
+</ol>
+<div class="callout note"><span class="ct">Independence</span>
+<p>The formal evaluation is internally led by WSU with KNPHI rather than by an independent third party. <span class="tag prop">Proposal</span> To strengthen credibility: pre-register the protocol and analysis plan, keep the expert panel independent of the build team, have KEMRI lead data-quality assessment, and invite an external reviewer to audit the endline analysis. <span class="tag rec">Recommended</span></p></div>
+<div class="callout warn"><span class="ct">Watch for small numbers</span><p>Level 2–3 events are uncommon. At some sites there may be too few real events in a period for stable estimates. Report confidence intervals, pool across sites where appropriate, and supplement with simulation cases — clearly labelled as such.</p></div>
+
+<h2 id="data-collection-and-ethics"><span class="sec">5</span>Data collection and ethics</h2>
+<ul>
+<li>System-generated data (timestamps, logs) under KNPHI data-custodian approval.</li>
+<li>Surveys, interviews and observation with informed consent or an approved waiver through the KEMRI ethics process. <span class="tag prop">Proposal</span></li>
+<li>Casual research assistants (budgeted in periods 1 and 3) support data collection and quality checks.</li>
+</ul>
+
+<h2 id="reporting-and-dissemination"><span class="sec">6</span>Reporting and dissemination</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Output</th><th>Audience</th><th>When</th></tr></thead>
+<tbody>
+<tr><td>Monthly indicator dashboard</td><td>Steering committee, EOC managers</td><td>Monthly from MVP</td></tr>
+<tr><td>Gate evidence packs</td><td>Gates Foundation</td><td>Progress reports 1–2, final report</td></tr>
+<tr><td>Annual partners meeting</td><td>KNPHI, counties, partners</td><td>Yearly (budgeted)</td></tr>
+<tr><td>Two peer-reviewed manuscripts + preprints</td><td>Scientific community</td><td>By Gate 3</td></tr>
+<tr><td>Scale-up evidence report and policy brief</td><td>MoH, KNPHI, counties, funders</td><td>By Gate 3</td></tr>
+<tr><td>Regional dissemination</td><td>Africa CDC networks, WHO Preparedness Data Exchange</td><td>Year 3</td></tr>
+</tbody></table></div>
+
+<h2 id="open-questions"><span class="sec">7</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Which past events form the baseline,</b> and over what period? <span class="owner">Owner: MEL consultant + KNPHI · month 2</span></li>
+<li><b>Required DMT-PHE fields</b> for the completeness measure. <span class="owner">Owner: KNPHI + CGP</span></li>
+<li><b>Will an external reviewer audit the endline?</b> <span class="owner">Owner: PI</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — Measurement and Evaluation; formal evaluation; outcome measures.</li>
+<li>Stage-gate paper — thresholds and Gate 3 milestones 1, 4–6.</li>
+<li>7-1-7 Alliance — <a href="https://717alliance.org/faq/">FAQ</a>.</li>
+<li>MeasuringU — <a href="https://measuringu.com/interpret-sus-score/">Interpreting SUS scores</a>.</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="13-roadmap-stage-gates.html"><span class="d">← Previous</span><br><span class="t">13 · Roadmap &amp; Stage Gates</span></a><a class="next" href="15-partners-governance.html"><span class="d">Next →</span><br><span class="t">15 · Partners &amp; Governance</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

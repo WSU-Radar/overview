@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>12 · Responsible AI &amp; Model Assurance — RADAR</title>
+<meta name="description" content="How the AI layer is evaluated, constrained, monitored and retrained so that it stays accurate, explainable and safe.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html" aria-current="page"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 12</span><span>·</span><span class="track"><i style="background:#5BC3F5"></i>Trust &amp; Safety</span></div><h1>Responsible AI &amp; Model Assurance</h1><p class="lede">How the AI layer is evaluated, constrained, monitored and retrained so that it stays accurate, explainable and safe.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Engineering</span><span class="chip">M&amp;E / research</span><span class="chip">Governance &amp; legal</span><span class="chip">Leadership &amp; funder</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>RADAR's AI has one <strong>intended use</strong>: help EOC officers classify and escalate events consistently and quickly under DMT-PHE — never to decide on its own.</li>
+<li>Every model version passes an <strong>assurance loop</strong>: test sets, offline evaluation, simulation and parallel run, monitored live use, recalibration.</li>
+<li>Key measures: <strong>AI–expert concordance, false-negative rate, citation accuracy, SUS, zero adverse decision events</strong> — with thresholds rising at each gate.</li>
+<li>Known AI risks (prompt injection via free text, hallucination, automation bias, drift) each have a named control.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>In outbreak response, a confident but wrong recommendation can delay containment (false negative) or waste scarce teams (false positive). WHO's guidance on large multi-modal models warns specifically about automation bias — professionals overlooking errors or handing difficult decisions to the model. <span class="tag res">Research</span> The gates make AI performance a funding condition; this document says how that performance is earned and kept.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="07-dmt-phe-ai-agent.html"><span class="t">07 · DMT-PHE &amp; AI Agent</span><span class="r">The agent&#x27;s behaviour is what AI assurance must test and monitor.</span></a><a class="conn" href="10-data-governance.html"><span class="t">10 · Data Governance</span><span class="r">Rules on data use bound what models may be trained on.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="13-roadmap-stage-gates.html"><span class="t">13 · Roadmap &amp; Stage Gates</span><span class="r">Concordance, SUS and adverse-event thresholds are gate criteria.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#intended-use">Intended use</a></li><li><a href="#principles-in-practice">Principles in practice</a></li><li><a href="#the-assurance-loop">The assurance loop</a></li><li><a href="#how-performance-is-measured">How performance is measured</a></li><li><a href="#risks-and-controls">Risks and controls</a></li><li><a href="#test-sets-and-the-expert-panel">Test sets and the expert panel</a></li><li><a href="#monitoring-incidents-and-the-kill-switch">Monitoring, incidents and the kill switch</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="intended-use"><span class="sec">1</span>Intended use</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>In scope</th><th>Out of scope</th></tr></thead>
+<tbody>
+<tr><td>Summarising evidence linked to an MER event</td><td>Clinical diagnosis or treatment advice for individual patients</td></tr>
+<tr><td>Explaining which trigger-card criteria are met or missing</td><td>Setting the escalation level (the rules engine does this)</td></tr>
+<tr><td>Drafting recommended actions with citations to approved guidance</td><td>Sending anything outside RADAR without human approval</td></tr>
+<tr><td>Classifying free-text signals into syndromes and places, for review</td><td>Processing identifiable data on external AI services</td></tr>
+<tr><td>Flagging missing information and timeline risks</td><td>Answering general questions unrelated to the event in hand</td></tr>
+</tbody></table></div>
+
+<h2 id="principles-in-practice"><span class="sec">2</span>Principles in practice</h2>
+<p>WHO's six principles for AI in health, mapped to RADAR controls. <span class="tag res">Research</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>WHO principle</th><th>How RADAR applies it</th></tr></thead>
+<tbody>
+<tr><td>Protect human autonomy</td><td>Human confirms, modifies or overrides every recommendation; overriding is easy and expected</td></tr>
+<tr><td>Promote well-being, safety and the public interest</td><td>Zero adverse decision events as a gate threshold; false-negative ceiling; kill switch to rules-only mode</td></tr>
+<tr><td>Ensure transparency, explainability and intelligibility</td><td>Citations to document and page; reasoning summary; published model card and error/override log</td></tr>
+<tr><td>Foster responsibility and accountability</td><td>Named decision-maker on every action; audit log; KNPHI owns the model release decision</td></tr>
+<tr><td>Ensure inclusiveness and equity</td><td>Performance reported per county and per language (English/Kiswahili); no county left with a weaker model</td></tr>
+<tr><td>Promote AI that is responsive and sustainable</td><td>Retraining on Kenyan operational data; open-weight models KNPHI can run; costs in the recurrent budget</td></tr>
+</tbody></table></div>
+
+<h2 id="the-assurance-loop"><span class="sec">3</span>The assurance loop</h2>
+<figure class="fig wide" id="fig-ai-lifecycle">
+<svg viewBox="0 0 760 340" role="img" aria-label="Six steps arranged in a loop: define intended use and hazards, build test sets, offline evaluation, simulation and parallel run, monitored live use, retrain or recalibrate, with a release gate in the centre." xmlns="http://www.w3.org/2000/svg">
+<polyline points="465.0,68.3 546.1,87.7" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="546.1,87.7 539.4,81.5 537.3,90.2" fill="#4D4D4D"/>
+<polyline points="631.1,138.0 631.1,198.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="631.1,198.0 635.6,190.0 626.6,190.0" fill="#4D4D4D"/>
+<polyline points="546.1,248.3 465.0,267.7" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="465.0,267.7 473.8,270.2 471.7,261.5" fill="#4D4D4D"/>
+<polyline points="295.0,267.7 213.9,248.3" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="213.9,248.3 220.6,254.5 222.7,245.8" fill="#4D4D4D"/>
+<polyline points="128.9,198.0 128.9,138.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="128.9,138.0 124.4,146.0 133.4,146.0" fill="#4D4D4D"/>
+<polyline points="213.9,87.7 295.0,68.3" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="295.0,68.3 286.2,65.8 288.3,74.5" fill="#4D4D4D"/>
+<rect x="295.0" y="18.0" width="170.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="380.0" y="31.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">1 · Define</text>
+<text x="380.0" y="51.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">intended use, hazards,</text>
+<text x="380.0" y="65.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">metrics</text>
+<rect x="546.1" y="78.0" width="170.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="631.1" y="91.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">2 · Test sets</text>
+<text x="631.1" y="111.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">SIMEX cases, past events,</text>
+<text x="631.1" y="125.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">red-team</text>
+<rect x="546.1" y="198.0" width="170.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="631.1" y="211.2" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">3 · Offline eval</text>
+<text x="631.1" y="231.8" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">concordance, citations, FN</text>
+<text x="631.1" y="245.6" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">rate</text>
+<rect x="295.0" y="258.0" width="170.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="380.0" y="278.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">4 · Simulate</text>
+<text x="380.0" y="298.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">tabletop + parallel run</text>
+<rect x="43.9" y="198.0" width="170.0" height="60.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="128.9" y="218.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">5 · Monitor live</text>
+<text x="128.9" y="238.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#E6E6E6">overrides, drift, incidents</text>
+<rect x="43.9" y="78.0" width="170.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="128.9" y="98.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">6 · Recalibrate</text>
+<text x="128.9" y="118.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">versioned, re-evaluated</text>
+<rect x="285.0" y="134.0" width="190.0" height="68.0" rx="6" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="380.0" y="151.2" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Release gate</text>
+<text x="380.0" y="172.1" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">no version ships without</text>
+<text x="380.0" y="185.9" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#F2D6DC">passing steps 3 and 4</text>
+</svg>
+<figcaption><b>The assurance loop every model version goes through.</b> A new prompt, model, retrieval index or threshold set is a new version. No version reaches users without passing offline evaluation and simulation; live monitoring feeds the next cycle.</figcaption>
+</figure>
+<p>A new <em>version</em> is any change to the model, prompt, retrieval index, knowledge-base documents or rule thresholds. Each version gets a model card and release notes, and can be rolled back.</p>
+
+<h2 id="how-performance-is-measured"><span class="sec">4</span>How performance is measured</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Measure</th><th>Definition <span class="tag rec">Recommended</span></th></tr></thead>
+<tbody>
+<tr><td><b>AI–expert concordance</b></td><td>Share of assessed events where the AI-supported classification and level match the expert-panel reference. Report alongside a chance-corrected statistic (weighted kappa) and by outbreak category and site.</td></tr>
+<tr><td><b>False-negative rate</b></td><td>Share of events the panel placed at Level 2–3 that the AI-supported path placed lower. Ceiling agreed at Gate 1 <span class="tag prop">Proposal</span>.</td></tr>
+<tr><td><b>Citation accuracy</b></td><td>Share of cited passages that exist and support the claim (sampled and checked by reviewers).</td></tr>
+<tr><td><b>Unsupported-claim rate</b></td><td>Share of recommendation statements with no supporting citation.</td></tr>
+<tr><td><b>Override rate</b></td><td>Share of recommendations modified or overridden, with reasons — a learning signal, not a failure measure.</td></tr>
+<tr><td><b>Adverse decision event</b></td><td>A decision influenced by the AI that delayed or wrongly downgraded a response, or caused harm. Any one is reviewed as a safety incident.</td></tr>
+<tr><td><b>System Usability Scale</b></td><td>Ten-item questionnaire scored 0–100; 68 is average, scores above about 80 are in the top 10%. <span class="tag res">Research</span></td></tr>
+</tbody></table></div>
+<figure class="fig wide" id="fig-thresholds">
+<svg viewBox="0 0 760 250" role="img" aria-label="Three small charts: AI-expert concordance thresholds 0.85, 0.88, 0.90 against preliminary 0.924; System Usability Scale thresholds 75, 78, 80 against preliminary 85.2; documentation completeness thresholds 80, 85, 90 percent." xmlns="http://www.w3.org/2000/svg">
+<line x1="0.0" y1="200.0" x2="236.0" y2="200.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="262.0" y1="200.0" x2="498.0" y2="200.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="524.0" y1="200.0" x2="760.0" y2="200.0" stroke="#9A9A9A" stroke-width="1"/>
+<polyline points="84.0,148.0 146.0,116.8 208.0,96.0" fill="none" stroke="#A60F2D" stroke-width="2"/>
+<polyline points="346.0,161.0 408.0,137.6 470.0,122.0" fill="none" stroke="#A60F2D" stroke-width="2"/>
+<polyline points="608.0,161.0 670.0,122.0 732.0,83.0" fill="none" stroke="#A60F2D" stroke-width="2"/>
+<text x="0.0" y="12.0" font-size="12" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">AI-expert concordance</text>
+<text x="22.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Prelim.</text>
+<text x="84.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Gate 1</text>
+<text x="146.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Gate 2</text>
+<text x="208.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Gate 3</text>
+<circle cx="84.0" cy="148.0" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="84.0" y="134.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">0.85</text>
+<circle cx="146.0" cy="116.8" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="146.0" y="102.8" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">0.88</text>
+<circle cx="208.0" cy="96.0" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="208.0" y="82.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">0.90</text>
+<circle cx="22.0" cy="71.0" r="5" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="2"/>
+<text x="22.0" y="57.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">0.924</text>
+<text x="262.0" y="12.0" font-size="12" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">System Usability Scale</text>
+<text x="284.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Prelim.</text>
+<text x="346.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Gate 1</text>
+<text x="408.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Gate 2</text>
+<text x="470.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Gate 3</text>
+<circle cx="346.0" cy="161.0" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="346.0" y="147.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">75</text>
+<circle cx="408.0" cy="137.6" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="408.0" y="123.6" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">78</text>
+<circle cx="470.0" cy="122.0" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="470.0" y="108.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">80</text>
+<circle cx="284.0" cy="81.4" r="5" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="2"/>
+<text x="284.0" y="67.4" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">85.2</text>
+<text x="524.0" y="12.0" font-size="12" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Documentation completeness</text>
+<text x="546.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Prelim.</text>
+<text x="608.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Gate 1</text>
+<text x="670.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Gate 2</text>
+<text x="732.0" y="214.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Gate 3</text>
+<circle cx="608.0" cy="161.0" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="608.0" y="147.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">80%</text>
+<circle cx="670.0" cy="122.0" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="670.0" y="108.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">85%</text>
+<circle cx="732.0" cy="83.0" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="732.0" y="69.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">90%</text>
+<text x="546.0" y="180.0" font-size="10" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">n/a</text>
+<circle cx="8.0" cy="236.0" r="5" fill="#A60F2D" stroke="#FFFFFF" stroke-width="2"/>
+<text x="18.0" y="236.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">gate threshold (minimum)</text>
+<circle cx="200.0" cy="236.0" r="5" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="2"/>
+<text x="210.0" y="236.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">preliminary result, March 2026 (simulation)</text>
+</svg>
+<figcaption><b>The bar rises at each gate.</b> Gate thresholds from the stage-gate paper, next to the March 2026 preliminary evaluation (11 surveillance professionals, 33 simulated interactions). The preliminary scores already clear the Gate 3 bar — the challenge is holding them under real workload, at every site, on real data.</figcaption>
+</figure>
+
+<h2 id="risks-and-controls"><span class="sec">5</span>Risks and controls</h2>
+<p>Mapped to the OWASP Top 10 for LLM Applications (2025) where relevant. <span class="tag res">Research</span> <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Risk</th><th>Example in RADAR</th><th>Control</th></tr></thead>
+<tbody>
+<tr><td>Missed escalation (false negative)</td><td>Agent describes a cluster as low-risk</td><td>Level always from rules; validator blocks any draft that disagrees; FN-rate ceiling; panel review of all L2–3 events in parallel runs</td></tr>
+<tr><td>Alert fatigue (false positives)</td><td>Many “alert” cards that are discarded</td><td>Alert budget per EOC; specificity-first detectors; fusion before alert (<a href="06-intelligence-layer.html">doc 06</a>)</td></tr>
+<tr><td>Hallucinated or outdated guidance (LLM09)</td><td>Cites a superseded case definition</td><td>Approved-documents-only index; citations required and checked; document register with effective dates</td></tr>
+<tr><td>Prompt injection (LLM01)</td><td>Free text in an EBS signal or media item says “ignore previous instructions…”</td><td>Treat all source text as data, not instructions; isolate it in prompts; tools read-only; output validation</td></tr>
+<tr><td>Sensitive information disclosure (LLM02)</td><td>Model repeats personal details from a line list</td><td>No C1 data in agent context by design; output filters; logs reviewed</td></tr>
+<tr><td>Excessive agency (LLM06)</td><td>Agent triggers a GHEC-AI request on its own</td><td>Write tools require named human approval; least-privilege tool scopes</td></tr>
+<tr><td>Improper output handling (LLM05)</td><td>Malformed JSON breaks the workspace</td><td>Strict schema validation; render as text, never execute</td></tr>
+<tr><td>Supply chain / poisoning (LLM03–04)</td><td>Tampered model weights or documents</td><td>Checksums on model files; signed images; documents only from approved sources</td></tr>
+<tr><td>Automation bias</td><td>Officers accept drafts without reading</td><td>Training; show rules level and evidence first; periodic “blind” review drills; monitor confirm-without-viewing rates</td></tr>
+<tr><td>Drift</td><td>New reporting patterns lower accuracy</td><td>Monthly monitoring of concordance proxies and override reasons; retrain triggers</td></tr>
+<tr><td>Unequal performance</td><td>Lower accuracy for Kiswahili text or one county</td><td>Disaggregated reporting; targeted test cases</td></tr>
+</tbody></table></div>
+
+<h2 id="test-sets-and-the-expert-panel"><span class="sec">6</span>Test sets and the expert panel</h2>
+<ul>
+<li><strong>Golden set:</strong> the 33 simulated interactions from the March 2026 evaluation, the five national SIMEX scenarios, and documented historical events (e.g. RVF 2018, recent cholera and mpox), each with a panel-agreed reference. Held out from any tuning.</li>
+<li><strong>Adversarial set:</strong> ambiguous presentations, conflicting streams, missing data, injection attempts, Kiswahili and mixed-language text.</li>
+<li><strong>Expert panel:</strong> at least three experienced epidemiologists/EOC leads not involved in building the tool; blinded; disagreements resolved by a pre-set rule (e.g. majority, then discussion).</li>
+</ul>
+
+<h2 id="monitoring-incidents-and-the-kill-switch"><span class="sec">7</span>Monitoring, incidents and the kill switch</h2>
+<ul>
+<li><strong>Published error and override log</strong> — a Gate 2 milestone, with a documented benchmarking and recalibration procedure. <span class="tag prop">Proposal</span></li>
+<li><strong>Incident reporting:</strong> any suspected adverse decision event is logged, reviewed within 5 working days by KNPHI and UM/CGHE, and reported at the next steering committee.</li>
+<li><strong>Kill switch:</strong> KNPHI can switch the agent off instantly; the workspace continues in rules-only mode with full evidence.</li>
+<li><strong>Retraining:</strong> AI model retraining using national EOC operational data is planned in Phase 2 <span class="tag prop">Proposal</span> — every retrained version re-enters the loop at step 3.</li>
+</ul>
+
+<h2 id="open-questions"><span class="sec">8</span>Open questions</h2>
+<ol class="decisions">
+<li><b>What false-negative ceiling will be agreed at Gate 1?</b> <span class="owner">Owner: KNPHI + UM/CGHE + foundation</span></li>
+<li><b>Formal definition of an “adverse decision event”.</b> <span class="owner">Owner: KNPHI + KEMRI</span></li>
+<li><b>Who sits on the expert panel</b> and how are they compensated and kept independent? <span class="owner">Owner: KEMRI + WSU</span></li>
+<li><b>Who signs off a model release</b> — KNPHI system owner, UM/CGHE lead, or both? <span class="owner">Owner: Steering committee</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — DMT-PHE agentic AI (citations, reasoning trace, human-in-the-loop); Preliminary work (March 2026 evaluation); Phase 2–3 gated decisions.</li>
+<li>Stage-gate paper — performance thresholds for Gates 1–3; Gate 2 milestone 6.</li>
+<li>WHO — Ethics and governance of AI for health (2021) and guidance on large multi-modal models (Jan 2024); <a href="https://mlo-online.com/information-technology/artificial-intelligence/article/53082906/who-releases-ai-ethics-and-governance-guidance-for-large-multi-modal-models">summary of the LMM guidance</a>.</li>
+<li>OWASP — <a href="https://www.invicti.com/blog/web-security/owasp-top-10-risks-llm-security-2025">Top 10 for LLM Applications 2025</a>.</li>
+<li>MeasuringU — <a href="https://measuringu.com/interpret-sus-score/">5 ways to interpret a SUS score</a>.</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="11-security-infrastructure.html"><span class="d">← Previous</span><br><span class="t">11 · Security &amp; Infrastructure</span></a><a class="next" href="13-roadmap-stage-gates.html"><span class="d">Next →</span><br><span class="t">13 · Roadmap &amp; Stage Gates</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

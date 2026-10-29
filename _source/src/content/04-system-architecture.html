@@ -1,0 +1,131 @@
+<!--inshort-->
+<ul>
+<li>RADAR has <strong>five layers</strong> on top of existing systems: integration, bridge (MER), intelligence, decision support, and users &amp; channels.</li>
+<li>Identity, audit and observability <strong>cut across</strong> every layer.</li>
+<li>The recommended stack is <strong>open source and government-ownable</strong>: OpenHIM, HAPI FHIR, PostgreSQL, NATS, Python/R analytics, an on-premise LLM served by vLLM, and Keycloak.</li>
+<li>RADAR is <strong>not a big-data problem</strong> — volumes are modest. The hard parts are reliability, integration, audit and safe AI.</li>
+</ul>
+<!--why-->
+<p>The architecture fixes where each responsibility lives, so the connector, analytics, AI and UI teams can work in parallel without stepping on each other. It also has to be something KNPHI can run after October 2029: every choice here favours tools that are well documented, widely used in African health information systems, and free of licence lock-in.</p>
+<!--body-->
+<h2>Quality goals that drive the design</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Goal</th><th>What it means for RADAR</th><th>Design response</th></tr></thead>
+<tbody>
+<tr><td><b>Available during outbreaks</b></td><td>Load and attention spike exactly when the system matters most</td><td>Stateless services, queues between stages, degraded modes, tested restores</td></tr>
+<tr><td><b>Data residency</b></td><td>Identifiable data stays on Government-authorised infrastructure <span class="tag prop">Proposal</span></td><td>Production on KNPHI/DHA infrastructure; on-prem LLM; dev on non-identifiable data only</td></tr>
+<tr><td><b>Auditable</b></td><td>Every recommendation, confirmation and override is time-stamped and attributable</td><td>Append-only audit log; Provenance on every MER change</td></tr>
+<tr><td><b>Incremental</b></td><td>Start with four sources; add streams without rebuilding</td><td>One connector pattern; MER as stable contract; event bus decouples producers and consumers</td></tr>
+<tr><td><b>Operable by KNPHI</b></td><td>Small ops team after handover</td><td>Few moving parts, containers, infrastructure-as-code, runbooks, managed upgrades</td></tr>
+<tr><td><b>Low-connectivity tolerant</b></td><td>County EOCs may lose power or internet</td><td>Light web UI, offline-capable forms, SMS alerts, back-entry with true timestamps</td></tr>
+</tbody></table></div>
+
+<h2>The five layers</h2>
+<!--fig:arch-layers-->
+<div class="table-wrap"><table>
+<thead><tr><th>Layer</th><th>Responsibility</th><th>Detail in</th></tr></thead>
+<tbody>
+<tr><td><b>Integration</b></td><td>Connect to sources, land raw data unchanged, validate, map to standard codes</td><td><a href="05-interoperability.html">doc 05</a></td></tr>
+<tr><td><b>Bridge (MER)</b></td><td>Hold event identities, timestamps and links; publish changes</td><td><a href="03-minimum-event-record.html">doc 03</a></td></tr>
+<tr><td><b>Intelligence</b></td><td>Linkage, baselines, anomaly detection, fusion, forecasts, risk scores, signal cards</td><td><a href="06-intelligence-layer.html">doc 06</a></td></tr>
+<tr><td><b>Decision support</b></td><td>Trigger-card rules, AI agent, human confirmation, audit</td><td><a href="07-dmt-phe-ai-agent.html">doc 07</a></td></tr>
+<tr><td><b>Users &amp; channels</b></td><td>EOC dashboard, DMT-PHE workspace, alerts, partner APIs (GHEC-AI)</td><td><a href="08-signal-to-response.html">doc 08</a></td></tr>
+</tbody></table></div>
+
+<h2>Components and the path of one record</h2>
+<!--fig:arch-containers-->
+<ol class="steps">
+<li><b>Ingest.</b> A connector pulls the week's KABS reports through the gateway and lands the raw file unchanged.</li>
+<li><b>Validate, map, code.</b> Records are checked against the source schema, mapped to MER/FHIR fields, and coded (syndrome, species, admin unit). Failures go to quarantine.</li>
+<li><b>Link.</b> The linker matches a cluster of livestock abortions to an existing suspected-RVF MER in the same sub-county, or opens a new one.</li>
+<li><b>Publish.</b> The MER service writes the change (with Provenance) and publishes an event on the bus.</li>
+<li><b>Analyse.</b> Analytics workers recompute baselines and fusion scores; a signal card is written with its evidence.</li>
+<li><b>Decide.</b> The rules engine evaluates the RVF trigger card; the agent drafts a cited recommendation; an officer confirms Level 2 in the DMT-PHE workspace.</li>
+<li><b>Act and record.</b> The decision lands in the audit log; the outbound gateway notifies the level owner and sends the GHEC-AI hand-off.</li>
+</ol>
+
+<h2>Recommended technology stack</h2>
+<p>Each choice is a recommendation for the Technical Working Group to confirm in the Technical Product Profile (TPP). All are open source. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Component</th><th>Recommendation</th><th>Why</th><th>Alternatives</th></tr></thead>
+<tbody>
+<tr><td>Gateway / interoperability layer</td><td><b>OpenHIM</b> (or LATTICE where operational)</td><td>Reference interoperability layer of OpenHIE; routing, client auth, ATNA audit, mediators; MPL 2.0</td><td>Kong / NGINX + custom audit</td></tr>
+<tr><td>Connector orchestration</td><td><b>Dagster</b></td><td>Asset-based pipelines with lineage, retries and schedules; Python-native</td><td>Apache Airflow, Prefect</td></tr>
+<tr><td>Raw landing</td><td>S3-compatible object storage</td><td>Immutable raw files allow re-processing when mappings improve</td><td>Ceph RGW, SeaweedFS, MinIO</td></tr>
+<tr><td>MER &amp; FHIR server</td><td><b>HAPI FHIR JPA</b> on PostgreSQL</td><td>Most widely used open FHIR R4 server; profile validation, subscriptions, terminology</td><td>Microsoft FHIR server, Medplum</td></tr>
+<tr><td>Database</td><td><b>PostgreSQL 16+</b> with PostGIS and pgvector</td><td>One reliable engine for relational, spatial and vector search; strong tooling for backup</td><td>TimescaleDB extension for time series</td></tr>
+<tr><td>Event bus</td><td><b>NATS JetStream</b></td><td>Single small binary with persistence; enough for RADAR's volumes; easy to operate</td><td>Apache Kafka / Redpanda if DHA standardises on them</td></tr>
+<tr><td>Record linkage</td><td><b>Splink</b></td><td>Open, explainable Fellegi–Sunter linkage at scale</td><td>Custom rules only</td></tr>
+<tr><td>Analytics</td><td>Python (statsmodels, scikit-learn) + R <b>surveillance</b> package</td><td>Farrington Flexible, EARS, CUSUM are mature in R; Python for pipelines and fusion</td><td>—</td></tr>
+<tr><td>Rules engine</td><td>Versioned <b>decision tables</b> (YAML/JSON) evaluated in code, under test</td><td>Trigger cards stay readable by epidemiologists and deterministic</td><td>DMN engine (e.g. Camunda) if KNPHI prefers BPMN tools</td></tr>
+<tr><td>AI agent</td><td>Python service (FastAPI) with thin orchestration; tools via <b>MCP</b></td><td>Small, auditable code path; MCP standardises tool access</td><td>LangGraph or similar if complexity grows</td></tr>
+<tr><td>LLM serving</td><td><b>vLLM</b> on on-prem GPU; open-weight model chosen by evaluation</td><td>Data never leaves Government infrastructure; OpenAI-compatible API</td><td>Government-authorised hosted endpoint</td></tr>
+<tr><td>Web application</td><td>React + TypeScript; MapLibre maps with offline tiles</td><td>Production-grade UI; the Streamlit prototype remains a reference only</td><td>—</td></tr>
+<tr><td>Analyst dashboards</td><td>Apache Superset</td><td>Self-service charts for KNPHI analysts on read-only replicas</td><td>Metabase, Grafana</td></tr>
+<tr><td>Identity &amp; access</td><td><b>Keycloak</b> (OIDC)</td><td>SSO, MFA, role-based access; can federate with Government identity later</td><td>—</td></tr>
+<tr><td>Alerts</td><td>SMS gateway + email</td><td>Reaches officers without the app open</td><td>WhatsApp Business API (policy check)</td></tr>
+<tr><td>Observability</td><td>Prometheus, Grafana, Loki, OpenTelemetry</td><td>Metrics, logs and traces in one place; alerting on pipeline failures</td><td>—</td></tr>
+<tr><td>Runtime &amp; delivery</td><td>Containers on <b>k3s/RKE2</b>; CI with image scanning and signing</td><td>Same deployment model from dev to production; small footprint</td><td>Docker Compose for the MVP only</td></tr>
+</tbody></table></div>
+
+<h2>Environments</h2>
+<!--fig:arch-envs-->
+<p>Development environments may use approved non-identifiable data; production runs within KNPHI/DHA-approved on-premise or other Government-authorised infrastructure. <span class="tag prop">Proposal</span> The budget includes hosting subscriptions in Periods 1 and 3 (US$4,000 each), the latter to keep the platform running through evaluation and handover. Any cloud hosting that carries live data must itself be Government-authorised. <span class="tag prop">Proposal</span></p>
+
+<h2>Sizing and hardware</h2>
+<p>RADAR's data volumes are small by modern standards. Published figures give a sense of scale: KABS received about 11,400 livestock reports in its first two years; one county's community EBS produced about 8,700 signals in a year. <span class="tag res">Research</span> Even nationally, structured records will be in the low millions over the grant — comfortably handled by a single well-configured PostgreSQL server. The compute-heavy component is <strong>LLM inference</strong>.</p>
+<p>The proposal describes the budgeted server as hosting the RADAR development platform, integrated surveillance databases, analytics engines, AI services and decision-support tools. <span class="tag prop">Proposal</span> Whether it becomes the production host at KNPHI, a development/staging host, or both is a decision for the TPP. <span class="tag open">Open</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Dell PowerEdge R770 (budgeted, US$36,095)</th><th>Specification <span class="tag res">Research</span></th></tr></thead>
+<tbody>
+<tr><td>Form factor &amp; CPU</td><td>2U, two Intel Xeon 6 processors (up to 86 P-cores or 144 E-cores each)</td></tr>
+<tr><td>Memory</td><td>32 DDR5 DIMM slots, up to 8 TB</td></tr>
+<tr><td>Storage</td><td>Up to 40 E3.S NVMe or 24 × 2.5" SATA; BOSS-N1 mirrored boot</td></tr>
+<tr><td>GPU</td><td>Up to 2 double-width 450 W GPUs, or 6 single-width 75 W GPUs</td></tr>
+<tr><td>Security</td><td>TPM 2.0, silicon root of trust, secure boot, self-encrypting drives, system lockdown</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="ct">Two hardware risks to settle early</span>
+<ul>
+<li><strong>GPU.</strong> Running an LLM on-premise needs at least one data-centre GPU (for example a 48 GB-class card for a mid-size open-weight model). Confirm whether the quoted server configuration includes one; if not, budget it or agree a Government-authorised hosted model endpoint. <span class="tag open">Open</span></li>
+<li><strong>Single point of failure.</strong> One server hosts everything. Plan a second node or a Government-cloud standby for recovery (see <a href="11-security-infrastructure.html">doc 11</a>).</li>
+</ul></div>
+<p><strong>Indicative configuration</strong> <span class="tag rec">Recommended</span>: 2 × mid-range Xeon 6 P-core CPUs, 512 GB RAM, 8 × NVMe in RAID 10, mirrored boot, 1–2 × 48 GB-class GPUs, dual power supplies, iDRAC Enterprise. Finalise after a load test of the MVP.</p>
+
+<h2>Designing for low connectivity</h2>
+<ul>
+<li>A light web UI that loads quickly on weak links; static assets cached by the browser.</li>
+<li>Offline-capable forms for county officers, syncing when the link returns, with the officer's original action time preserved.</li>
+<li>SMS alerts for escalations so no one depends on having the app open.</li>
+<li>Starlink connectivity at KNPHI and implementation sites is budgeted across all three periods. <span class="tag prop">Proposal</span></li>
+<li>A documented paper fallback (the existing DMT-PHE tools) with back-entry when systems return (<a href="08-signal-to-response.html">doc 08</a>).</li>
+</ul>
+
+<h2>Architecture decision log</h2>
+<p>Decisions are recorded as short Architecture Decision Records (ADRs) in the code repository. Initial set to confirm at the first Technical Working Group: <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>ADR</th><th>Decision</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>001</td><td>MER implemented as FHIR R4 profiles on HAPI FHIR, built on Kenya Core</td><td>Proposed</td></tr>
+<tr><td>002</td><td>Escalation level is always computed by the deterministic rules engine; the LLM never sets it</td><td>Proposed</td></tr>
+<tr><td>003</td><td>LLM runs on Government infrastructure; no identifiable data to public AI services</td><td>Proposed (aligns with proposal)</td></tr>
+<tr><td>004</td><td>NATS JetStream as event bus</td><td>Proposed</td></tr>
+<tr><td>005</td><td>OpenHIM as gateway unless LATTICE covers the source</td><td>Proposed</td></tr>
+<tr><td>006</td><td>Raw data landed unchanged and retained for re-processing</td><td>Proposed</td></tr>
+<tr><td>007</td><td>Production UI rebuilt in React; Streamlit prototype kept for research only</td><td>Proposed</td></tr>
+</tbody></table></div>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Where exactly will production run?</b> KNPHI data centre, DHA-designated facility or Government cloud — and who operates it day to day. <span class="owner">Owner: KNPHI + DHA · before TPP sign-off</span></li>
+<li><b>Does the server quote include GPUs?</b> <span class="owner">Owner: WSU finance + engineering · month 1</span></li>
+<li><b>Does DHA mandate specific platforms</b> (e.g. a national HIE gateway, Kafka) that should replace the recommendations above? <span class="owner">Owner: DHA liaison · month 2</span></li>
+<li><b>What does the enterprise software partner own</b> — UI, hardening, or both? <span class="owner">Owner: WSU · partner selection</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — RADAR Conceptual Design; Budget (server, hosting, internet); Data Access (production hosting, security controls).</li>
+<li>Stage-gate paper — Gate 1 milestone 2 (Technical Product Profile and architecture sign-off); Gate 2 milestone 2 (product hardening).</li>
+<li>Dell Technologies — <a href="https://www.delltechnologies.com/asset/en-us/products/servers/technical-support/poweredge-r770-spec-sheet.pdf">PowerEdge R770 specification sheet</a>.</li>
+<li>OpenHIM — <a href="https://cdn.jsdelivr.net/npm/openhim-core@5.2.5/docs/about.md">About the OpenHIM</a> (OpenHIE interoperability layer).</li>
+<li>KABS and EBS volumes — see sources in <a href="02-surveillance-landscape.html">doc 02</a>.</li>
+</ul>

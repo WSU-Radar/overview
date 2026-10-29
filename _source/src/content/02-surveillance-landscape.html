@@ -1,0 +1,108 @@
+<!--inshort-->
+<ul>
+<li>Outbreak signals in Kenya are spread across <strong>six sectors</strong> and more than a dozen systems, each with its own owner, format and rhythm.</li>
+<li>RADAR connects to them <strong>in priority order</strong>: four sources for the MVP, the rest in Phases 1–2.</li>
+<li>Every source needs the same things before it connects: a custodian, a legal basis and agreement, an access route, and known identifiers and timestamps.</li>
+<li>This document is the seed of the <strong>dataset inventory</strong> — a Gate 1 deliverable.</li>
+</ul>
+<!--why-->
+<p>The MER (doc 03) can only link what it can reach. Knowing exactly which system holds which piece of an outbreak — and how good, how fast and how accessible that data is — decides what the MVP can realistically show and which agreements must be signed first.</p>
+<!--body-->
+<h2>The landscape at a glance</h2>
+<!--fig:landscape-->
+<p>Kenya's ecosystem is expansive and increasingly digital, but each system carries its own data. Events that arise across more than one system — which is where the most dangerous outbreaks originate — are the ones most likely to be missed or reported late. <span class="tag prop">Proposal</span></p>
+
+<h2>Source system profiles</h2>
+<p>What is known today about each source. Items marked “confirm” must be verified with the custodian during the inventory.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>System</th><th>Custodian</th><th>What it holds</th><th>Rhythm &amp; access</th><th>RADAR use · phase</th></tr></thead>
+<tbody>
+<tr><td><b>IDSR via KHIS2</b><span class="sub">DHIS2-based national HIS</span></td><td>MoH / KNPHI</td><td>Weekly aggregate counts of priority diseases by facility and sub-county; immediately notifiable cases</td><td>Weekly; DHIS2 Web API (JSON) or ADX</td><td>Baselines and aberration detection · <b>MVP</b></td></tr>
+<tr><td><b>m-Dharura</b><span class="sub">community &amp; health-facility EBS</span></td><td>MoH / KNPHI</td><td>Signals from community health promoters and health workers (unexplained deaths, animal deaths, clusters); verification and response status</td><td>Near real-time; export or API (confirm)</td><td>Earliest human signals; verification timestamps · <b>MVP</b></td></tr>
+<tr><td><b>KABS</b><span class="sub">Kenya Animal Biosurveillance System</span></td><td>Directorate of Veterinary Services</td><td>9 livestock syndromes (e.g. abortion, sudden death, haemorrhagic) and 9 wildlife syndromes, with GPS, species, numbers at risk/affected, provisional diagnosis; zero reports for RVF, PPR, CBPP <span class="tag res">Research</span></td><td>Android app (offline) → central server; reports arrive within 24 h; dashboard export</td><td>Zoonotic early warning (RVF, anthrax) · <b>MVP</b></td></tr>
+<tr><td><b>EOC logs / DMT-PHE records</b></td><td>KNPHI PHEOC, county EOCs</td><td>Activations, escalation decisions, response actions (today in spreadsheets and paper)</td><td>Manual today; RADAR becomes the record</td><td>Decision timestamps for 7-1-7 · <b>MVP</b></td></tr>
+<tr><td><b>LIMS / NPHL</b></td><td>National Public Health Laboratories</td><td>Lab requests and results; specimen IDs</td><td>Kenya Diagnostics FHIR IG (draft, R4) <span class="tag res">Research</span></td><td>Confirmation timestamps; links lab ↔ event · Phase 1</td></tr>
+<tr><td><b>ADaM / SHIELD</b></td><td>MoH DDSR (built by ICAP)</td><td>Outbreak line lists, case investigation, contact tracing, lab and location data</td><td>Works online/offline; export or API (confirm)</td><td>Case counts once an outbreak is declared · Phase 1</td></tr>
+<tr><td><b>KMD</b></td><td>Kenya Meteorological Department</td><td>Rainfall, temperature, forecasts, seasonal outlooks</td><td>Daily–monthly; data agreement needed</td><td>Climate-driven risk (RVF, cholera) · Phase 1</td></tr>
+<tr><td><b>NDMA</b></td><td>National Drought Management Authority</td><td>Monthly county drought early-warning bulletins: drought phase, vegetation condition, livestock and water indicators</td><td>Monthly PDF bulletins (Level-1 extraction)</td><td>Environmental context, vegetation anomalies · Phase 1</td></tr>
+<tr><td><b>eCHIS</b></td><td>MoH Division of Community Health</td><td>Household and community-level data from community health promoters</td><td>Rolled out in all counties (2024) <span class="tag res">Research</span>; integration route to confirm</td><td>Community syndromic signals, aggregated · Phase 2</td></tr>
+<tr><td><b>EarthRanger</b><span class="sub">Wildlife Health Watch</span></td><td>Conservancies, KWS, Smithsonian partners</td><td>Ranger reports of wildlife illness, injury, unusual mortality</td><td>REST API; partner agreement needed</td><td>Wildlife sentinel signals · Phase 2</td></tr>
+<tr><td><b>WHO EIOS 2.0</b></td><td>WHO (KNPHI accounts)</td><td>Media, web, social and (since 2025) transcribed radio signals, AI-assisted</td><td>Free to Member States <span class="tag res">Research</span>; export/API to confirm</td><td>Open-source and cross-border signals · Phase 2</td></tr>
+<tr><td><b>LATTICE</b></td><td>KNPHI</td><td>Governed, FHIR-compliant integration platform</td><td>Where operational</td><td>Preferred route for any source it already connects</td></tr>
+<tr><td><b>NPHIIS</b></td><td>KNPHI</td><td>Named in the proposal's data list; scope to confirm</td><td>—</td><td>To be assessed in the inventory</td></tr>
+<tr><td><b>Telecom / mobility</b></td><td>Operators (via agreements)</td><td>Aggregated movement or behavioural indicators</td><td>Only where legally permitted, minimum granularity, aggregated <span class="tag prop">Proposal</span></td><td>Optional context · later</td></tr>
+</tbody></table></div>
+
+<h2>What each stream contributes</h2>
+<p>Not every stream matters equally for every outbreak type. This matrix guides which sources to connect first for each category (● strong value · ○ supporting · – little value). <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Stream</th><th>Enteric</th><th>VHF</th><th>Febrile / resp.</th><th>Unknown aetiology</th></tr></thead>
+<tbody>
+<tr><td>IDSR aggregates (KHIS2)</td><td>●</td><td>○</td><td>●</td><td>○</td></tr>
+<tr><td>Event-based (m-Dharura)</td><td>●</td><td>●</td><td>○</td><td>●</td></tr>
+<tr><td>Animal &amp; wildlife (KABS, EarthRanger)</td><td>–</td><td>●</td><td>○</td><td>●</td></tr>
+<tr><td>Laboratory (LIMS)</td><td>●</td><td>●</td><td>●</td><td>●</td></tr>
+<tr><td>Climate &amp; environment (KMD, NDMA)</td><td>●</td><td>●</td><td>–</td><td>○</td></tr>
+<tr><td>Open-source &amp; media (EIOS)</td><td>○</td><td>●</td><td>●</td><td>●</td></tr>
+<tr><td>Outbreak line lists (ADaM)</td><td>●</td><td>●</td><td>●</td><td>○</td></tr>
+</tbody></table></div>
+
+<h2>What the evidence says about these data</h2>
+<p>Published evaluations of Kenyan systems show both their value and their limits. RADAR's design has to work with these realities, not assume clean data. <span class="tag res">Research</span></p>
+<div class="cards">
+<div class="card"><span class="k">33.9%</span><p>of 8,734 community EBS signals were verified as events in the 2020–21 Nakuru pilot; 84% of risk-assessed events got a response.</p></div>
+<div class="card"><span class="k">13%</span><p>of health workers in pilot facilities were trained on facility EBS — coverage, not technology, limited reporting.</p></div>
+<div class="card"><span class="k">&lt; 24 h</span><p>KABS reports reach the central server within a day; 11,399 livestock and 205 wildlife reports by Dec 2019.</p></div>
+<div class="card"><span class="k">143</span><p>mpox cases tracked in ADaM by Feb 2025; adopted as MoH's sole outbreak tracking tool.</p></div>
+</div>
+<div class="callout key"><span class="ct">The gap RADAR is built for</span>
+<p>The EBS evaluation explicitly names <strong>“no unique identifiers linking lab results to reported events”</strong> as a challenge. That is exactly the gap the Minimum Event Record closes. KABS also contributed to detecting the 2018 RVF outbreak across three counties — evidence that animal signals carry early warning value worth fusing with human data.</p></div>
+<ul>
+<li><strong>Reporting fluctuates.</strong> CEBS reporting rose sharply and then declined; baselines must handle reporting artefacts, not just disease trends (see <a href="06-intelligence-layer.html">doc 06</a>).</li>
+<li><strong>Verification is the bottleneck.</strong> Signals went uninvestigated when officers lacked transport funds — RADAR can make this visible, but the fix is operational.</li>
+<li><strong>Different geographies and codes.</strong> Facility codes (KMHFL), administrative units and GPS points must be harmonised before linking.</li>
+</ul>
+
+<h2>How sources are prioritised</h2>
+<p>A source joins the MVP only if it scores well on all five criteria. <span class="tag rec">Recommended</span></p>
+<ol class="steps">
+<li><b>Signal value</b> for the MVP's priority events (see the matrix above).</li>
+<li><b>Access readiness</b> — an API, export or LATTICE route exists today.</li>
+<li><b>Agreement readiness</b> — the custodian is willing and a data-sharing agreement or MOU can be signed in time for Gate 1.</li>
+<li><b>Data quality</b> — completeness and timeliness are good enough to build a baseline.</li>
+<li><b>Linkability</b> — the source carries place, time and syndrome fields that the MER can match on.</li>
+</ol>
+<p>Applying these gives the recommended MVP set: <strong>KHIS2 (IDSR), m-Dharura, KABS and the EOC/DMT-PHE decision log.</strong> Together they cover the human–animal link for RVF and the human-only pathway for cholera, and they produce the timestamps needed for the 7-1-7 baseline.</p>
+
+<h2>The dataset inventory (Gate 1 deliverable)</h2>
+<p>For every source, the inventory records the same fields so the connector, governance and MEL teams work from one sheet. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Group</th><th>Fields to capture</th></tr></thead>
+<tbody>
+<tr><td>Ownership</td><td>Custodian institution · named data steward · technical contact · legal basis for sharing · DSA/MOU status and expiry</td></tr>
+<tr><td>Access</td><td>Route (API, export, LATTICE, file) · endpoint · authentication · rate limits · environment for testing</td></tr>
+<tr><td>Content</td><td>Data dictionary · record types · identifiers (and whether they are stable) · personal data present? · free text present?</td></tr>
+<tr><td>Space &amp; time</td><td>Geography fields and code systems · time fields and their meaning (onset, report, entry) · time zone</td></tr>
+<tr><td>Quality</td><td>Completeness · timeliness · known artefacts · volume per week · history available for baselines</td></tr>
+<tr><td>Integration</td><td>Current maturity level (L0–L4, <a href="05-interoperability.html">doc 05</a>) · target level · phase · connector owner</td></tr>
+</tbody></table></div>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Can m-Dharura and ADaM expose an API, or only exports?</b> Decides whether they start at Level 1 or Level 2. <span class="owner">Owner: WSU engineering with MoH/ICAP · MVP sprint 1</span></li>
+<li><b>Which sources does LATTICE already connect?</b> Any source on LATTICE should use it instead of a direct connector. <span class="owner">Owner: KNPHI · month 1</span></li>
+<li><b>What is NPHIIS and is it in scope?</b> <span class="owner">Owner: KNPHI · month 1</span></li>
+<li><b>How much history is available per source?</b> Aberration detection needs several seasons of baseline data. <span class="owner">Owner: data analyst · inventory</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — Background, RADAR Conceptual Design, Data Access sections.</li>
+<li>Kenya community and facility EBS evaluation — <a href="https://gh.bmj.com/content/8/12/e013736">BMJ Global Health 2023; 8:e013736</a>.</li>
+<li>KABS rollout evaluation — <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8415615">High real-time reporting of domestic and wild animal diseases (PMC8415615)</a>.</li>
+<li>ICAP — <a href="https://icap.columbia.edu/news-events/icap-in-kenya-develops-digital-solution-for-disease-outbreak-management/">ICAP in Kenya develops digital solution for disease outbreak management</a> (ADaM, SHIELD).</li>
+<li>WHO — <a href="https://who.int/news/item/13-10-2025-who-upgrades-its-public-health-intelligence-system-to-boost-global-health-security">WHO upgrades its public health intelligence system (EIOS 2.0)</a>, 13 Oct 2025.</li>
+<li>Mpala Research Centre — <a href="https://mpala.org/research/wildlife-health-watch/">Wildlife Health Watch</a> (EarthRanger).</li>
+<li>Amref — <a href="https://newsroom.amref.org/blog/2024/07/digital-community-health-activated-in-kenya-a-leap-towards-universal-health-coverage/amp/">Digital community health activated in Kenya</a> (eCHIS), Jul 2024.</li>
+<li>NPHL — <a href="https://gok-nphl.github.io/Kenya-Diagnostics-FHIR-IG/">Kenya Diagnostics FHIR IG</a> (draft).</li>
+<li>NDMA — <a href="https://knowledgeweb.ndma.go.ke/Content/LibraryDocuments/National_Drought_Early_Warning_Bulletin_July_202620260819151459.pdf">National Drought Early Warning Bulletin</a> (example, Jul 2026).</li>
+</ul>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>10 · Data Governance, Privacy &amp; Ethics — RADAR</title>
+<meta name="description" content="The laws, approvals and agreements RADAR needs, how data is classified, where each class may live and how access is controlled.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html" aria-current="page"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 10</span><span>·</span><span class="track"><i style="background:#5BC3F5"></i>Trust &amp; Safety</span></div><h1>Data Governance, Privacy &amp; Ethics</h1><p class="lede">The laws, approvals and agreements RADAR needs, how data is classified, where each class may live and how access is controlled.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Governance &amp; legal</span><span class="chip">Engineering</span><span class="chip">Leadership &amp; funder</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>Health data is <strong>sensitive personal data</strong> under Kenya's Data Protection Act 2019; the <strong>Digital Health Act 2023</strong> and DHA set the sector rules.</li>
+<li>Before live data flows: <strong>ethics approvals</strong> (KEMRI SERU, WSU IRB), <strong>data-sharing agreements</strong> for every MVP source, a <strong>DPIA</strong> lodged at least 60 days ahead, and registration checks. Ethics approvals and agreements are Gate 1 conditions; the DPIA and registration are legal prerequisites.</li>
+<li>Data is handled in <strong>four classes</strong>; identifiable data lives only on Government-authorised infrastructure and never goes to public AI services.</li>
+<li>Access is <strong>role-based, least-privilege, MFA-protected and fully logged</strong>.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>No data, no RADAR — and data only flows when custodians trust the arrangements. Governance gaps are also the most likely cause of delay to the MVP: agreements with several institutions and a 60-day DPIA notice period sit on the critical path. Getting this right early protects people, the partners and the project timeline.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="02-surveillance-landscape.html"><span class="t">02 · Surveillance Landscape</span><span class="r">Every source needs a data-sharing agreement and a data custodian.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="05-interoperability.html"><span class="t">05 · Interoperability</span><span class="r">Governance decides which data a connector may pull and at what granularity.</span></a><a class="conn" href="11-security-infrastructure.html"><span class="t">11 · Security &amp; Infrastructure</span><span class="r">Data classification drives the security controls and hosting location.</span></a><a class="conn" href="12-responsible-ai.html"><span class="t">12 · Responsible AI</span><span class="r">Rules on data use bound what models may be trained on.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#principles">Principles</a></li><li><a href="#legal-and-regulatory-framework">Legal and regulatory framework</a></li><li><a href="#approvals-on-the-critical-path">Approvals on the critical path</a></li><li><a href="#roles-who-is-responsible-for-what-data">Roles: who is responsible for what data</a></li><li><a href="#data-classes-and-where-they-may-live">Data classes and where they may live</a></li><li><a href="#what-every-data-sharing-agreement-must-cover">What every data-sharing agreement must cover</a></li><li><a href="#access-control">Access control</a></li><li><a href="#data-lifecycle-and-open-outputs">Data lifecycle and open outputs</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="principles"><span class="sec">1</span>Principles</h2>
+<div class="cards">
+<div class="card"><h4>Government custody</h4><p>Restricted data stays on Government-controlled or authorised infrastructure. <span class="tag prop">Proposal</span></p></div>
+<div class="card"><h4>Custodians decide</h4><p>Each source institution remains the authority over access to its data.</p></div>
+<div class="card"><h4>Minimum necessary</h4><p>Collect and share the least data, at the coarsest granularity, that serves the purpose.</p></div>
+<div class="card"><h4>Purpose-bound</h4><p>Surveillance and response; research or secondary use needs separate approval.</p></div>
+</div>
+
+<h2 id="legal-and-regulatory-framework"><span class="sec">2</span>Legal and regulatory framework</h2>
+<p>Summary for orientation only — not legal advice. Confirm current requirements with KNPHI/DHA legal counsel and the ODPC. <span class="tag res">Research</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Instrument</th><th>What it means for RADAR</th></tr></thead>
+<tbody>
+<tr><td><b>Data Protection Act, 2019</b></td><td>Health data is sensitive personal data. Lawful basis and purpose limitation; data-subject rights; DPIA where processing is likely to be high-risk; cross-border transfers only with safeguards; breach notification to the ODPC within 72 hours.</td></tr>
+<tr><td><b>Data Protection (General) Regulations, 2021</b></td><td>DPIA report lodged with the Data Protection Commissioner at least 60 days before high-risk processing starts. Processing for the “strategic interest of the State” must use a server/data centre in Kenya (or keep a serving copy there) — confirm whether public-health surveillance is treated as such.</td></tr>
+<tr><td><b>Digital Health Act, 2023</b></td><td>Establishes the Digital Health Agency (DHA): the Comprehensive Integrated Health Information System, interoperability standards and certification of digital health solutions. Classifies health data; breach notification to DHA within 48 hours with follow-up detail within 72 hours; long retention duties for health records. The Act is operating while a court appeal on parts of it is pending.</td></tr>
+<tr><td><b>Digital health regulations (2025)</b></td><td>Including the Digital Health (Health Information Management Procedures) Regulations; check gazettement status and specific hosting and exchange obligations.</td></tr>
+<tr><td><b>ODPC guidance on health data</b></td><td>Practical guidance on lawful processing of health data; use when drafting the DPIA and agreements.</td></tr>
+<tr><td><b>International Health Regulations (2005), amended</b></td><td>2024 amendments in force from 19 September 2025: a new “pandemic emergency” alert level and National IHR Authorities. Notification duties to WHO run through Kenya's IHR National Focal Point.</td></tr>
+<tr><td><b>Research ethics</b></td><td>KEMRI Scientific and Ethics Review Unit (SERU) amendment and WSU IRB extension are Gate 1 conditions <span class="tag prop">Proposal</span>; informed consent or approved waiver for evaluation data collected from individuals.</td></tr>
+</tbody></table></div>
+
+<h2 id="approvals-on-the-critical-path"><span class="sec">3</span>Approvals on the critical path</h2>
+<figure class="fig wide" id="fig-gov-approvals">
+<svg viewBox="0 0 760 300" role="img" aria-label="Gantt-style chart from November 2026 to June 2027 with bars for KEMRI SERU amendment, WSU IRB extension, data-sharing agreements per source, DPIA with 60-day notice, ODPC registration and DHA alignment, converging on first live data flows and MVP acceptance by 30 June 2027." xmlns="http://www.w3.org/2000/svg">
+<line x1="210.0" y1="22.0" x2="210.0" y2="262.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="277.5" y1="22.0" x2="277.5" y2="262.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="345.0" y1="22.0" x2="345.0" y2="262.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="412.5" y1="22.0" x2="412.5" y2="262.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="480.0" y1="22.0" x2="480.0" y2="262.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="547.5" y1="22.0" x2="547.5" y2="262.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="615.0" y1="22.0" x2="615.0" y2="262.0" stroke="#EBEBEB" stroke-width="1"/>
+<line x1="682.5" y1="22.0" x2="682.5" y2="262.0" stroke="#EBEBEB" stroke-width="1"/>
+<text x="243.8" y="12.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Nov</text>
+<text x="311.2" y="12.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Dec</text>
+<text x="378.8" y="12.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Jan</text>
+<text x="446.2" y="12.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Feb</text>
+<text x="513.8" y="12.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Mar</text>
+<text x="581.2" y="12.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Apr</text>
+<text x="648.8" y="12.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">May</text>
+<text x="716.2" y="12.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Jun</text>
+<text x="210.0" y="30.0" font-size="9.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">2026</text>
+<text x="348.0" y="30.0" font-size="9.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">2027</text>
+<text x="0.0" y="51.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">KEMRI SERU amendment</text>
+<rect x="212.0" y="44.0" width="232.2" height="14.0" rx="4" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="0.0" y="81.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">WSU IRB extension</text>
+<rect x="212.0" y="74.0" width="164.8" height="14.0" rx="4" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="0.0" y="111.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">DSAs / MOUs per source</text>
+<rect x="212.0" y="104.0" width="266.0" height="14.0" rx="4" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="0.0" y="141.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">DPIA submitted to ODPC</text>
+<rect x="212.0" y="134.0" width="131.0" height="14.0" rx="4" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="0.0" y="171.0" font-size="11" font-weight="500" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">60-day notice window</text>
+<rect x="347.0" y="164.0" width="131.0" height="14.0" rx="4" fill="#FFFFFF" stroke="#A60F2D" stroke-width="1.2" stroke-dasharray="4 3"/>
+<text x="0.0" y="201.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">ODPC registration check</text>
+<rect x="245.8" y="194.0" width="97.2" height="14.0" rx="4" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="0.0" y="231.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">DHA standards &amp; hosting</text>
+<rect x="279.5" y="224.0" width="468.5" height="14.0" rx="4" fill="#002D61" stroke="#002D61" stroke-width="1"/>
+<line x1="480.0" y1="22.0" x2="480.0" y2="262.0" stroke="#A60F2D" stroke-width="2"/>
+<text x="486.0" y="272.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D">first live data flows (target)</text>
+<line x1="748.0" y1="22.0" x2="748.0" y2="262.0" stroke="#4D4D4D" stroke-width="2" stroke-dasharray="5 3"/>
+<text x="744.0" y="288.0" font-size="10.5" font-weight="700" text-anchor="end" dominant-baseline="middle" fill="#4D4D4D">MVP accepted by 30 Jun 2027</text>
+</svg>
+<figcaption><b>Approvals that must be in place before live data flows (recommended sequencing).</b> Ethics, agreements, the DPIA and registration run in parallel from month 1. The DPIA must reach the Data Protection Commissioner at least 60 days before high-risk processing starts, so it sits on the critical path to the MVP. Ethics approvals and data-sharing agreements are Gate 1 conditions; the DPIA and registration are legal prerequisites for processing.</figcaption>
+</figure>
+
+<h2 id="roles-who-is-responsible-for-what-data"><span class="sec">4</span>Roles: who is responsible for what data</h2>
+<p>Proposed allocation, to be written into the agreements. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Party</th><th>Role</th><th>Responsibilities</th></tr></thead>
+<tbody>
+<tr><td>Source custodians (MoH/KNPHI, DVS, NPHL, KMD, NDMA, …)</td><td>Controllers of their source data</td><td>Approve sharing, define permitted use, receive data-quality feedback</td></tr>
+<tr><td>KNPHI</td><td>Controller of RADAR (MER, decisions, derived data)</td><td>Owns access policy, data-steward roles, incident response, retention</td></tr>
+<tr><td>WSU and consortium partners</td><td>Processors on KNPHI's behalf</td><td>Process only on instruction; no onward sharing; security obligations; return or delete at transition</td></tr>
+<tr><td>DHA</td><td>Regulator and standards body</td><td>Interoperability standards, hosting guidance, certification, breach notifications</td></tr>
+<tr><td>ODPC</td><td>Data-protection regulator</td><td>Registration, DPIA review, complaints, breach notifications</td></tr>
+</tbody></table></div>
+
+<h2 id="data-classes-and-where-they-may-live"><span class="sec">5</span>Data classes and where they may live</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Class</th><th>Examples</th><th>Where it may live</th><th>AI use</th></tr></thead>
+<tbody>
+<tr><td><b>C1 · Identifiable / restricted</b></td><td>Line lists with names, lab results with patient IDs, exact household locations</td><td>Source systems; RADAR production only if strictly needed (avoid by design)</td><td>Kept on Government-controlled or authorised infrastructure; not sent to public AI services or external clouds without explicit Government authorisation, data-use agreement, ethics approval where required and security review <span class="tag prop">Proposal</span></td></tr>
+<tr><td><b>C2 · Event-level, pseudonymous</b></td><td>MER records, signal cards, decision logs</td><td>Production; staging only as de-identified replay</td><td>On-prem LLM</td></tr>
+<tr><td><b>C3 · Aggregated / derived</b></td><td>Weekly counts by sub-county, model outputs, performance metrics</td><td>Production, staging, approved analysis environments</td><td>On-prem; external only with approval</td></tr>
+<tr><td><b>C4 · Public / open</b></td><td>Published guidelines, open climate data, released de-identified datasets and code</td><td>Anywhere; open licence where permitted</td><td>Unrestricted</td></tr>
+</tbody></table></div>
+
+<h2 id="what-every-data-sharing-agreement-must-cover"><span class="sec">6</span>What every data-sharing agreement must cover</h2>
+<ul>
+<li>Purpose (surveillance and response; any research use listed separately)</li>
+<li>Exact fields and granularity; frequency; access route</li>
+<li>Roles (controller/processor), named stewards and contacts</li>
+<li>Security controls and hosting location</li>
+<li>Onward sharing (e.g. to GHEC-AI) — minimum-necessary fields only</li>
+<li>Retention, return and deletion at the end of the grant; transition to KNPHI</li>
+<li>Breach notification duties and timelines</li>
+<li>Publication rules for aggregated or de-identified outputs</li>
+</ul>
+
+<h2 id="access-control"><span class="sec">7</span>Access control</h2>
+<p>Role-based permissions, least privilege, multifactor authentication, encryption, audit logging, backup/recovery and incident response are required by the proposal. <span class="tag prop">Proposal</span> Starting role set <span class="tag rec">Recommended</span>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Role</th><th>Can see</th><th>Can do</th></tr></thead>
+<tbody>
+<tr><td>Sub-county surveillance officer</td><td>Events in own sub-county</td><td>Verify signals, record actions</td></tr>
+<tr><td>County EOC manager</td><td>Events in own county</td><td>Confirm/override L1–L2, authorise county response</td></tr>
+<tr><td>KNPHI PHEOC incident manager</td><td>National view</td><td>Confirm L2–L3, activate national response</td></tr>
+<tr><td>Data steward</td><td>Source quality queues</td><td>Fix mappings, merge/split events, manage quarantine</td></tr>
+<tr><td>Analyst / evaluator</td><td>De-identified and aggregated data</td><td>Analysis, reports; no access to C1</td></tr>
+<tr><td>System administrator</td><td>Infrastructure, not content by default</td><td>Operate, patch, restore; break-glass access logged</td></tr>
+<tr><td>Developer</td><td>Development and staging only</td><td>No production data access</td></tr>
+</tbody></table></div>
+
+<h2 id="data-lifecycle-and-open-outputs"><span class="sec">8</span>Data lifecycle and open outputs</h2>
+<ul>
+<li><strong>Curation:</strong> data dictionaries, metadata, harmonised coding, quality checks, de-identification where required, version-controlled documentation of derived variables. <span class="tag prop">Proposal</span></li>
+<li><strong>Retention:</strong> align with Digital Health Act duties and KNPHI policy; raw landing data kept only as long as re-processing needs it.</li>
+<li><strong>Open outputs at Gate 3:</strong> de-identified or aggregated derivative datasets, metadata, analytic code, data dictionaries and model documentation, subject to Government of Kenya requirements. <span class="tag prop">Proposal</span></li>
+<li><strong>Telecom, mobility and media data:</strong> only where legally and operationally permitted, minimum granularity, aggregated or de-identified. <span class="tag prop">Proposal</span></li>
+</ul>
+
+<h2 id="open-questions"><span class="sec">9</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Is surveillance processing a “strategic interest of the State” under the 2021 Regulations,</b> and what hosting obligations does the Digital Health Act add? <span class="owner">Owner: KNPHI/DHA legal · month 1</span></li>
+<li><b>Who signs the DPIA and when is it lodged?</b> Lodging by early January 2027 keeps a March 2027 data start possible. <span class="owner">Owner: KNPHI + WSU · month 1</span></li>
+<li><b>One umbrella agreement or one per source?</b> <span class="owner">Owner: KNPHI data governance consultants</span></li>
+<li><b>Data residency for the GHEC-AI hand-off.</b> <span class="owner">Owner: KNPHI + Sobek</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — Data Access section (datasets, curation, preservation, consents and approvals).</li>
+<li>Stage-gate paper — Gate 1 milestone 5 (governance conditions).</li>
+<li>Clyde &amp; Co — <a href="https://www.clydeco.com/en/insights/2026/03/health-data-protection-in-kenya-strategic-complian">Health data protection in Kenya: strategic compliance</a> (Mar 2026).</li>
+<li>Oraro &amp; Co — <a href="https://www.oraro.co.ke/open-sesame-reflections-on-the-data-protection-general-regulations-2021/">Reflections on the Data Protection (General) Regulations, 2021</a>.</li>
+<li>ODPC — <a href="https://www.odpc.go.ke/wp-content/uploads/2024/03/THE-DATA-PROTECTION-GENERAL-REGULATIONS-2021-1.pdf">Data Protection (General) Regulations, 2021</a>.</li>
+<li>Kenya Law — <a href="https://new.kenyalaw.org/akn/ke/act/2023/15/eng@2023-11-24">Digital Health Act, 2023</a>; KELIN — <a href="https://www.kelinkenya.org/patient-empowerment-innovation-interoperability-and-privacy-the-core-of-the-digital-health-bill-2023/">overview of the Digital Health Bill</a>.</li>
+<li>Kenya Parliament library — <a href="https://libraryir.parliament.go.ke/items/e459ef51-6fce-45e2-9266-d4cb376d8e45/full">Digital Health (Health Information Management Procedures) Regulations, 2025</a>.</li>
+<li>WHO — <a href="https://www.who.int/news/item/19-09-2025-amended-international-health-regulations-enter-into-force">Amended IHR enter into force</a> (19 Sep 2025).</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="09-deployment-adoption.html"><span class="d">← Previous</span><br><span class="t">09 · Deployment &amp; Adoption</span></a><a class="next" href="11-security-infrastructure.html"><span class="d">Next →</span><br><span class="t">11 · Security &amp; Infrastructure</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

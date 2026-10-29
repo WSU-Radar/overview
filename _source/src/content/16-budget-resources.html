@@ -1,0 +1,83 @@
+<!--inshort-->
+<ul>
+<li>Total request <strong>US$1,500,000</strong>: US$1,335,968 direct and US$164,032 indirect (12% rate stated).</li>
+<li><strong>Subawards</strong> to partners are the largest line (US$800,000 cumulative), then WSU personnel and benefits (US$308,941) and consultants (US$157,838).</li>
+<li>Technology spend is small: one enterprise server (US$36,095), hosting (US$4,000 in each of Periods 1 and 3) and Starlink connectivity.</li>
+<li>Three things to settle early: how the line items reconcile to the total, whether the server includes a <strong>GPU</strong>, and what KNPHI will need to <strong>fund after 2029</strong>.</li>
+</ul>
+<!--why-->
+<p>The budget determines what can be built in-house versus by partners, how much hardware the AI layer gets, and whether the system can be sustained after the grant — a Gate 3 condition (“documented KNPHI recurrent budget pathway”). Spotting reconciliation and scope gaps now is cheaper than at a progress report.</p>
+<!--body-->
+<h2>Headline figures</h2>
+<div class="cards">
+<div class="card accent"><span class="k">$1.50M</span><p>Total requested <span class="tag prop">Proposal</span></p></div>
+<div class="card accent"><span class="k">$1.34M</span><p>Total direct costs</p></div>
+<div class="card accent"><span class="k">$164K</span><p>Indirect costs (12% rate)</p></div>
+<div class="card accent"><span class="k">53%</span><p>Share of total going to subawards</p></div>
+</div>
+
+<h2>Where the money goes</h2>
+<!--fig:budget-bars-->
+<div class="table-wrap"><table>
+<thead><tr><th>Line</th><th class="num">US$</th><th class="num">Share of $1.5M</th><th>What it buys</th></tr></thead>
+<tbody>
+<tr><td>Subawards (cumulative)</td><td class="num">800,000</td><td class="num">53.3%</td><td>Partner workstreams: AI-enabled DMT-PHE, deployment and training, evaluation, One Health integration</td></tr>
+<tr><td>Personnel &amp; benefits</td><td class="num">308,941</td><td class="num">20.6%</td><td>PI, finance &amp; operations, project coordinator, senior software engineer, data analyst(s)</td></tr>
+<tr><td>Indirect costs</td><td class="num">164,032</td><td class="num">10.9%</td><td>WSU overheads</td></tr>
+<tr><td>Consultants</td><td class="num">157,838</td><td class="num">10.5%</td><td>KNPHI data-governance consultants, MEL consultant, enterprise software consultant (hardening, scalability, security, hosting review)</td></tr>
+<tr><td>Other direct costs (periods 1–3)</td><td class="num">74,025</td><td class="num">4.9%</td><td>ICT supplies, training materials, connectivity, hosting, field and meeting costs</td></tr>
+<tr><td>Enterprise server (Dell PowerEdge R770)</td><td class="num">36,095</td><td class="num">2.4%</td><td>Primary hosting for RADAR, databases, analytics and AI services</td></tr>
+<tr><td>Travel</td><td class="num">31,797</td><td class="num">2.1%</td><td>County visits, reviews, workshops, two international conferences</td></tr>
+<tr class="total"><td>Sum of stated lines</td><td class="num">1,572,728</td><td class="num">104.8%</td><td>See reconciliation note</td></tr>
+</tbody></table></div>
+<div class="callout warn"><span class="ct">Reconciliation note</span>
+<p>The stated lines add up to <strong>US$72,728 more</strong> than the US$1.5M total. The direct-cost total (US$1,335,968) leaves US$727,272 for subawards once the other direct lines are subtracted — and US$727,272 plus 10% is exactly US$800,000. The likeliest explanation is that the subaward figure is quoted <em>including</em> subrecipients' own indirect costs. Also, US$164,032 is 12.3% of the stated direct total rather than exactly 12%. Confirm both against the detailed budget narrative before the first financial report. <span class="tag open">Open</span></p></div>
+
+<h2>Other direct costs by period</h2>
+<div class="table-wrap"><table>
+<thead><tr><th>Period</th><th class="num">US$</th><th>Main items <span class="tag prop">Proposal</span></th></tr></thead>
+<tbody>
+<tr><td>Period 1 — design, governance, infrastructure</td><td class="num">32,153</td><td>ICT supplies for staff and KNPHI, training materials ($4,013), hosting subscription ($4,000), Starlink for KNPHI ($1,900), casual staff ($6,720), ethics fees ($1,000), community engagement, airtime</td></tr>
+<tr><td>Period 2 — deployment, training, validation</td><td class="num">18,244</td><td>Participant reimbursements ($4,800), connectivity ($2,850), airtime and fuel ($2,400 each), ICT accessories, partners meeting, vehicle costs</td></tr>
+<tr><td>Period 3 — evaluation, dissemination, transition</td><td class="num">23,628</td><td>Research assistants ($6,720), ICT supplies ($4,000), annual hosting ($4,000), connectivity ($2,850), dissemination, participant reimbursements, partners meeting</td></tr>
+<tr class="total"><td>Total</td><td class="num">74,025</td><td></td></tr>
+</tbody></table></div>
+
+<h2>Payments and gates</h2>
+<p>Payment 2 is released at Gate 1 (Progress Report 1) and Payment 3 at Gate 2 (Progress Report 2); no payment is attached to Gate 3. <span class="tag prop">Proposal</span> A held gate therefore delays cash for the following period — keep partner subaward schedules aligned with gate dates. See <a href="13-roadmap-stage-gates.html">doc 13</a>.</p>
+
+<h2>Technology cost observations</h2>
+<ul>
+<li><strong>GPU.</strong> On-premise LLM inference needs at least one data-centre GPU. If the US$36,095 server quote does not include one, either re-scope the server, budget a GPU from savings, or use a Government-authorised hosted model. <span class="tag open">Open</span></li>
+<li><strong>Single server.</strong> No line covers a second node or recovery site. Explore DHA/Government shared infrastructure for disaster recovery (<a href="11-security-infrastructure.html">doc 11</a>).</li>
+<li><strong>Software licences.</strong> The recommended stack is open source, so there are no licence lines — the costs are people and hardware.</li>
+<li><strong>Penetration testing and load testing</strong> (Gate 2) should be explicitly costed, for example within the enterprise software consultant line.</li>
+</ul>
+
+<h2>After the grant: the recurrent budget pathway</h2>
+<p>Gate 3 requires a documented KNPHI recurrent budget pathway reflected in a budget submission or departmental statement. <span class="tag prop">Proposal</span> Cost categories to estimate from Gate 2 operating data <span class="tag rec">Recommended</span>:</p>
+<div class="table-wrap"><table>
+<thead><tr><th>Category</th><th>Examples</th></tr></thead>
+<tbody>
+<tr><td>People</td><td>System owner, 1–2 platform engineers, data steward(s), analyst, helpdesk share</td></tr>
+<tr><td>Infrastructure</td><td>Power, cooling, rack space, hardware warranty and refresh (5-year cycle), GPU refresh</td></tr>
+<tr><td>Connectivity</td><td>EOC internet and backup links at national and county sites</td></tr>
+<tr><td>Security</td><td>Annual penetration test, certificates, security monitoring</td></tr>
+<tr><td>Training</td><td>Refreshers and onboarding to offset staff turnover</td></tr>
+<tr><td>Model upkeep</td><td>Periodic re-evaluation and retraining; knowledge-base curation</td></tr>
+</tbody></table></div>
+
+<h2>Spending risks</h2>
+<p>From the proposal <span class="tag prop">Proposal</span>, with mitigations in <a href="17-risk-register.html">doc 17</a>: recruitment delays for key staff, ICT procurement lead times, slower-than-expected stakeholder adoption, and technical integration challenges between surveillance systems.</p>
+
+<h2>Open questions</h2>
+<ol class="decisions">
+<li><b>Reconcile subaward and indirect figures</b> with the budget narrative. <span class="owner">Owner: WSU finance · month 1</span></li>
+<li><b>Does the server include a GPU?</b> <span class="owner">Owner: WSU finance + engineering · month 1</span></li>
+<li><b>Subaward split</b> between UM/CGHE, CGP, KEMRI and KIPRE, and its alignment with gate timing. <span class="owner">Owner: WSU</span></li>
+</ol>
+<!--sources-->
+<ul>
+<li>INV-110654 proposal — Investment details; Budget section (all line items and period breakdowns).</li>
+<li>Stage-gate paper — payments attached to Gates 1 and 2; Gate 3 milestone 3.</li>
+</ul>

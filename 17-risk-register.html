@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>17 · Risk Register — RADAR</title>
+<meta name="description" content="The main delivery, technical, data, AI and sustainability risks, how likely and serious each is, and how each will be reduced.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html" aria-current="page"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 17</span><span>·</span><span class="track"><i style="background:#E16727"></i>Delivery &amp; Management</span></div><h1>Risk Register</h1><p class="lede">The main delivery, technical, data, AI and sustainability risks, how likely and serious each is, and how each will be reduced.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Leadership &amp; funder</span><span class="chip">Engineering</span><span class="chip">Governance &amp; legal</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>Fifteen risks across <strong>delivery, data, technology, AI, adoption and sustainability</strong>, each with a likelihood, impact, mitigation and owner.</li>
+<li>The highest-rated: slow <strong>data-sharing agreements</strong> (R1), weak source data or APIs (R2), low adoption (R3), procurement delays (R6), county power and connectivity (R8), staff turnover (R9) and no recurrent budget (R10).</li>
+<li>Risks are reviewed at every steering committee and at each gate.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>Most risks that would sink RADAR are not technical — they are agreements, people, procurement and money. Naming them early, with an owner and an early-warning sign, turns surprises at a gate review into issues handled months earlier.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="assets/source-documents/INV110654_2026_WSU%20Kenya_Proposal_Investment_Document_WSUCleared%20%281%29.pdf"><span class="t">INV-110654 Investment Document (proposal)</span><span class="r">Source document in the _docs folder</span></a><a class="conn" href="assets/source-documents/RADAR_Stage_Gates_Proposed_WSURevClean.pdf"><span class="t">Proposed Milestone-Based Stage Gates</span><span class="r">Source document in the _docs folder</span></a><a class="conn" href="assets/source-documents/PowerPoint%20Presentation.pdf"><span class="t">RADAR slide deck</span><span class="r">Source document in the _docs folder</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="13-roadmap-stage-gates.html"><span class="t">13 · Roadmap &amp; Stage Gates</span><span class="r">Open risks are reviewed at every gate decision.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#risk-map">Risk map</a></li><li><a href="#register">Register</a></li><li><a href="#how-risks-are-managed">How risks are managed</a></li><li><a href="#key-assumptions">Key assumptions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="risk-map"><span class="sec">1</span>Risk map</h2>
+<figure class="fig wide" id="fig-risk-heatmap">
+<svg viewBox="0 0 760 330" role="img" aria-label="Three by three grid of likelihood against impact with risk IDs R1 to R15 placed in cells; R1 is high likelihood and high impact." xmlns="http://www.w3.org/2000/svg">
+<rect x="90.0" y="194.0" width="186.0" height="88.0" rx="4" fill="#F4F4F4" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="90.0" y="102.0" width="186.0" height="88.0" rx="4" fill="#E6E6E6" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="90.0" y="10.0" width="186.0" height="88.0" rx="4" fill="#D6D6D6" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="280.0" y="194.0" width="186.0" height="88.0" rx="4" fill="#E6E6E6" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="280.0" y="102.0" width="186.0" height="88.0" rx="4" fill="#D6D6D6" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="280.0" y="10.0" width="186.0" height="88.0" rx="4" fill="#C4C4C4" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="470.0" y="194.0" width="186.0" height="88.0" rx="4" fill="#D6D6D6" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="470.0" y="102.0" width="186.0" height="88.0" rx="4" fill="#C4C4C4" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="470.0" y="10.0" width="186.0" height="88.0" rx="4" fill="#B8B8B8" stroke="#FFFFFF" stroke-width="1"/>
+<rect x="102.0" y="17.0" width="27.4" height="18.0" rx="9.0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1"/>
+<text x="115.7" y="26.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">R4</text>
+<rect x="102.0" y="17.0" width="27.4" height="18.0" rx="9" fill="none" stroke="#9A9A9A" stroke-width="1"/>
+<rect x="102.0" y="37.0" width="27.4" height="18.0" rx="9.0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1"/>
+<text x="115.7" y="46.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">R5</text>
+<rect x="102.0" y="37.0" width="27.4" height="18.0" rx="9" fill="none" stroke="#9A9A9A" stroke-width="1"/>
+<rect x="292.0" y="109.0" width="27.4" height="18.0" rx="9.0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1"/>
+<text x="305.7" y="118.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">R7</text>
+<rect x="292.0" y="109.0" width="27.4" height="18.0" rx="9" fill="none" stroke="#9A9A9A" stroke-width="1"/>
+<rect x="292.0" y="129.0" width="33.6" height="18.0" rx="9.0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1"/>
+<text x="308.8" y="138.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">R11</text>
+<rect x="292.0" y="129.0" width="33.6" height="18.0" rx="9" fill="none" stroke="#9A9A9A" stroke-width="1"/>
+<rect x="292.0" y="149.0" width="33.6" height="18.0" rx="9.0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1"/>
+<text x="308.8" y="158.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">R12</text>
+<rect x="292.0" y="149.0" width="33.6" height="18.0" rx="9" fill="none" stroke="#9A9A9A" stroke-width="1"/>
+<rect x="292.0" y="169.0" width="33.6" height="18.0" rx="9.0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1"/>
+<text x="308.8" y="178.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">R13</text>
+<rect x="292.0" y="169.0" width="33.6" height="18.0" rx="9" fill="none" stroke="#9A9A9A" stroke-width="1"/>
+<rect x="384.0" y="109.0" width="33.6" height="18.0" rx="9.0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1"/>
+<text x="400.8" y="118.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">R14</text>
+<rect x="384.0" y="109.0" width="33.6" height="18.0" rx="9" fill="none" stroke="#9A9A9A" stroke-width="1"/>
+<rect x="384.0" y="129.0" width="33.6" height="18.0" rx="9.0" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="1"/>
+<text x="400.8" y="138.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">R15</text>
+<rect x="384.0" y="129.0" width="33.6" height="18.0" rx="9" fill="none" stroke="#9A9A9A" stroke-width="1"/>
+<rect x="292.0" y="17.0" width="27.4" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="305.7" y="26.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">R3</text>
+<rect x="292.0" y="37.0" width="27.4" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="305.7" y="46.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">R6</text>
+<rect x="292.0" y="57.0" width="33.6" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="308.8" y="66.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">R10</text>
+<rect x="482.0" y="109.0" width="27.4" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="495.7" y="118.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">R2</text>
+<rect x="482.0" y="129.0" width="27.4" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="495.7" y="138.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">R8</text>
+<rect x="482.0" y="149.0" width="27.4" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="495.7" y="158.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">R9</text>
+<rect x="482.0" y="17.0" width="27.4" height="18.0" rx="9.0" fill="#A60F2D" stroke="#A60F2D" stroke-width="1"/>
+<text x="495.7" y="26.5" font-size="10" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">R1</text>
+<text x="183.0" y="294.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Low</text>
+<text x="80.0" y="238.0" font-size="11" font-weight="600" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">Low</text>
+<text x="373.0" y="294.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Medium</text>
+<text x="80.0" y="146.0" font-size="11" font-weight="600" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">Medium</text>
+<text x="563.0" y="294.0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">High</text>
+<text x="80.0" y="54.0" font-size="11" font-weight="600" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">High</text>
+<text x="375.0" y="314.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.08em">LIKELIHOOD →</text>
+<text x="14.0" y="148.0" font-size="10.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" transform="rotate(-90 14.0 148.0)" letter-spacing="0.08em">IMPACT →</text>
+</svg>
+<figcaption><b>Risk map.</b> Likelihood (across) against impact (up), before mitigation. Risks in the top-right cells get a named owner and are reviewed at every steering committee and gate; details and mitigations are in the register below.</figcaption>
+</figure>
+
+<h2 id="register"><span class="sec">2</span>Register</h2>
+<p>Ratings are before mitigation (L = likelihood, I = impact; L/M/H). Initial assessment <span class="tag rec">Recommended</span> — the steering committee owns the ratings.</p>
+<div class="table-wrap"><table>
+<thead><tr><th>ID</th><th>Risk</th><th>L</th><th>I</th><th>Mitigation</th><th>Early warning</th><th>Owner</th></tr></thead>
+<tbody>
+<tr><td><b>R1</b></td><td>Data-sharing agreements and approvals take longer than planned, delaying live data and the MVP</td><td>H</td><td>H</td><td>Start month 1; standard DSA template; KNPHI-led umbrella agreement; DPIA lodged early; MVP can demo on de-identified replays while agreements finish</td><td>No signed DSA for an MVP source by month 3</td><td>KNPHI + WSU</td></tr>
+<tr><td><b>R2</b></td><td>Source data incomplete, late, or without usable API</td><td>H</td><td>M</td><td>Integration ladder (start at L1); data-quality dashboard; feedback to custodians; pick MVP sources by readiness</td><td>Inventory shows &lt; 2 seasons of history or no export</td><td>WSU engineering</td></tr>
+<tr><td><b>R3</b></td><td>Low adoption: officers see RADAR as extra work</td><td>M</td><td>H</td><td>Remove re-typing; champions; SOP update; SUS and time-on-task tracked; fast support</td><td>Falling log-ins; back-entered decisions rising</td><td>CGP + KNPHI</td></tr>
+<tr><td><b>R4</b></td><td>Unsafe AI recommendation contributes to a missed or delayed escalation</td><td>L</td><td>H</td><td>Rules set the level; validator; human confirmation; FN ceiling; kill switch; incident review</td><td>Override reasons citing wrong level</td><td>UM/CGHE + KNPHI</td></tr>
+<tr><td><b>R5</b></td><td>Security incident or data breach</td><td>L</td><td>H</td><td>Zones, MFA, encryption, audit, pen test, minimum-necessary data, incident runbook</td><td>Failed-login spikes; unpatched critical CVEs</td><td>WSU + KNPHI ICT</td></tr>
+<tr><td><b>R6</b></td><td>Server/GPU procurement or import delays</td><td>M</td><td>H</td><td>Order in month 1–2; develop on cloud with synthetic data meanwhile; consider Government hosting as interim</td><td>No PO by month 2</td><td>WSU finance</td></tr>
+<tr><td><b>R7</b></td><td>Recruitment delays (coordinator, analyst, enterprise partner)</td><td>M</td><td>M</td><td>Early recruitment <span class="tag prop">Proposal</span>; interim cover from partners</td><td>Posts unfilled at month 2</td><td>WSU</td></tr>
+<tr><td><b>R8</b></td><td>Power and connectivity failures at county EOCs</td><td>H</td><td>M</td><td>Starlink, UPS, light UI, SMS alerts, offline forms, paper fallback</td><td>Readiness assessment scores</td><td>CGP + counties</td></tr>
+<tr><td><b>R9</b></td><td>EOC staff turnover erodes skills</td><td>H</td><td>M</td><td>ToT, job aids, six-monthly refreshers, onboarding pack, in-app guidance</td><td>Share of active users trained &lt; 80%</td><td>CGP</td></tr>
+<tr><td><b>R10</b></td><td>No recurrent budget after October 2029</td><td>M</td><td>H</td><td>Cost model from Gate 2 data; engage KNPHI finance early; open-source stack; align with national budget calendar</td><td>No budget line in KNPHI submission by mid-2029</td><td>PI + KNPHI</td></tr>
+<tr><td><b>R11</b></td><td>Regulatory change or DHA certification delays</td><td>M</td><td>M</td><td>Early DHA engagement; FHIR validation in CI; track regulations</td><td>New DHA requirements issued</td><td>WSU + DHA liaison</td></tr>
+<tr><td><b>R12</b></td><td>Enterprise software partner selected late or under-scoped</td><td>M</td><td>M</td><td>Select in months 1–2 with clear statement of work tied to Gate 1 and 2 deliverables</td><td>No contract by month 3</td><td>WSU</td></tr>
+<tr><td><b>R13</b></td><td>A major outbreak diverts EOC staff from the project</td><td>M</td><td>M</td><td>Rapid-response mode: use the outbreak as live validation where safe; keep a minimal core team on delivery</td><td>Level 3 activation</td><td>Steering committee</td></tr>
+<tr><td><b>R14</b></td><td>Model performance drifts on real data</td><td>M</td><td>M</td><td>Monitoring, retraining procedure, disaggregated reporting</td><td>Rising override rate</td><td>UM/CGHE</td></tr>
+<tr><td><b>R15</b></td><td>Scope creep toward “integrate everything”</td><td>M</td><td>M</td><td>MVP scope locked; new sources only via the prioritisation criteria; change control in TWG</td><td>Unplanned connectors in sprint plans</td><td>PI + TWG</td></tr>
+</tbody></table></div>
+
+<h2 id="how-risks-are-managed"><span class="sec">3</span>How risks are managed</h2>
+<ol class="steps">
+<li><b>Review rhythm.</b> Top risks at every TWG; full register at every steering committee and in each gate evidence pack.</li>
+<li><b>Escalation.</b> Any risk rated High/High, or any early-warning sign that fires, goes to the steering committee within two weeks.</li>
+<li><b>Issues vs. risks.</b> When a risk happens it becomes an issue with an action plan and date; the register records the outcome.</li>
+<li><b>Gate link.</b> If a risk threatens the MVP deadline, the 30-day remediation notice to the foundation applies (<a href="13-roadmap-stage-gates.html">doc 13</a>).</li>
+</ol>
+
+<h2 id="key-assumptions"><span class="sec">4</span>Key assumptions</h2>
+<p>If any of these turns out false, revisit the plan.</p>
+<ul>
+<li>KNPHI can nominate a system owner, data stewards and ICT staff from the start.</li>
+<li>At least four MVP sources can share data at Level 1–2 by March 2027.</li>
+<li>KNPHI/DHA will authorise a production hosting location by mid-2027.</li>
+<li>The DMT-PHE trigger-card set is stable enough to encode for the MVP.</li>
+<li>Sobek can provide a GHEC-AI interface for joint specification in the MVP phase.</li>
+</ul><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — Budget (spending risks and mitigations), Data Access.</li>
+<li>Stage-gate paper — MVP remediation rule.</li>
+<li>Risk ratings are an initial assessment for the steering committee to confirm.</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="16-budget-resources.html"><span class="d">← Previous</span><br><span class="t">16 · Budget &amp; Resources</span></a><a class="next" href="18-glossary-references.html"><span class="d">Next →</span><br><span class="t">18 · Glossary &amp; References</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>

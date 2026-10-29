@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 · Minimum Event Record (MER) Specification — RADAR</title>
+<meta name="description" content="The small shared record that gives one outbreak event one identity across systems — fields, lifecycle, timestamps, linking rules and FHIR mapping.">
+<link rel="stylesheet" href="assets/radar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html"><span class="inst">Washington State University · Global Health – Kenya</span><span class="prog">RADAR Documentation</span></a>
+    <div class="meta"><strong>INV-110654</strong> · Draft v0.1 · 29 October 2026</div>
+  </div>
+</header>
+<div class="layout">
+<nav class="sidenav" aria-label="All documents"><details open><summary>All documents</summary><div class="navgroups"><div class="navgroup"><h4><i style="background:#4D4D4D"></i>Orientation</h4><ul><li><a href="index.html"><span class="n">00</span><span>Start Here</span></a></li><li><a href="01-project-overview.html"><span class="n">01</span><span>Project Overview</span></a></li><li><a href="02-surveillance-landscape.html"><span class="n">02</span><span>Surveillance Landscape</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#A60F2D"></i>Product &amp; Architecture</h4><ul><li><a href="03-minimum-event-record.html" aria-current="page"><span class="n">03</span><span>Minimum Event Record</span></a></li><li><a href="04-system-architecture.html"><span class="n">04</span><span>System Architecture</span></a></li><li><a href="05-interoperability.html"><span class="n">05</span><span>Interoperability</span></a></li><li><a href="06-intelligence-layer.html"><span class="n">06</span><span>Intelligence Layer</span></a></li><li><a href="07-dmt-phe-ai-agent.html"><span class="n">07</span><span>DMT-PHE &amp; AI Agent</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#002D61"></i>Operations</h4><ul><li><a href="08-signal-to-response.html"><span class="n">08</span><span>Signal-to-Response Workflow</span></a></li><li><a href="09-deployment-adoption.html"><span class="n">09</span><span>Deployment &amp; Adoption</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#5BC3F5"></i>Trust &amp; Safety</h4><ul><li><a href="10-data-governance.html"><span class="n">10</span><span>Data Governance</span></a></li><li><a href="11-security-infrastructure.html"><span class="n">11</span><span>Security &amp; Infrastructure</span></a></li><li><a href="12-responsible-ai.html"><span class="n">12</span><span>Responsible AI</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#E16727"></i>Delivery &amp; Management</h4><ul><li><a href="13-roadmap-stage-gates.html"><span class="n">13</span><span>Roadmap &amp; Stage Gates</span></a></li><li><a href="14-mel-framework.html"><span class="n">14</span><span>MEL Framework</span></a></li><li><a href="15-partners-governance.html"><span class="n">15</span><span>Partners &amp; Governance</span></a></li><li><a href="16-budget-resources.html"><span class="n">16</span><span>Budget &amp; Resources</span></a></li><li><a href="17-risk-register.html"><span class="n">17</span><span>Risk Register</span></a></li></ul></div><div class="navgroup"><h4><i style="background:#808080"></i>Reference</h4><ul><li><a href="18-glossary-references.html"><span class="n">18</span><span>Glossary &amp; References</span></a></li></ul></div></div></details></nav>
+<main id="main">
+<article class="doc">
+<div class="eyebrow"><span class="num">Doc 03</span><span>·</span><span class="track"><i style="background:#A60F2D"></i>Product &amp; Architecture</span></div><h1>Minimum Event Record (MER) Specification</h1><p class="lede">The small shared record that gives one outbreak event one identity across systems — fields, lifecycle, timestamps, linking rules and FHIR mapping.</p><div class="docmeta"><span><b>For:</b> <span class="chip">Engineering</span><span class="chip">EOC &amp; surveillance</span><span class="chip">M&amp;E / research</span></span><span><b>Status:</b> Draft v0.1</span><span><b>Updated:</b> 29 October 2026</span></div><div class="summary"><div class="box inshort"><h3>In short</h3><ul>
+<li>The <strong>Minimum Event Record (MER)</strong> is a small, standard set of fields that describes one public-health event and the times it passed through detection, notification, investigation and response.</li>
+<li>It is a <strong>data standard and exchange profile</strong> — not a new database, not a new user interface.</li>
+<li>Systems <strong>publish</strong> a few fields about an event and <strong>subscribe</strong> to what others published; each stays authoritative for its own data.</li>
+<li>For the first time, one event has <strong>one identity</strong> across human, animal, laboratory and response systems — which is what makes 7-1-7 measurable.</li>
+</ul></div><div class="box why"><h3>Why it matters</h3><p>Everything else in RADAR keys off the MER: analytics link signals to it, DMT-PHE classifies it, GHEC-AI responds to it, and MEL measures time along it. If the MER is wrong or bloated, every downstream piece inherits the problem. It is also the first MVP component and must be <strong>agreed with KNPHI and in operational use</strong> for Gate 1.</p></div></div><section class="connections" aria-label="How this document connects"><h3>How this document connects</h3><div class="conn-grid"><div class="conn-col"><h4>← Builds on</h4><a class="conn" href="02-surveillance-landscape.html"><span class="t">02 · Surveillance Landscape</span><span class="r">The source systems&#x27; identifiers and timestamps shape the MER fields.</span></a></div><div class="conn-col"><h4>Informs →</h4><a class="conn" href="04-system-architecture.html"><span class="t">04 · System Architecture</span><span class="r">The MER is the core data contract the architecture is built around.</span></a><a class="conn" href="05-interoperability.html"><span class="t">05 · Interoperability</span><span class="r">The MER is the exchange profile systems publish and subscribe to.</span></a><a class="conn" href="06-intelligence-layer.html"><span class="t">06 · Intelligence Layer</span><span class="r">Fusion links signals from many streams to one MER event.</span></a><a class="conn" href="08-signal-to-response.html"><span class="t">08 · Signal-to-Response Workflow</span><span class="r">MER timestamps are how the 7-1-7 clock is measured.</span></a><a class="conn" href="14-mel-framework.html"><span class="t">14 · MEL Framework</span><span class="r">Latency metrics are computed directly from MER timestamps.</span></a></div></div></section><nav class="toc" aria-label="On this page"><b>On this page</b><ol><li><a href="#what-the-mer-is">What the MER is</a></li><li><a href="#design-rules">Design rules</a></li><li><a href="#field-specification-v0-1-draft">Field specification (v0.1 draft)</a></li><li><a href="#lifecycle">Lifecycle</a></li><li><a href="#timestamps-and-the-7-1-7-clock">Timestamps and the 7-1-7 clock</a></li><li><a href="#linking-signals-to-events">Linking signals to events</a></li><li><a href="#exchange-model-publish-and-subscribe">Exchange model: publish and subscribe</a></li><li><a href="#fhir-r4-representation">FHIR R4 representation</a></li><li><a href="#governance-of-the-standard">Governance of the standard</a></li><li><a href="#open-questions">Open questions</a></li><li><a href="#sources">Sources</a></li></ol></nav><p class="legend-tags">Labels used in this document: <span class="tag prop">Proposal</span> stated in the funded proposal, stage-gate paper or deck · <span class="tag res">Research</span> external evidence (see Sources) · <span class="tag rec">Recommended</span> proposed design choice, to be confirmed · <span class="tag open">Open</span> decision still needed</p><h2 id="what-the-mer-is"><span class="sec">1</span>What the MER is</h2>
+<p>When a suspected outbreak occurs today, the facts about that single event are scattered: the community signal in m-Dharura, the animal signal in KABS, the case count in KHIS2, the lab result in a laboratory system, and the decision in an EOC spreadsheet. No system holds a record of the event itself. <span class="tag prop">Proposal</span></p>
+<p>The MER fixes this with the smallest possible shared record: an event identity, a handful of descriptive fields, a set of lifecycle timestamps, and <strong>pointers</strong> back to the source records. It is the “bridge” that achieves systems integration before the heavy infrastructure needed for full integration exists.</p>
+<figure class="fig" id="fig-mer-linking">
+<svg viewBox="0 0 760 330" role="img" aria-label="Four source records (KMD A-104, ENV-331, KABS-22, EBS-7 with lab ref 83) pass through a linker that matches on place, time, syndrome and species, producing one MER event RVF-ISI-2026-001 with linked record pointers." xmlns="http://www.w3.org/2000/svg">
+<polyline points="200.0,44.0 223.0,44.0 223.0,162.0 246.0,162.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polyline points="200.0,122.0 223.0,122.0 223.0,162.0 246.0,162.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polyline points="200.0,200.0 223.0,200.0 223.0,162.0 246.0,162.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polyline points="200.0,278.0 223.0,278.0 223.0,162.0 246.0,162.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polyline points="223.0,162.0 246.0,162.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="246.0,162.0 238.0,157.5 238.0,166.5" fill="#4D4D4D"/>
+<polyline points="376.0,162.0 420.0,162.0" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="420.0,162.0 412.0,157.5 412.0,166.5" fill="#A60F2D"/>
+<rect x="0.0" y="14.0" width="200.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<rect x="0.0" y="14.0" width="5" height="60.0" rx="2" fill="#4D4D4D"/>
+<text x="18.0" y="26.5" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">KMD · ID A-104</text>
+<text x="18.0" y="47.1" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">Heavy rainfall + flooding</text>
+<text x="18.0" y="61.6" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">forecast</text>
+<rect x="0.0" y="92.0" width="200.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<rect x="0.0" y="92.0" width="5" height="60.0" rx="2" fill="#AADC24"/>
+<text x="18.0" y="111.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">Vector signal · ENV-331</text>
+<text x="18.0" y="132.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">Mosquito breeding increases</text>
+<rect x="0.0" y="170.0" width="200.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<rect x="0.0" y="170.0" width="5" height="60.0" rx="2" fill="#E16727"/>
+<text x="18.0" y="189.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">KABS · case #22</text>
+<text x="18.0" y="210.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">Livestock abortions &amp; deaths</text>
+<rect x="0.0" y="248.0" width="200.0" height="60.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<rect x="0.0" y="248.0" width="5" height="60.0" rx="2" fill="#002D61"/>
+<text x="18.0" y="267.8" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="currentColor">EBS-7 + Lab ref 83</text>
+<text x="18.0" y="288.4" font-size="10.5" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">Human febrile illness, deaths</text>
+<rect x="246.0" y="92.0" width="130.0" height="140.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="311.0" y="130.0" font-size="12.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Linker</text>
+<text x="311.0" y="151.3" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">match on: place ·</text>
+<text x="311.0" y="165.8" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">time window ·</text>
+<text x="311.0" y="180.2" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">hazard / syndrome</text>
+<text x="311.0" y="194.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">· species</text>
+<rect x="420.0" y="30.0" width="340.0" height="270.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="438.0" y="56.0" font-size="13" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D">MER  RVF-ISI-2026-001</text>
+<text x="438.0" y="86.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">Hazard</text>
+<text x="548.0" y="86.0" font-size="11" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="currentColor">Suspected Rift Valley fever</text>
+<line x1="438.0" y1="99.0" x2="744.0" y2="99.0" stroke="#EBEBEB" stroke-width="1"/>
+<text x="438.0" y="112.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">Place</text>
+<text x="548.0" y="112.0" font-size="11" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="currentColor">County → sub-county</text>
+<line x1="438.0" y1="125.0" x2="744.0" y2="125.0" stroke="#EBEBEB" stroke-width="1"/>
+<text x="438.0" y="138.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">Species</text>
+<text x="548.0" y="138.0" font-size="11" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="currentColor">Cattle, goats, humans</text>
+<line x1="438.0" y1="151.0" x2="744.0" y2="151.0" stroke="#EBEBEB" stroke-width="1"/>
+<text x="438.0" y="164.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">Status</text>
+<text x="548.0" y="164.0" font-size="11" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="currentColor">Verified → Level 2</text>
+<line x1="438.0" y1="177.0" x2="744.0" y2="177.0" stroke="#EBEBEB" stroke-width="1"/>
+<text x="438.0" y="190.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">Confidence</text>
+<text x="548.0" y="190.0" font-size="11" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="currentColor">Probable</text>
+<line x1="438.0" y1="203.0" x2="744.0" y2="203.0" stroke="#EBEBEB" stroke-width="1"/>
+<text x="438.0" y="216.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">Timestamps</text>
+<text x="548.0" y="216.0" font-size="11" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="currentColor">detected · notified · classified</text>
+<line x1="438.0" y1="229.0" x2="744.0" y2="229.0" stroke="#EBEBEB" stroke-width="1"/>
+<text x="438.0" y="242.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D">Linked records</text>
+<text x="548.0" y="242.0" font-size="11" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="currentColor">A-104 · ENV-331 · KABS-22</text>
+<text x="438.0" y="268.0" font-size="11" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#4D4D4D"></text>
+<text x="548.0" y="268.0" font-size="11" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="currentColor">EBS-7 · Lab-83</text>
+<text x="590.0" y="318.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">pointers, not copies — data stays in source systems</text>
+</svg>
+<figcaption><b>How four unrelated records become one event.</b> The RVF example from the project deck: each system sees part of the picture under its own ID. The linker matches them on place, time window, hazard/syndrome and species, and the MER stores the event identity plus pointers back to each source record — not copies of the data.</figcaption>
+</figure>
+
+<h2 id="design-rules"><span class="sec">2</span>Design rules</h2>
+<p>These rules keep the MER small, safe and durable. <span class="tag rec">Recommended</span></p>
+<div class="cards">
+<div class="card"><h4>Minimum necessary</h4><p>Only fields needed to identify, classify, time and link an event. Anything else stays at the source.</p></div>
+<div class="card"><h4>No direct identifiers</h4><p>No names, phone numbers or national IDs. Counts and places, not people.</p></div>
+<div class="card"><h4>Pointers, not copies</h4><p>Linked records are referenced by source system and source ID.</p></div>
+<div class="card"><h4>Everything attributed</h4><p>Every field change records who or what changed it, when, and from which source.</p></div>
+<div class="card"><h4>Stable identity</h4><p>The event ID never changes, even when the suspected disease does.</p></div>
+<div class="card"><h4>Disease-agnostic</h4><p>Hazard is a coded field, so new threats need a code, not a schema change.</p></div>
+</div>
+
+<h2 id="field-specification-v0-1-draft"><span class="sec">3</span>Field specification (v0.1 draft)</h2>
+<p>A starting proposal for the KNPHI MER workshop. “MVP” marks fields required for the first release. <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>Group</th><th>Field</th><th>MVP</th><th>Description</th></tr></thead>
+<tbody>
+<tr><td rowspan="3"><b>Identity</b></td><td><code>mer_id</code></td><td>✓</td><td>Opaque, permanent identifier (UUID). Never reused, never re-coded.</td></tr>
+<tr><td><code>display_code</code></td><td>✓</td><td>Human-readable label such as <code>RVF-ISI-2026-001</code>. May change if the hazard is re-classified; <code>mer_id</code> does not.</td></tr>
+<tr><td><code>version</code></td><td>✓</td><td>Increments on every update; enables optimistic locking and audit.</td></tr>
+<tr><td rowspan="3"><b>Hazard</b></td><td><code>hazard_code</code></td><td>✓</td><td>Disease, syndrome or event type from the national code list (mapped to ICD-11 where one exists; DMT-PHE trigger-card ID).</td></tr>
+<tr><td><code>hazard_category</code></td><td>✓</td><td>Enteric · VHF · febrile/respiratory · unknown aetiology · other.</td></tr>
+<tr><td><code>case_status</code></td><td>✓</td><td>Suspected · probable · confirmed · discarded (per DMT-PHE case definitions).</td></tr>
+<tr><td rowspan="3"><b>Place</b></td><td><code>county</code>, <code>sub_county</code></td><td>✓</td><td>Official administrative codes. Multi-county events list all affected units.</td></tr>
+<tr><td><code>ward</code>, <code>facility</code></td><td></td><td>Optional finer units; facility uses the Kenya Master Health Facility List (KMHFL) code.</td></tr>
+<tr><td><code>location_point</code></td><td></td><td>Optional generalised coordinates (rounded) for clustering; never a household location.</td></tr>
+<tr><td rowspan="2"><b>Population</b></td><td><code>species</code></td><td>✓</td><td>Human and/or animal species affected (livestock, wildlife groups).</td></tr>
+<tr><td><code>counts</code></td><td></td><td>Aggregate cases, deaths, animals at risk/affected — each with “as of” time and source.</td></tr>
+<tr><td rowspan="9"><b>Timestamps</b></td><td><code>emergence_at</code></td><td></td><td>Earliest known onset or exposure (often estimated retrospectively; may stay unknown).</td></tr>
+<tr><td><code>detected_at</code></td><td>✓</td><td>First time the event was recorded by any source or system (7-1-7 definition).</td></tr>
+<tr><td><code>notified_at</code></td><td>✓</td><td>First time the information reached the public-health authority responsible for action.</td></tr>
+<tr><td><code>verified_at</code></td><td>✓</td><td>Signal confirmed as an event by a surveillance officer.</td></tr>
+<tr><td><code>classified_at</code></td><td>✓</td><td>DMT-PHE level first assigned (confirmed by a human).</td></tr>
+<tr><td><code>escalated_at</code></td><td>✓</td><td>Each escalation or de-escalation decision, with level.</td></tr>
+<tr><td><code>response_authorised_at</code></td><td>✓</td><td>Response approved; hand-off to GHEC-AI / RRT.</td></tr>
+<tr><td><code>action_completed_at[1..7]</code></td><td>✓</td><td>Completion date for each of the seven 7-1-7 early response actions, or “N/A”.</td></tr>
+<tr><td><code>closed_at</code></td><td></td><td>Exit criteria met (e.g. 42 days with no new case for Ebola).</td></tr>
+<tr><td rowspan="3"><b>Status</b></td><td><code>lifecycle_state</code></td><td>✓</td><td>Signal · verifying · verified · classified · responding · monitoring · closed · discarded.</td></tr>
+<tr><td><code>escalation_level</code></td><td>✓</td><td>DMT-PHE level 1, 2 or 3 (current).</td></tr>
+<tr><td><code>risk_score</code></td><td></td><td>Latest RADAR score (0–1) and band, with a pointer to the signal card evidence.</td></tr>
+<tr><td rowspan="2"><b>Links</b></td><td><code>linked_records[]</code></td><td>✓</td><td>Source system · source record ID · record type · link method (shared ID / rule / probabilistic / manual) · link confidence · linked by · linked at.</td></tr>
+<tr><td><code>decisions[]</code></td><td>✓</td><td>Pointers to DMT-PHE decision-log entries (recommendation, human action, reason).</td></tr>
+<tr><td><b>Provenance</b></td><td><code>field_sources</code></td><td>✓</td><td>For each field: which system or person last set it, and when.</td></tr>
+</tbody></table></div>
+
+<h2 id="lifecycle"><span class="sec">4</span>Lifecycle</h2>
+<figure class="fig" id="fig-mer-states">
+<svg viewBox="0 0 760 275" role="img" aria-label="State machine: Signal, Under verification, then either Discarded or Verified event, then Classified at level 1 to 3, Responding, Monitoring and Closed; escalation and de-escalation loops between levels." xmlns="http://www.w3.org/2000/svg">
+<polyline points="88.0,126.0 114.0,126.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="114.0,126.0 106.0,121.5 106.0,130.5" fill="#4D4D4D"/>
+<polyline points="170.0,152.0 170.0,200.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="170.0,200.0 174.5,192.0 165.5,192.0" fill="#4D4D4D"/>
+<polyline points="226.0,126.0 252.0,126.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="252.0,126.0 244.0,121.5 244.0,130.5" fill="#4D4D4D"/>
+<polyline points="356.0,126.0 382.0,126.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="382.0,126.0 374.0,121.5 374.0,130.5" fill="#4D4D4D"/>
+<polyline points="498.0,126.0 546.0,126.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="546.0,126.0 538.0,121.5 538.0,130.5" fill="#4D4D4D"/>
+<polyline points="598.0,152.0 598.0,200.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="598.0,200.0 602.5,192.0 593.5,192.0" fill="#4D4D4D"/>
+<polyline points="650.0,224.0 718.0,224.0 718.0,152.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="718.0,152.0 713.5,160.0 722.5,160.0" fill="#4D4D4D"/>
+<polyline points="418.0,100.0 418.0,58.0 462.0,58.0 462.0,100.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="462.0,100.0 466.5,92.0 457.5,92.0" fill="#4D4D4D"/>
+<polyline points="546.0,224.0 440.0,224.0 440.0,152.0" fill="none" stroke="#4D4D4D" stroke-width="1.4" stroke-dasharray="5 4" stroke-linejoin="round"/>
+<polygon points="440.0,152.0 435.5,160.0 444.5,160.0" fill="#4D4D4D"/>
+<rect x="0.0" y="100.0" width="88.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="44.0" y="116.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Signal</text>
+<text x="44.0" y="136.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">raw report</text>
+<rect x="114.0" y="100.0" width="112.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="170.0" y="116.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Verifying</text>
+<text x="170.0" y="136.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">triage ≤ 24 h</text>
+<rect x="114.0" y="200.0" width="112.0" height="48.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2" stroke-dasharray="5 4"/>
+<text x="170.0" y="214.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Discarded</text>
+<text x="170.0" y="234.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">kept for audit</text>
+<rect x="252.0" y="100.0" width="104.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="304.0" y="118.3" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Verified</text>
+<text x="304.0" y="133.7" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">event</text>
+<rect x="382.0" y="100.0" width="116.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="440.0" y="116.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Classified</text>
+<text x="440.0" y="136.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">Level 1 · 2 · 3</text>
+<rect x="546.0" y="100.0" width="104.0" height="52.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="598.0" y="116.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Responding</text>
+<text x="598.0" y="136.7" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">7 actions</text>
+<rect x="546.0" y="200.0" width="104.0" height="48.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="598.0" y="214.1" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Monitoring</text>
+<text x="598.0" y="234.4" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">watch period</text>
+<rect x="676.0" y="100.0" width="84.0" height="52.0" rx="6" fill="#4D4D4D" stroke="#4D4D4D" stroke-width="1"/>
+<text x="718.0" y="126.0" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#FFFFFF">Closed</text>
+<text x="170.0" y="176.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">not an event</text>
+<text x="522.0" y="86.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">authorised</text>
+<text x="684.0" y="212.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">criteria met</text>
+<text x="440.0" y="44.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">escalate / de-escalate</text>
+<text x="490.0" y="236.0" font-size="10.5" font-weight="600" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A" stroke="#FFFFFF" stroke-width="5" stroke-linejoin="round" paint-order="stroke">new cases</text>
+</svg>
+<figcaption><b>MER lifecycle.</b> Every event moves through a small set of states. Only a verified event can be classified; every transition writes who, when and why to the audit trail. Discarded signals are kept (not deleted) because they are needed to measure false alarms.</figcaption>
+</figure>
+<ul>
+<li><strong>Who can open an MER?</strong> RADAR opens one automatically when a new signal does not match an existing event; an officer can also open one manually (e.g. a phone report).</li>
+<li><strong>Merge and split.</strong> If two MERs turn out to be the same event, they merge — the surviving <code>mer_id</code> keeps both histories and the other becomes an alias. A split creates a new MER and moves selected links. Both actions require a human and are audited.</li>
+<li><strong>Discarded is a state, not a deletion.</strong> False alarms are evidence: they are needed to measure positive predictive value and alert burden.</li>
+</ul>
+
+<h2 id="timestamps-and-the-7-1-7-clock"><span class="sec">5</span>Timestamps and the 7-1-7 clock</h2>
+<figure class="fig wide" id="fig-mer-timeline">
+<svg viewBox="0 0 760 270" role="img" aria-label="Timeline with milestones emergence, detection, notification, verified, classified, escalation decision, response authorised and early response complete; brackets show the 7-day, 1-day and 7-day targets and a 48-hour classification target." xmlns="http://www.w3.org/2000/svg">
+<line x1="30.0" y1="111.0" x2="30.0" y2="78.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="170.0" y1="129.0" x2="170.0" y2="148.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="260.0" y1="111.0" x2="260.0" y2="78.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="350.0" y1="129.0" x2="350.0" y2="148.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="440.0" y1="111.0" x2="440.0" y2="78.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="520.0" y1="129.0" x2="520.0" y2="148.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="600.0" y1="111.0" x2="600.0" y2="78.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="730.0" y1="129.0" x2="730.0" y2="148.0" stroke="#9A9A9A" stroke-width="1"/>
+<line x1="20.0" y1="120.0" x2="745.0" y2="120.0" stroke="#4D4D4D" stroke-width="2"/>
+<circle cx="30.0" cy="120.0" r="7" fill="#A60F2D" stroke="#A60F2D" stroke-width="2"/>
+<text x="30.0" y="64.0" font-size="11.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#A60F2D">Emergence</text>
+<text x="30.0" y="79.0" font-size="10" font-weight="400" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">first case / exposure</text>
+<circle cx="170.0" cy="120.0" r="7" fill="#A60F2D" stroke="#A60F2D" stroke-width="2"/>
+<text x="170.0" y="162.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Detection</text>
+<text x="170.0" y="177.0" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">first recorded anywhere</text>
+<circle cx="260.0" cy="120.0" r="7" fill="#A60F2D" stroke="#A60F2D" stroke-width="2"/>
+<text x="260.0" y="64.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">Notification</text>
+<text x="260.0" y="79.0" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">reaches responsible authority</text>
+<circle cx="350.0" cy="120.0" r="5" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="2"/>
+<text x="350.0" y="162.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Verified</text>
+<text x="350.0" y="177.0" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">signal → event</text>
+<circle cx="440.0" cy="120.0" r="5" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="2"/>
+<text x="440.0" y="64.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Classified</text>
+<text x="440.0" y="79.0" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">DMT-PHE level set</text>
+<circle cx="520.0" cy="120.0" r="5" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="2"/>
+<text x="520.0" y="162.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Escalated</text>
+<text x="520.0" y="177.0" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">decision logged</text>
+<circle cx="600.0" cy="120.0" r="5" fill="#FFFFFF" stroke="#4D4D4D" stroke-width="2"/>
+<text x="600.0" y="64.0" font-size="11.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">Authorised</text>
+<text x="600.0" y="79.0" font-size="10" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">response hand-off</text>
+<circle cx="730.0" cy="120.0" r="7" fill="#A60F2D" stroke="#A60F2D" stroke-width="2"/>
+<text x="730.0" y="162.0" font-size="11.5" font-weight="700" text-anchor="end" dominant-baseline="middle" fill="#A60F2D">Response done</text>
+<text x="730.0" y="177.0" font-size="10" font-weight="400" text-anchor="end" dominant-baseline="middle" fill="#5A5A5A">7 actions complete</text>
+<line x1="30.0" y1="214.0" x2="170.0" y2="214.0" stroke="#A60F2D" stroke-width="1.6"/>
+<line x1="30.0" y1="209.0" x2="30.0" y2="219.0" stroke="#A60F2D" stroke-width="1.6"/>
+<line x1="170.0" y1="209.0" x2="170.0" y2="219.0" stroke="#A60F2D" stroke-width="1.6"/>
+<text x="100.0" y="228.0" font-size="11" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">≤ 7 days detect</text>
+<line x1="170.0" y1="214.0" x2="260.0" y2="214.0" stroke="#A60F2D" stroke-width="1.6"/>
+<line x1="170.0" y1="209.0" x2="170.0" y2="219.0" stroke="#A60F2D" stroke-width="1.6"/>
+<line x1="260.0" y1="209.0" x2="260.0" y2="219.0" stroke="#A60F2D" stroke-width="1.6"/>
+<text x="215.0" y="228.0" font-size="11" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">≤ 1 day notify</text>
+<line x1="260.0" y1="214.0" x2="730.0" y2="214.0" stroke="#A60F2D" stroke-width="1.6"/>
+<line x1="260.0" y1="209.0" x2="260.0" y2="219.0" stroke="#A60F2D" stroke-width="1.6"/>
+<line x1="730.0" y1="209.0" x2="730.0" y2="219.0" stroke="#A60F2D" stroke-width="1.6"/>
+<text x="495.0" y="228.0" font-size="11" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">≤ 7 days early response</text>
+<line x1="170.0" y1="248.0" x2="440.0" y2="248.0" stroke="#4D4D4D" stroke-width="1.6"/>
+<line x1="170.0" y1="243.0" x2="170.0" y2="253.0" stroke="#4D4D4D" stroke-width="1.6"/>
+<line x1="440.0" y1="243.0" x2="440.0" y2="253.0" stroke="#4D4D4D" stroke-width="1.6"/>
+<text x="305.0" y="262.0" font-size="11" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#4D4D4D">≤ 48 h median signal → classification (Gate 2 target)</text>
+<text x="20.0" y="18.0" font-size="10.5" font-weight="700" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A" letter-spacing="0.06em">7-1-7 MILESTONES (filled) · RADAR CHECKPOINTS (open)</text>
+</svg>
+<figcaption><b>The event clock.</b> 7-1-7 needs three intervals: emergence → detection (≤ 7 days), detection → notification (≤ 1 day), notification → completion of seven early response actions (≤ 7 days). RADAR adds intermediate timestamps (verification, DMT-PHE classification, escalation) so the bottleneck can be located, not just the total.</figcaption>
+</figure>
+<p>The 7-1-7 target expects every outbreak to be <strong>detected within 7 days</strong> of emergence, <strong>notified within 1 day</strong> of detection, and to have <strong>seven early response actions completed within 7 days</strong> of notification. <span class="tag res">Research</span> The MER uses the 7-1-7 Alliance definitions so results are comparable internationally:</p>
+<ul>
+<li><strong>Detection:</strong> the date the event is first recorded by any source or in any system.</li>
+<li><strong>Notification:</strong> the date the information reaches the first public-health authority responsible for action.</li>
+<li><strong>Early response completion:</strong> the last completion date across the seven actions; an action that does not apply is recorded as “N/A”, not left blank.</li>
+</ul>
+<div class="callout warn"><span class="ct">Rules for messy time data</span>
+<ul>
+<li>Store the <strong>original source timestamp</strong> and the <strong>time RADAR received it</strong> separately — they answer different questions.</li>
+<li>Back-entered data (e.g. after a system outage) keeps its real event time and carries a “back-entered” flag.</li>
+<li>Unknown is <code>null</code>; not applicable is <code>N/A</code>. Never default a missing time to “now”.</li>
+<li>Store all times in UTC with the source time zone; display in East Africa Time (UTC+3).</li>
+</ul></div>
+
+<h2 id="linking-signals-to-events"><span class="sec">6</span>Linking signals to events</h2>
+<p>Linking is the hardest and most consequential step. A wrong merge hides an outbreak; a missed link splits one. RADAR applies three passes in order and records which one made each link. <span class="tag rec">Recommended</span></p>
+<ol class="steps">
+<li><b>Shared identifiers.</b> If two records share a reliable ID (for example a lab specimen ID quoted in an EBS follow-up), link them deterministically.</li>
+<li><b>Rules.</b> Same or adjacent administrative unit, overlapping time window and compatible hazard/syndrome (configurable per disease — e.g. a wider window for RVF than for cholera).</li>
+<li><b>Probabilistic matching.</b> A Fellegi–Sunter model (e.g. the open-source Splink library) scores candidate pairs. High scores link automatically; borderline scores go to a data steward's review queue.</li>
+</ol>
+
+<h2 id="exchange-model-publish-and-subscribe"><span class="sec">7</span>Exchange model: publish and subscribe</h2>
+<figure class="fig" id="fig-mer-pubsub">
+<svg viewBox="0 0 760 300" role="img" aria-label="Hub and spoke: KHIS2, m-Dharura, KABS, LIMS, EOC log and GHEC-AI publish fields to and subscribe from a central MER exchange; full records stay in each source." xmlns="http://www.w3.org/2000/svg">
+<polyline points="170.0,41.0 250.0,41.0 290.0,127.7" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="290.0,127.7 290.7,118.6 282.6,122.3" fill="#A60F2D"/>
+<polyline points="290.0,141.7 250.0,55.0 170.0,55.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="170.0,55.0 178.0,59.5 178.0,50.5" fill="#9A9A9A"/>
+<polyline points="170.0,141.0 250.0,141.0 290.0,142.7" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="290.0,142.7 282.2,137.9 281.8,146.9" fill="#A60F2D"/>
+<polyline points="290.0,156.7 250.0,155.0 170.0,155.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="170.0,155.0 178.0,159.5 178.0,150.5" fill="#9A9A9A"/>
+<polyline points="170.0,241.0 250.0,241.0 290.0,157.7" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="290.0,157.7 282.5,163.0 290.6,166.9" fill="#A60F2D"/>
+<polyline points="290.0,171.7 250.0,255.0 170.0,255.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="170.0,255.0 178.0,259.5 178.0,250.5" fill="#9A9A9A"/>
+<polyline points="590.0,41.0 510.0,41.0 470.0,127.7" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="470.0,127.7 477.4,122.3 469.3,118.6" fill="#A60F2D"/>
+<polyline points="470.0,141.7 510.0,55.0 590.0,55.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="590.0,55.0 582.0,50.5 582.0,59.5" fill="#9A9A9A"/>
+<polyline points="590.0,141.0 510.0,141.0 470.0,142.7" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="470.0,142.7 478.2,146.9 477.8,137.9" fill="#A60F2D"/>
+<polyline points="470.0,156.7 510.0,155.0 590.0,155.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="590.0,155.0 582.0,150.5 582.0,159.5" fill="#9A9A9A"/>
+<polyline points="590.0,241.0 510.0,241.0 470.0,157.7" fill="none" stroke="#A60F2D" stroke-width="2" stroke-linejoin="round"/>
+<polygon points="470.0,157.7 469.4,166.9 477.5,163.0" fill="#A60F2D"/>
+<polyline points="470.0,171.7 510.0,255.0 590.0,255.0" fill="none" stroke="#9A9A9A" stroke-width="1.4" stroke-linejoin="round"/>
+<polygon points="590.0,255.0 582.0,250.5 582.0,259.5" fill="#9A9A9A"/>
+<rect x="290.0" y="110.0" width="180.0" height="80.0" rx="6" fill="#FFFFFF" stroke="#A60F2D" stroke-width="2"/>
+<text x="380.0" y="132.5" font-size="13" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="#A60F2D">MER exchange</text>
+<text x="380.0" y="154.1" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">event IDs · status ·</text>
+<text x="380.0" y="168.6" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">timestamps · pointers</text>
+<rect x="20.0" y="20.0" width="150.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="95.0" y="37.8" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">KHIS2</text>
+<text x="95.0" y="58.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">case counts</text>
+<rect x="20.0" y="120.0" width="150.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="95.0" y="137.8" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">m-Dharura</text>
+<text x="95.0" y="158.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">community signals</text>
+<rect x="20.0" y="220.0" width="150.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="95.0" y="237.8" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">KABS</text>
+<text x="95.0" y="258.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">animal syndromes</text>
+<rect x="590.0" y="20.0" width="150.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="665.0" y="37.8" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">LIMS</text>
+<text x="665.0" y="58.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">lab confirmation</text>
+<rect x="590.0" y="120.0" width="150.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="665.0" y="130.1" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">EOC log /</text>
+<text x="665.0" y="145.4" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">DMT-PHE</text>
+<text x="665.0" y="166.4" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">decisions</text>
+<rect x="590.0" y="220.0" width="150.0" height="56.0" rx="6" fill="#FFFFFF" stroke="#9A9A9A" stroke-width="1.2"/>
+<text x="665.0" y="237.8" font-size="12" font-weight="700" text-anchor="middle" dominant-baseline="middle" fill="currentColor">GHEC-AI</text>
+<text x="665.0" y="258.7" font-size="10.5" font-weight="400" text-anchor="middle" dominant-baseline="middle" fill="#5A5A5A">deployment status</text>
+<line x1="300.0" y1="268.0" x2="330.0" y2="268.0" stroke="#A60F2D" stroke-width="2"/>
+<text x="336.0" y="268.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">publish fields</text>
+<line x1="430.0" y1="268.0" x2="460.0" y2="268.0" stroke="#9A9A9A" stroke-width="1.4"/>
+<text x="466.0" y="268.0" font-size="10.5" font-weight="600" text-anchor="start" dominant-baseline="middle" fill="#5A5A5A">subscribe to updates</text>
+</svg>
+<figcaption><b>Federated, not centralised.</b> The MER is a data standard and exchange profile. Each system publishes a handful of fields about an event and subscribes to what others have published; each remains the authoritative source for its own data and no institution has to work inside a new system.</figcaption>
+</figure>
+<p>Each participating system publishes a small number of standard fields about an event and subscribes to what others have published about the same event. Existing systems keep operating exactly as they do now. <span class="tag prop">Proposal</span> In the MVP, “publishing” will mostly be done <em>on behalf of</em> source systems by RADAR's connectors (integration levels 1–2); native publishing by source systems is the Level 4 end state (<a href="05-interoperability.html">doc 05</a>).</p>
+
+<h2 id="fhir-r4-representation"><span class="sec">8</span>FHIR R4 representation</h2>
+<p>FHIR R4 has no dedicated “outbreak event” resource, so the MER is modelled as a small set of profiles built on Kenya Core (DHA, FHIR R4 4.0.1). <span class="tag rec">Recommended</span></p>
+<div class="table-wrap"><table>
+<thead><tr><th>MER part</th><th>FHIR resource</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td>The event itself</td><td><code>Basic</code> profile <code>KeMerEvent</code></td><td>R4's pattern for concepts without a resource; MER fields as extensions; <code>identifier</code> holds <code>mer_id</code> and display code.</td></tr>
+<tr><td>Signals and counts</td><td><code>Observation</code></td><td><code>focus</code> → event; one per signal or count, with source identifier.</td></tr>
+<tr><td>Workflow steps (verify, classify, escalate, 7 actions)</td><td><code>Task</code></td><td><code>focus</code> → event; <code>executionPeriod</code> carries the timestamps; <code>owner</code> the responsible unit.</td></tr>
+<tr><td>Place</td><td><code>Location</code>, <code>Organization</code></td><td>Kenya Core identifiers; KMHFL facility codes; admin-unit code systems.</td></tr>
+<tr><td>Links and attribution</td><td><code>Provenance</code></td><td>Who/what linked or changed what, and how (rule, model, person).</td></tr>
+<tr><td>Hand-off and notifications</td><td><code>Communication</code> / <code>Task</code></td><td>GHEC-AI request and status updates.</td></tr>
+<tr><td>Publish / subscribe</td><td><code>Subscription</code></td><td>R4 Subscription (or the R4 backport of topic-based subscriptions).</td></tr>
+</tbody></table></div>
+<pre><code>{
+  "resourceType": "Basic",
+  "meta": { "profile": ["{knphi-fhir-base}/mer/StructureDefinition/KeMerEvent"] },
+  "identifier": [
+    { "system": "{knphi-fhir-base}/mer/id", "value": "5b0e…-uuid" },
+    { "system": "{knphi-fhir-base}/mer/display", "value": "RVF-ISI-2026-001" }
+  ],
+  "code": { "coding": [{ "system": "{knphi-fhir-base}/mer/CodeSystem/record-type", "code": "mer-event" }] },
+  "extension": [
+    { "url": ".../hazard", "valueCodeableConcept": { "text": "Rift Valley fever (suspected)" } },
+    { "url": ".../escalationLevel", "valueInteger": 2 },
+    { "url": ".../detectedAt", "valueDateTime": "2026-12-03T07:40:00Z" },
+    { "url": ".../notifiedAt", "valueDateTime": "2026-12-03T15:05:00Z" }
+  ]
+}</code></pre>
+<p class="sources">Illustrative only — canonical URLs, extension names and code systems are decided at the MER workshop and published by KNPHI. Before drafting profiles, review the draft Kenya surveillance FHIR IG on build.fhir.org and the Kenya Core and Diagnostics IGs so the MER reuses what already exists.</p>
+
+<h2 id="governance-of-the-standard"><span class="sec">9</span>Governance of the standard</h2>
+<ul>
+<li><strong>Owner:</strong> KNPHI. The MER must be <em>agreed and in operational use</em> by Gate 1 and <em>published and adopted as a KNPHI standard</em> by Gate 2. <span class="tag prop">Proposal</span></li>
+<li><strong>Versioning:</strong> semantic versions (v0.x during the MVP, v1.0 at adoption). Additive changes are minor versions; removing or redefining a field is a major version with a migration plan.</li>
+<li><strong>Change control:</strong> proposals go to the Technical Working Group; KNPHI approves (<a href="15-partners-governance.html">doc 15</a>).</li>
+<li><strong>Code lists:</strong> hazards, statuses, link methods and action types are published as FHIR CodeSystems/ValueSets and versioned with the profile.</li>
+</ul>
+
+<h2 id="open-questions"><span class="sec">10</span>Open questions</h2>
+<ol class="decisions">
+<li><b>Which hazard code list is authoritative?</b> IDSR priority list, DMT-PHE trigger cards and ICD-11 overlap but differ. <span class="owner">Owner: KNPHI · MER workshop</span></li>
+<li><b>Do counts live in the MER or only at the source?</b> Counts make the MER more useful but harder to keep consistent. <span class="owner">Owner: TWG</span></li>
+<li><b>Finest geography allowed?</b> Ward level helps clustering; it may raise re-identification risk in sparse areas. <span class="owner">Owner: Data governance group</span></li>
+<li><b>Who may merge or split events?</b> Suggest data stewards at KNPHI and county EOC managers. <span class="owner">Owner: KNPHI</span></li>
+</ol><h2 id="sources">Sources</h2><div class="sources"><ul>
+<li>INV-110654 proposal — RADAR Conceptual Design (minimum event record), Phase 0 milestones.</li>
+<li>RADAR deck — slide 3 “Minimum Event Record: the practical bridge to interoperability”.</li>
+<li>Stage-gate paper — Gate 1 threshold “minimum event record agreed with KNPHI and in operational use”; Gate 2 milestone 7.</li>
+<li>7-1-7 Alliance — <a href="https://717alliance.org/faq/">Frequently Asked Questions</a> (milestone definitions, seven early response actions).</li>
+<li>Digital Health Agency — <a href="https://build.fhir.org/ig/IntelliSOFT-Consulting/Kenya-core-FHIR-IG/index.html">Kenya Core FHIR Implementation Guide v1.0.0</a> (CI build).</li>
+<li>HL7 — FHIR R4 resource definitions (Basic, Observation, Task, Provenance, Subscription).</li>
+<li>UK Ministry of Justice — Splink probabilistic record linkage (<a href="https://pypi.org/project/splink/3.7.1">PyPI</a>).</li>
+</ul></div><nav class="pager" aria-label="Previous and next document"><a class="prev" href="02-surveillance-landscape.html"><span class="d">← Previous</span><br><span class="t">02 · Surveillance Landscape</span></a><a class="next" href="04-system-architecture.html"><span class="d">Next →</span><br><span class="t">04 · System Architecture</span></a></nav>
+<footer class="foot"><span>RADAR — Real-Time AI-Driven Alert &amp; Response System · WSU Global Health – Kenya with KNPHI and partners</span><span>Draft v0.1 · prepared 29 October 2026 · internal working document</span></footer>
+</article>
+</main>
+</div>
+<script>if (window.matchMedia("(max-width: 980px)").matches) { var d = document.querySelector(".sidenav details"); if (d) d.open = false; }</script>
+</body>
+</html>
